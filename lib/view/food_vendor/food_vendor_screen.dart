@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:saffron_hub/consts/const_colors.dart';
@@ -33,18 +34,39 @@ class _FoodVendorScreenState extends State<FoodVendorScreen> {
               children: [
                 Positioned(
                   top: 0.0,
-                  left: 0,
-                  right: 0,
+                  left: 0.0,
+                  right: 0.0,
                   child: ClipRRect(
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(10),
                       bottomRight: Radius.circular(10),
                     ),
-                    child: Image.asset(
-                      "assets/images/f-c.jpg",
-                      height: 265.h,
-                      width: MediaQuery.of(context).size.width,
-                      fit: BoxFit.fill,
+                    child: CarouselSlider.builder(
+                      options: CarouselOptions(
+                        viewportFraction: 1,
+                        disableCenter: false,
+                        initialPage: 0,
+                        autoPlay: true,
+                        reverse: false,
+                        height: 270.h,
+                        enableInfiniteScroll: true,
+                        // autoPlayInterval: const Duration(seconds: 3),
+                        autoPlayAnimationDuration:
+                            const Duration(milliseconds: 3000),
+                        pauseAutoPlayOnTouch: true,
+                        scrollDirection: Axis.horizontal,
+                        pageSnapping: true,
+                      ),
+                      itemCount: 1,
+                      itemBuilder:
+                          (BuildContext context, int index, int realIndex) =>
+                              Container(
+                        margin: EdgeInsets.symmetric(horizontal: 1),
+                        child: Image.asset(
+                          "assets/images/f-c.jpg",
+                          fit: BoxFit.fill,
+                        ),
+                      ),
                     ),
                   ),
                 ),
