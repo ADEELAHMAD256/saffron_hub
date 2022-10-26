@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:saffron_hub/consts/const_colors.dart';
-import 'package:saffron_hub/custom_widgets/custom_card/custom_card.dart';
-import 'package:saffron_hub/custom_widgets/custom_text/text.dart';
 import 'package:saffron_hub/view/vendors/vendors_list_model.dart';
+import '../../components/custom_card/custom_card.dart';
+import '../../components/custom_text/text.dart';
 
 class VendorsScreen extends StatelessWidget {
   static const String id = "VendorsScreen";

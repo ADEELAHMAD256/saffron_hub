@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:saffron_hub/view/search/horizontal_list_item_data.dart';
 import 'package:saffron_hub/view/vendors/vendors_list_model.dart';
-
+import '../../components/custom_card/custom_card.dart';
+import '../../components/custom_text/text.dart';
 import '../../consts/const_colors.dart';
-import '../../custom_widgets/custom_card/custom_card.dart';
-import '../../custom_widgets/custom_text/text.dart';
 
 class SearchScreen extends StatelessWidget {
   static const String id = "SearchScreen";
@@ -132,7 +131,7 @@ class SearchScreen extends StatelessWidget {
                               width: 193.w,
                               cardRadius: 5,
                               cardColor: Colors.white,
-                              boxShadow: const [
+                              shadow: const [
                                 BoxShadow(
                                   color: Colors.black12,
                                   spreadRadius: 0.4,

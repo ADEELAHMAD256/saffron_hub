@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../custom_widgets/custom_text/text.dart';
+import '../../components/custom_text/text.dart';
 
 class AccountSettingScreen extends StatelessWidget {
   static const String id = "AccountSettingScreen";

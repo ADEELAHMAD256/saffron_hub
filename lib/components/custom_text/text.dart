@@ -16,6 +16,7 @@ class CustomText extends StatelessWidget {
         fontSize: fontSize,
         fontWeight: fontWeight,
         color: fontColor,
+        fontFamily: "assets/font_family/Poppins-Regular.ttf",
       ),
     );
   }

@@ -7,7 +7,7 @@ class CustomCard extends StatelessWidget {
   final double? cardRadius;
   final Widget? cardChild;
   final BoxBorder? border;
-  final List<BoxShadow>? boxShadow;
+  final List<BoxShadow>? shadow;
 
   const CustomCard(
       {super.key,
@@ -17,7 +17,7 @@ class CustomCard extends StatelessWidget {
       this.cardRadius,
       this.cardChild,
       this.border,
-      this.boxShadow});
+      this.shadow});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class CustomCard extends StatelessWidget {
           color: cardColor,
           border: border,
           borderRadius: BorderRadius.circular(cardRadius!),
-          boxShadow: boxShadow),
+          boxShadow: shadow),
       child: cardChild,
     );
   }

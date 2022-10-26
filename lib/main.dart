@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:saffron_hub/view/food_vendor/food_vendor_screen.dart';
 import 'package:saffron_hub/view/home/home_screen.dart';
 import 'package:saffron_hub/view/search/search_screen.dart';
 import 'package:saffron_hub/view/setting/setting_screen.dart';
@@ -27,7 +28,8 @@ class MyApp extends StatelessWidget {
           HomeScreen.id: (context) => HomeScreen(),
           VendorsScreen.id: (context) => VendorsScreen(),
           SearchScreen.id: (context) => SearchScreen(),
-          AccountSettingScreen.id: (context) => AccountSettingScreen()
+          AccountSettingScreen.id: (context) => AccountSettingScreen(),
+          FoodVendorScreen.id: (context) => FoodVendorScreen(),
         },
       ),
     );

@@ -2,13 +2,13 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:saffron_hub/consts/const_colors.dart';
-import 'package:saffron_hub/custom_widgets/custom_card/custom_card.dart';
-import 'package:saffron_hub/custom_widgets/custom_text/text.dart';
+import 'package:saffron_hub/view/food_vendor/food_vendor_screen.dart';
 import 'package:saffron_hub/view/home/home_list_model.dart';
 import 'package:saffron_hub/view/search/search_screen.dart';
 import 'package:saffron_hub/view/setting/setting_screen.dart';
 import 'package:saffron_hub/view/vendors/vendors_screen.dart';
-
+import '../../components/custom_card/custom_card.dart';
+import '../../components/custom_text/text.dart';
 import 'drawer/drawer_widget.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -210,65 +210,69 @@ class HomeScreen extends StatelessWidget {
                             childAspectRatio: itemWidth / itemHeight,
                             crossAxisSpacing: 10,
                           ),
-                          itemBuilder: (context, index) => CustomCard(
-                            cardRadius: 16,
-                            border: Border.all(
-                              color: Colors.black12,
-                            ),
-                            cardColor: Colors.white,
-                            cardChild: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Image.asset(
-                                  homeItemList[index].itemImage,
-                                  fit: BoxFit.fitWidth,
-                                ),
-                                SizedBox(height: 5.h),
-                                Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 10.w),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      CustomText(
-                                        text: homeItemList[index].itemText,
-                                      ),
-                                      SizedBox(height: 3.h),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.phone_in_talk_outlined,
-                                            size: 12.sp,
-                                          ),
-                                          SizedBox(width: 10.w),
-                                          CustomText(
-                                            text:
-                                                homeItemList[index].phoneNumber,
-                                            fontSize: 10.sp,
-                                            fontWeight: FontWeight.w400,
-                                          )
-                                        ],
-                                      ),
-                                      SizedBox(height: 3.h),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.location_on_outlined,
-                                            size: 12.sp,
-                                          ),
-                                          SizedBox(width: 10.w),
-                                          CustomText(
-                                            text: homeItemList[index].address,
-                                            fontSize: 10.sp,
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                          itemBuilder: (context, index) => InkWell(
+                            onTap: () => Navigator.pushNamed(
+                                context, FoodVendorScreen.id),
+                            child: CustomCard(
+                              cardRadius: 16,
+                              border: Border.all(
+                                color: Colors.black12,
+                              ),
+                              cardColor: Colors.white,
+                              cardChild: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Image.asset(
+                                    homeItemList[index].itemImage,
+                                    fit: BoxFit.fitWidth,
                                   ),
-                                ),
-                              ],
+                                  SizedBox(height: 5.h),
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 10.w),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        CustomText(
+                                          text: homeItemList[index].itemText,
+                                        ),
+                                        SizedBox(height: 3.h),
+                                        Row(
+                                          children: [
+                                            Icon(
+                                              Icons.phone_in_talk_outlined,
+                                              size: 12.sp,
+                                            ),
+                                            SizedBox(width: 10.w),
+                                            CustomText(
+                                              text: homeItemList[index]
+                                                  .phoneNumber,
+                                              fontSize: 10.sp,
+                                              fontWeight: FontWeight.w400,
+                                            )
+                                          ],
+                                        ),
+                                        SizedBox(height: 3.h),
+                                        Row(
+                                          children: [
+                                            Icon(
+                                              Icons.location_on_outlined,
+                                              size: 12.sp,
+                                            ),
+                                            SizedBox(width: 10.w),
+                                            CustomText(
+                                              text: homeItemList[index].address,
+                                              fontSize: 10.sp,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
