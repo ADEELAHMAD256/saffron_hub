@@ -144,13 +144,13 @@ class _FoodVendorScreenState extends State<FoodVendorScreen> {
                     fontWeight: FontWeight.w500,
                   ),
                   SizedBox(height: 10.h),
-                  // CustomText(
-                  //   text:
-                  //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. ",
-                  //   fontSize: 12.sp,
-                  //   fontWeight: FontWeight.w300,
-                  //   fontColor: Colors.black.withOpacity(0.6),
-                  // ),
+                  CustomText(
+                    text:
+                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. ",
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w300,
+                    fontColor: Colors.black.withOpacity(0.6),
+                  ),
                   SizedBox(height: 20.h),
                   CustomText(
                     text: "Foods Menu",
