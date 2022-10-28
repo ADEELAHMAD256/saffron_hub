@@ -73,9 +73,9 @@ class _FoodVendorScreenState extends State<FoodVendorScreen> {
                 Positioned(
                   top: 216.h,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
                     child: CustomCard(
-                      height: 97.h,
+                      height: 100.h,
                       width: 335.w,
                       cardRadius: 10,
                       cardColor: Colors.white,

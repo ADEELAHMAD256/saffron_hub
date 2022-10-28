@@ -17,7 +17,16 @@ class ChickenList extends StatelessWidget {
       removeTop: true,
       child: InkWell(
         onTap: () => showModalBottomSheet(
-            context: context, builder: (builder) => CustomBottomSheet()),
+          context: context,
+          builder: (builder) => CustomBottomSheet(),
+          isScrollControlled: true,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+            ),
+          ),
+        ),
         child: ListView.builder(
           itemCount: 2,
           itemBuilder: (context, index) => Column(

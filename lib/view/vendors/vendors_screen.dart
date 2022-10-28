@@ -46,11 +46,11 @@ class VendorsScreen extends StatelessWidget {
                 cursorColor: kGray,
                 decoration: InputDecoration(
                   border: InputBorder.none,
+                  hintText: "Search",
                   prefixIcon: Icon(
                     Icons.search_sharp,
                     color: kYellow,
                   ),
-                  hintText: "Search",
                 ),
               ),
             ),
@@ -62,20 +62,19 @@ class VendorsScreen extends StatelessWidget {
                   itemCount: vendorsItemList.length,
                   itemBuilder: (context, index) => Column(
                     children: [
-                      SizedBox(height: 20),
+                      SizedBox(height: 20.h),
                       CustomCard(
-                        height: 272.h,
+                        height: 280.h,
                         width: 335.w,
                         cardRadius: 20,
                         cardColor: Colors.white,
                         cardChild: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Image.asset(
-                              vendorsItemList[index].vendorsItemImage,
-                              fit: BoxFit.fitWidth,
-                              // height: 180.h,
-                            ),
+                            Image.asset(vendorsItemList[index].vendorsItemImage,
+                                fit: BoxFit.fitWidth
+                                // height: 180.h,
+                                ),
                             Flexible(
                               child: Container(
                                 decoration: BoxDecoration(
@@ -94,48 +93,42 @@ class VendorsScreen extends StatelessWidget {
                                   ],
                                 ),
                                 child: Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 20),
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 20.w),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
                                       SizedBox(height: 10.h),
                                       CustomText(
-                                        text: vendorsItemList[index]
-                                            .vendorsItemText,
-                                        fontSize: 16.sp,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                      SizedBox(height: 7.h),
+                                          text: vendorsItemList[index]
+                                              .vendorsItemText,
+                                          fontSize: 16.sp,
+                                          fontWeight: FontWeight.w500),
+                                      SizedBox(height: 10.h),
                                       Row(
                                         children: [
-                                          Icon(
-                                            Icons.phone_in_talk_outlined,
-                                            size: 12.sp,
-                                          ),
+                                          Icon(Icons.phone_in_talk_outlined,
+                                              size: 12.sp),
                                           SizedBox(width: 10.w),
                                           CustomText(
-                                            text: vendorsItemList[index]
-                                                .vendorsPhoneNumber,
-                                            fontSize: 10.sp,
-                                            fontWeight: FontWeight.w400,
-                                          )
+                                              text: vendorsItemList[index]
+                                                  .vendorsPhoneNumber,
+                                              fontSize: 10.sp,
+                                              fontWeight: FontWeight.w400),
                                         ],
                                       ),
-                                      SizedBox(height: 7.h),
+                                      SizedBox(height: 10.h),
                                       Row(
                                         children: [
-                                          Icon(
-                                            Icons.location_on_outlined,
-                                            size: 12.sp,
-                                          ),
+                                          Icon(Icons.location_on_outlined,
+                                              size: 12.sp),
                                           SizedBox(width: 10.w),
                                           CustomText(
-                                            text: vendorsItemList[index]
-                                                .vendorsAddress,
-                                            fontSize: 10.sp,
-                                            fontWeight: FontWeight.w400,
-                                          ),
+                                              text: vendorsItemList[index]
+                                                  .vendorsAddress,
+                                              fontSize: 10.sp,
+                                              fontWeight: FontWeight.w400),
                                         ],
                                       ),
                                       SizedBox(height: 7.h),

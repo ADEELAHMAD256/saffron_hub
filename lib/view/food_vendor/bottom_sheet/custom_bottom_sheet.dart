@@ -12,12 +12,12 @@ class CustomBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 400.h,
+      height: 440.h,
       // color: Colors.transparent,
       child: Column(
         children: [
           SizedBox(
-            height: 250.h,
+            height: 280.h,
             child: Stack(
               children: [
                 ClipRRect(
@@ -29,7 +29,7 @@ class CustomBottomSheet extends StatelessWidget {
                     clipper: CustomShape(),
                     child: Image.asset(
                       "assets/images/sb.png",
-                      fit: BoxFit.fitWidth,
+                      fit: BoxFit.cover,
                       width: MediaQuery.of(context).size.width,
                     ),
                   ),
