@@ -1,14 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:saffron_hub/consts/const_colors.dart';
-import 'package:saffron_hub/view/vendors/vendors_list_model.dart';
 import '../../components/custom_card/custom_card.dart';
 import '../../components/custom_text/text.dart';
+import '../../provider/home_provider.dart';
 import '../food_vendor/food_vendor_screen.dart';
 
 class VendorsScreen extends StatelessWidget {
   static const String id = "VendorsScreen";
-  const VendorsScreen({Key? key}) : super(key: key);
+
+  final String? image;
+  final String? name;
+  final String? phoneNo;
+  final String? location;
+  const VendorsScreen({
+    Key? key,
+    @required this.image,
+    @required this.name,
+    @required this.phoneNo,
+    @required this.location,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +70,7 @@ class VendorsScreen extends StatelessWidget {
               child: InkWell(
                 onTap: () => Navigator.pushNamed(context, FoodVendorScreen.id),
                 child: ListView.builder(
-                  itemCount: vendorsItemList.length,
+                  itemCount: HomeProvider().restaurantsListModel!.length,
                   itemBuilder: (context, index) => Column(
                     children: [
                       SizedBox(height: 20.h),
@@ -71,8 +82,7 @@ class VendorsScreen extends StatelessWidget {
                         cardChild: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Image.asset(vendorsItemList[index].vendorsItemImage,
-                                fit: BoxFit.fitWidth
+                            Image.network(image!, fit: BoxFit.fitWidth
                                 // height: 180.h,
                                 ),
                             Flexible(
@@ -83,11 +93,11 @@ class VendorsScreen extends StatelessWidget {
                                     bottomLeft: Radius.circular(20),
                                     bottomRight: Radius.circular(20),
                                   ),
-                                  boxShadow: const [
+                                  boxShadow: [
                                     BoxShadow(
                                       color: Colors.black12,
-                                      blurRadius: 0.5,
-                                      spreadRadius: 1.5,
+                                      blurRadius: 0.5.r,
+                                      spreadRadius: 1.5.r,
                                       offset: Offset(0, 0),
                                     ),
                                   ],
@@ -101,8 +111,7 @@ class VendorsScreen extends StatelessWidget {
                                     children: [
                                       SizedBox(height: 10.h),
                                       CustomText(
-                                          text: vendorsItemList[index]
-                                              .vendorsItemText,
+                                          text: name,
                                           fontSize: 16.sp,
                                           fontWeight: FontWeight.w500),
                                       SizedBox(height: 10.h),
@@ -112,8 +121,7 @@ class VendorsScreen extends StatelessWidget {
                                               size: 12.sp),
                                           SizedBox(width: 10.w),
                                           CustomText(
-                                              text: vendorsItemList[index]
-                                                  .vendorsPhoneNumber,
+                                              text: phoneNo,
                                               fontSize: 10.sp,
                                               fontWeight: FontWeight.w400),
                                         ],
@@ -125,8 +133,7 @@ class VendorsScreen extends StatelessWidget {
                                               size: 12.sp),
                                           SizedBox(width: 10.w),
                                           CustomText(
-                                              text: vendorsItemList[index]
-                                                  .vendorsAddress,
+                                              text: location,
                                               fontSize: 10.sp,
                                               fontWeight: FontWeight.w400),
                                         ],

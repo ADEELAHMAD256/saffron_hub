@@ -34,7 +34,14 @@ class MyApp extends StatelessWidget {
             routes: {
               SplashScreen.id: (context) => SplashScreen(),
               HomeScreen.id: (context) => HomeScreen(),
-              VendorsScreen.id: (context) => VendorsScreen(),
+              VendorsScreen.id: (context) => VendorsScreen(
+                    image: HomeProvider()
+                        .restaurantsListModel![0]
+                        .vendorProfilePic,
+                    name: HomeProvider().restaurantsListModel![0].name,
+                    phoneNo: HomeProvider().restaurantsListModel![0].phone,
+                    location: HomeProvider().restaurantsListModel![0].location,
+                  ),
               SearchScreen.id: (context) => SearchScreen(),
               AccountSettingScreen.id: (context) => AccountSettingScreen(),
               FoodVendorScreen.id: (context) => FoodVendorScreen(),

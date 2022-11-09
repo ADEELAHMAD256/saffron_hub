@@ -114,7 +114,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   padding: EdgeInsets.zero,
                                   onPressed: () =>
                                       Scaffold.of(context).openDrawer(),
-                                  // Scaffold.of(context).openDrawer(),
                                   icon: Icon(Icons.format_list_bulleted_sharp),
                                 );
                               }),
@@ -225,8 +224,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                 fontWeight: FontWeight.w600,
                               ),
                               InkWell(
-                                onTap: () => Navigator.pushNamed(
-                                    context, VendorsScreen.id),
+                                onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => VendorsScreen(
+                                            image: homeProvider
+                                                .restaurantsListModel![0]
+                                                .vendorProfilePic,
+                                            name: homeProvider
+                                                .restaurantsListModel![0].name,
+                                            phoneNo: homeProvider
+                                                .restaurantsListModel![0].phone,
+                                            location: homeProvider
+                                                .restaurantsListModel![0]
+                                                .location))),
                                 child: CustomText(
                                   text: "View all",
                                   fontSize: 15.sp,
@@ -246,8 +257,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 // primary: false,
                                 shrinkWrap: true,
                                 physics: NeverScrollableScrollPhysics(),
-                                itemCount:
-                                    homeProvider.restaurantsListModel!.length,
+                                itemCount: homeProvider.restaurantsListModel![0]
+                                    .foodVendorItems!.length,
                                 // itemCount: homeProvider
                                 //     .restaurantsListModel.menuList!.length,
                                 gridDelegate:
