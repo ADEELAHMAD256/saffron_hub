@@ -5,9 +5,10 @@ import '../../../components/custom_text/text.dart';
 import '../bottom_sheet/custom_bottom_sheet.dart';
 
 class BiryaniList extends StatelessWidget {
-  const BiryaniList({
-    Key? key,
-  }) : super(key: key);
+  final String? image;
+  final String? imageTitle;
+  const BiryaniList({Key? key, @required this.image, @required this.imageTitle})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

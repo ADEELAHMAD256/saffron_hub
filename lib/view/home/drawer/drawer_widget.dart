@@ -9,7 +9,6 @@ Widget createDrawerBodyItem({
   required GestureTapCallback onTap,
 }) {
   return ListTile(
-    // contentPadding: EdgeInsets.zero,
     visualDensity: VisualDensity(horizontal: 0, vertical: -4),
     title: Row(
       children: <Widget>[
@@ -19,7 +18,7 @@ Widget createDrawerBodyItem({
           size: 17.sp,
         ),
         Padding(
-          padding: EdgeInsets.only(left: 8.0),
+          padding: EdgeInsets.only(left: 12.0.w),
           child: Text(
             text,
             style: TextStyle(
@@ -28,7 +27,7 @@ Widget createDrawerBodyItem({
               color: fontColor,
             ),
           ),
-        )
+        ),
       ],
     ),
     onTap: onTap,

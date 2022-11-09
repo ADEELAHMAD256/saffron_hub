@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:saffron_hub/models/food_vendor_model.dart';
 
 import '../../../components/custom_card/custom_card.dart';
 import '../../../components/custom_text/text.dart';
+import '../../../provider/food_vendors_provider.dart';
 import '../bottom_sheet/custom_bottom_sheet.dart';
 
 class SamosaList extends StatelessWidget {
-  const SamosaList({
-    Key? key,
-  }) : super(key: key);
+  final String? image;
+  final String? imageTitle;
+  FoodVendorsProvider? foodVendorsProvider;
+
+  SamosaList({super.key, @required this.image, @required this.imageTitle});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +32,8 @@ class SamosaList extends StatelessWidget {
           ),
         ),
         child: ListView.builder(
-          itemCount: 2,
+          // itemCount: foodVendorsProvider!
+          //     .foodVendorModel.data![0].foodVendorItems!.length,
           itemBuilder: (context, index) => Column(
             children: [
               SizedBox(height: 7.h),
@@ -41,11 +46,22 @@ class SamosaList extends StatelessWidget {
                 cardChild: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Image.asset("assets/images/cs.png"),
+                    ClipRRect(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10.r),
+                        bottomLeft: Radius.circular(10.r),
+                      ),
+                      child: Image.network(
+                        image!,
+                        height: MediaQuery.of(context).size.height,
+                        width: 118.w,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
                     Padding(
                       padding: EdgeInsets.only(top: 16.h, left: 20.w),
                       child: CustomText(
-                        text: "Chicken Samosa",
+                        text: imageTitle,
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w400,
                       ),

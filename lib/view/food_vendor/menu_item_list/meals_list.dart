@@ -6,7 +6,11 @@ import '../../../components/custom_text/text.dart';
 import '../bottom_sheet/custom_bottom_sheet.dart';
 
 class MealsList extends StatelessWidget {
+  final String? image;
+  final String? imageTitle;
   const MealsList({
+    @required this.image,
+    @required this.imageTitle,
     Key? key,
   }) : super(key: key);
 
