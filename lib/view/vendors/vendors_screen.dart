@@ -1,160 +1,269 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:provider/provider.dart';
 import 'package:saffron_hub/consts/const_colors.dart';
+import 'package:saffron_hub/models/vendors_model.dart';
+import 'package:saffron_hub/provider/food_vendors_provider.dart';
+import 'package:saffron_hub/view/food_vendor/food_vendor_page.dart';
+import 'package:saffron_hub/view/food_vendor/food_vendor_page_scroll.dart';
 import '../../components/custom_card/custom_card.dart';
 import '../../components/custom_text/text.dart';
-import '../../provider/home_provider.dart';
 import '../food_vendor/food_vendor_screen.dart';
 
-class VendorsScreen extends StatelessWidget {
+class VendorsScreen extends StatefulWidget {
   static const String id = "VendorsScreen";
 
-  final String? image;
-  final String? name;
-  final String? phoneNo;
-  final String? location;
+  // final String? image;
+  // final String? name;
+  // final String? phoneNo;
+  // final String? location;
   const VendorsScreen({
     Key? key,
-    @required this.image,
-    @required this.name,
-    @required this.phoneNo,
-    @required this.location,
+    // @required this.image,
+    // @required this.name,
+    // @required this.phoneNo,
+    // @required this.location,
   }) : super(key: key);
 
   @override
+  State<VendorsScreen> createState() => _VendorsScreenState();
+}
+
+class _VendorsScreenState extends State<VendorsScreen> {
+  bool _isInit = true;
+  late FoodVendorsProvider foodVendorsProvider;
+
+  bool? isSearchMode = false;
+  String? forSearch = '';
+  @override
+  Future<void> didChangeDependencies() async {
+    await getData();
+    super.didChangeDependencies();
+  }
+
+  Future<void> getData() async {
+    if (_isInit) {
+      foodVendorsProvider =
+          Provider.of<FoodVendorsProvider>(context, listen: false);
+      await foodVendorsProvider.getAllFoodVendors();
+    }
+    _isInit = false;
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: Icon(
-            Icons.arrow_back_ios,
-            size: 15.sp,
-            color: Colors.black,
-          ),
-        ),
-        title: CustomText(
-          text: "Vendors",
-          fontSize: 16.sp,
-          fontWeight: FontWeight.w600,
-          fontColor: Colors.black,
-        ),
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            CustomCard(
-              height: 45.h,
-              width: 335.w,
-              cardRadius: 10,
-              border: Border.all(color: Colors.black12),
-              cardColor: Colors.transparent,
-              cardChild: TextField(
-                cursorColor: kGray,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText: "Search",
-                  prefixIcon: Icon(
-                    Icons.search_sharp,
-                    color: kYellow,
-                  ),
+    return _isInit
+        ? const Center(
+            child:
+                //  CustomText(
+                //   text: "Loading...",
+                //   fontSize: 34,
+                //   fontWeight: FontWeight.w600,
+                //   fontColor: kYellow,
+                // ),
+                SpinKitSpinningLines(color: kYellow),
+          )
+        : Scaffold(
+            backgroundColor: Colors.white,
+            appBar: AppBar(
+              centerTitle: true,
+              backgroundColor: Colors.transparent,
+              elevation: 0.0,
+              leading: IconButton(
+                onPressed: () => Navigator.pop(context),
+                icon: Icon(
+                  Icons.arrow_back_ios,
+                  size: 15.sp,
+                  color: Colors.black,
                 ),
               ),
+              title: CustomText(
+                text: "Vendors",
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w600,
+                fontColor: Colors.black,
+              ),
             ),
-            SizedBox(height: 5.h),
-            Expanded(
-              child: InkWell(
-                onTap: () => Navigator.pushNamed(context, FoodVendorScreen.id),
-                child: ListView.builder(
-                  itemCount: HomeProvider().restaurantsListModel!.length,
-                  itemBuilder: (context, index) => Column(
-                    children: [
-                      SizedBox(height: 20.h),
-                      CustomCard(
-                        height: 280.h,
-                        width: 335.w,
-                        cardRadius: 20,
-                        cardColor: Colors.white,
-                        cardChild: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Image.network(image!, fit: BoxFit.fitWidth
-                                // height: 180.h,
-                                ),
-                            Flexible(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.only(
-                                    bottomLeft: Radius.circular(20),
-                                    bottomRight: Radius.circular(20),
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black12,
-                                      blurRadius: 0.5.r,
-                                      spreadRadius: 1.5.r,
-                                      offset: Offset(0, 0),
+            body: SafeArea(
+              child: Column(
+                children: [
+                  CustomCard(
+                    height: 45.h,
+                    width: 335.w,
+                    cardRadius: 10,
+                    border: Border.all(color: Colors.black12),
+                    cardColor: Colors.transparent,
+                    cardChild: TextField(
+                      cursorColor: kGray,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Search",
+                        prefixIcon: Icon(
+                          Icons.search_sharp,
+                          color: kYellow,
+                        ),
+                      ),
+                      onChanged: (value) {
+                        print('value >> $value');
+                        forSearch = value;
+                        if (value.isEmpty) {
+                          isSearchMode = false;
+                        } else {
+                          isSearchMode = true;
+                        }
+                        setState(() {});
+                      },
+                    ),
+                  ),
+                  SizedBox(height: 5.h),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: foodVendorsProvider.foodVendors.data!.length,
+                      // FoodVendorsProvider().foodVendorModel.length,
+                      itemBuilder: (context, index) {
+                        Data vendor =
+                            foodVendorsProvider.foodVendors.data![index];
+                        return !vendor.name!
+                                .toLowerCase()
+                                .contains('${forSearch!.toLowerCase()}')
+                            //  &&
+                            // !isSearchMode!
+                            ? Container()
+                            : InkWell(
+                                onTap: () async {
+                                  foodVendorsProvider.currentVendor = index;
+                                  await Navigator.pushNamed(
+                                      context, FoodVendorScreen.id);
+                                  // Popo.id); CustomScrollViewScreen.id);
+                                  _isInit = true;
+                                  setState(() {});
+                                  await getData();
+                                  setState(() {});
+                                },
+                                child: Column(
+                                  children: [
+                                    SizedBox(height: 20.h),
+                                    CustomCard(
+                                      height: 280.h,
+                                      width: 335.w,
+                                      cardRadius: 20,
+                                      cardColor: Colors.white,
+                                      cardChild: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          Container(
+                                            height: 180.h,
+                                            width: 335.w,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(20),
+                                                topRight: Radius.circular(20),
+                                              ),
+                                              image: DecorationImage(
+                                                image: NetworkImage(
+                                                  '${vendor.sliderImages!.first}',
+                                                ),
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
+                                          // Image.network(
+                                          //   '${vendor.sliderImages!.first}',
+                                          //   fit: BoxFit.cover,
+                                          //   height: 180.h,
+                                          //   width: 335.w,
+                                          // ),
+                                          Flexible(
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius: BorderRadius.only(
+                                                  bottomLeft:
+                                                      Radius.circular(20),
+                                                  bottomRight:
+                                                      Radius.circular(20),
+                                                ),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.black12,
+                                                    blurRadius: 0.5.r,
+                                                    spreadRadius: 1.5.r,
+                                                    offset: Offset(0, 0),
+                                                  ),
+                                                ],
+                                              ),
+                                              child: Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 20.w),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    SizedBox(height: 10.h),
+                                                    CustomText(
+                                                      text: '${vendor.name}',
+                                                      fontSize: 16.sp,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                    ),
+                                                    SizedBox(height: 10.h),
+                                                    Row(
+                                                      children: [
+                                                        Icon(
+                                                          Icons
+                                                              .phone_in_talk_outlined,
+                                                          size: 12.sp,
+                                                        ),
+                                                        SizedBox(width: 10.w),
+                                                        CustomText(
+                                                          text:
+                                                              '${vendor.phone}',
+                                                          fontSize: 10.sp,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    SizedBox(height: 10.h),
+                                                    Row(
+                                                      children: [
+                                                        Icon(
+                                                          Icons
+                                                              .location_on_outlined,
+                                                          size: 12.sp,
+                                                        ),
+                                                        SizedBox(width: 10.w),
+                                                        CustomText(
+                                                          text:
+                                                              '${vendor.location}',
+                                                          fontSize: 10.sp,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    SizedBox(height: 7.h),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),
-                                child: Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 20.w),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(height: 10.h),
-                                      CustomText(
-                                          text: name,
-                                          fontSize: 16.sp,
-                                          fontWeight: FontWeight.w500),
-                                      SizedBox(height: 10.h),
-                                      Row(
-                                        children: [
-                                          Icon(Icons.phone_in_talk_outlined,
-                                              size: 12.sp),
-                                          SizedBox(width: 10.w),
-                                          CustomText(
-                                              text: phoneNo,
-                                              fontSize: 10.sp,
-                                              fontWeight: FontWeight.w400),
-                                        ],
-                                      ),
-                                      SizedBox(height: 10.h),
-                                      Row(
-                                        children: [
-                                          Icon(Icons.location_on_outlined,
-                                              size: 12.sp),
-                                          SizedBox(width: 10.w),
-                                          CustomText(
-                                              text: location,
-                                              fontSize: 10.sp,
-                                              fontWeight: FontWeight.w400),
-                                        ],
-                                      ),
-                                      SizedBox(height: 7.h),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                              );
+                      },
+                    ),
                   ),
-                ),
+                ],
               ),
             ),
-          ],
-        ),
-      ),
-    );
+          );
   }
 }

@@ -9,15 +9,16 @@ class CustomCard extends StatelessWidget {
   final BoxBorder? border;
   final List<BoxShadow>? shadow;
 
-  const CustomCard(
-      {super.key,
-      this.height,
-      this.width,
-      this.cardColor,
-      this.cardRadius,
-      this.cardChild,
-      this.border,
-      this.shadow});
+  const CustomCard({
+    super.key,
+    this.height,
+    this.width,
+    this.cardColor,
+    this.cardRadius,
+    this.cardChild,
+    this.border,
+    this.shadow,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +26,11 @@ class CustomCard extends StatelessWidget {
       height: height,
       width: width,
       decoration: BoxDecoration(
-          color: cardColor,
-          border: border,
-          borderRadius: BorderRadius.circular(cardRadius!),
-          boxShadow: shadow),
+        color: cardColor,
+        border: border,
+        borderRadius: BorderRadius.circular(cardRadius!),
+        boxShadow: shadow,
+      ),
       child: cardChild,
     );
   }

@@ -24,7 +24,7 @@ class AccountSettingScreen extends StatelessWidget {
           ),
         ),
         title: CustomText(
-          text: "Setting",
+          text: "Settings",
           fontSize: 16.sp,
           fontWeight: FontWeight.w600,
           fontColor: Colors.black,

@@ -4,14 +4,15 @@ class VendorsItemList {
   String? vendorsAddress;
   String? vendorsPhoneNumber;
 
-  VendorsItemList(
-      {required this.vendorsItemText,
-      required this.vendorsItemImage,
-      this.vendorsAddress,
-      this.vendorsPhoneNumber});
+  VendorsItemList({
+    required this.vendorsItemText,
+    required this.vendorsItemImage,
+    this.vendorsAddress,
+    this.vendorsPhoneNumber,
+  });
 }
 
-List<VendorsItemList> vendorsItemList = [
+List<VendorsItemList> vendorsItemList2 = [
   VendorsItemList(
     vendorsItemText: "Kitchen Logic",
     vendorsItemImage: "assets/images/vendors_images.png",

@@ -31,10 +31,19 @@ class HomeServices {
     try {
       const url = '${AppConstants.baseUrl}home/food-vendors';
       final response = await _dio.post(url);
-      restaurantsList!.add(jsonDecode(response.data)
-          .map((items) => RestaurantsListModel.fromJson(items))
-          .toList()
-          .cast<RestaurantsListModel>());
+      // print('>>> ${response.data}');
+      restaurantsList = [];
+      List data = response.data;
+      // var data = jsonDecode(response.data);
+      for (var element in data) {
+        print('>>>  element');
+        RestaurantsListModel rlm = RestaurantsListModel.fromJson(element);
+        restaurantsList!.add(rlm);
+      }
+      // restaurantsList!.add(jsonDecode(response.data)
+      //     .map((items) => RestaurantsListModel.fromJson(items))
+      //     .toList()
+      //     .cast<RestaurantsListModel>());
       if (response.statusCode != 200) {
         throw response.data;
       }

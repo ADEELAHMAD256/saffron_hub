@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:saffron_hub/models/vendors_model.dart';
 import '../../../components/custom_card/custom_card.dart';
 import '../../../components/custom_text/text.dart';
 import '../../../consts/const_colors.dart';
 
 class CustomBottomSheet extends StatelessWidget {
-  const CustomBottomSheet({
+  CustomBottomSheet({
     Key? key,
+    required this.vendorName,
+    required this.item,
   }) : super(key: key);
-
-  @override
+  var vendorName;
+  var item;
+  // FoodVendorItems item;
   Widget build(BuildContext context) {
     return SizedBox(
       height: 440.h,
@@ -27,9 +31,11 @@ class CustomBottomSheet extends StatelessWidget {
                   ),
                   child: ClipPath(
                     clipper: CustomShape(),
-                    child: Image.asset(
-                      "assets/images/sb.png",
+                    // child: Image.asset("assets/images/sb.png",
+                    child: Image.network(
+                      '${item.image}',
                       fit: BoxFit.cover,
+                      height: 240.h,
                       width: MediaQuery.of(context).size.width,
                     ),
                   ),
@@ -57,30 +63,34 @@ class CustomBottomSheet extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 30.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Row(
               children: [
-                CustomText(
-                  text: "Chicken Samosa",
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.w500,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CustomText(
+                      text: '${item.name}', // "Chicken Samosa",
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    SizedBox(height: 3.h),
+                    CustomText(
+                      text: "${vendorName}", //  "Kitchen Logic",
+                      fontSize: 14.sp,
+                      fontColor: kYellow,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    SizedBox(height: 10.h),
+                    CustomText(
+                      text: '${item.description}', //
+                      // "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500",
+                      fontSize: 14.sp,
+                      fontColor: Colors.black.withOpacity(0.6),
+                      fontWeight: FontWeight.w400,
+                    ),
+                    SizedBox(height: 30.h),
+                  ],
                 ),
-                SizedBox(height: 3.h),
-                CustomText(
-                  text: "Kitchen Logic",
-                  fontSize: 14.sp,
-                  fontColor: kYellow,
-                  fontWeight: FontWeight.w500,
-                ),
-                SizedBox(height: 10.h),
-                CustomText(
-                  text:
-                      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500",
-                  fontSize: 14.sp,
-                  fontColor: Colors.black.withOpacity(0.6),
-                  fontWeight: FontWeight.w400,
-                ),
-                SizedBox(height: 30.h),
               ],
             ),
           ),

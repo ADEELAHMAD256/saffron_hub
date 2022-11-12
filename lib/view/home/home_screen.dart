@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:saffron_hub/consts/const_colors.dart';
 import 'package:saffron_hub/models/food_vendor_model.dart';
 import 'package:saffron_hub/provider/home_provider.dart';
+import 'package:saffron_hub/view/food_vendor/food_vendor_detail.dart';
 import 'package:saffron_hub/view/food_vendor/food_vendor_screen.dart';
 import 'package:saffron_hub/view/search/search_screen.dart';
 import 'package:saffron_hub/view/setting/setting_screen.dart';
@@ -26,30 +27,45 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldState = GlobalKey<ScaffoldState>();
 
-  final double itemHeight = 223.h;
-
+  final double itemHeight = 226.h;
   final double itemWidth = 160.w;
   late HomeProvider homeProvider;
-
   bool _isInit = true;
+  // int _current = 0;
 
   @override
   Future<void> didChangeDependencies() async {
+    // _isInit = true;
+    await getData();
+    super.didChangeDependencies();
+  }
+
+  Future<void> getData() async {
+    print('111');
     if (_isInit) {
-      homeProvider = Provider.of<HomeProvider>(context);
+      print('444');
+      homeProvider = Provider.of<HomeProvider>(context, listen: false);
       await homeProvider.getBanners();
       await homeProvider.getRlm();
     }
     _isInit = false;
-    super.didChangeDependencies();
+    setState(() {});
   }
-
-  int _current = 0;
 
   @override
   Widget build(BuildContext context) {
     return _isInit
-        ? const Center(child: SpinKitSpinningLines(color: kYellow))
+        ? const Center(
+            child:
+                //
+                //  CustomText(
+                //   text: "Loading...",
+                //   fontSize: 34,
+                //   fontWeight: FontWeight.w600,
+                //   fontColor: kYellow,
+                // ),
+                SpinKitSpinningLines(color: kYellow),
+          )
         : Scaffold(
             key: _scaffoldState,
             drawer: Drawer(
@@ -78,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   createDrawerBodyItem(
                     icon: Icons.settings,
                     iconColor: Colors.black,
-                    text: "Setting",
+                    text: "Settings",
                     fontColor: Colors.black,
                     onTap: () =>
                         Navigator.pushNamed(context, AccountSettingScreen.id),
@@ -166,48 +182,50 @@ class _HomeScreenState extends State<HomeScreen> {
 
                   ///=================================================================== Slider,
 
-                  CarouselSlider(
-                    options: CarouselOptions(
-                        disableCenter: false,
-                        aspectRatio: 16 / 8,
-                        initialPage: 0,
-                        viewportFraction: 0.8,
-                        enlargeCenterPage: true,
-                        autoPlay: true,
-                        reverse: false,
-                        height: 150.h,
-                        enableInfiniteScroll: true,
-                        autoPlayInterval: const Duration(seconds: 3),
-                        autoPlayAnimationDuration:
-                            const Duration(milliseconds: 2200),
-                        pauseAutoPlayOnTouch: true,
-                        scrollDirection: Axis.horizontal,
-                        pageSnapping: true,
-                        onPageChanged: (index, val) {
-                          _current = index;
-                          setState(() {
-                            // print('current index$_current $index');
-                          });
-                        }),
-                    items: [
-                      for (int i = 0;
-                          i < homeProvider.bannersModel.banners!.length;
-                          i++)
-                        CustomCard(
-                          height: 169.h,
-                          width: 335.w,
-                          cardRadius: 10,
-                          cardColor: kLightGray,
-                          cardChild: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Image.network(
-                              '${homeProvider.bannersModel.banners![i].image}',
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                        ),
-                    ],
+                  // CarouselSlider(
+                  //   options: CarouselOptions(
+                  //       disableCenter: false,
+                  //       aspectRatio: 12 / 8,
+                  //       initialPage: 0,
+                  //       viewportFraction: 0.8,
+                  //       enlargeCenterPage: true,
+                  //       autoPlay: true,
+                  //       reverse: false,
+                  //       height: 150.h,
+                  //       enableInfiniteScroll: true,
+                  //       autoPlayInterval: const Duration(seconds: 3),
+                  //       autoPlayAnimationDuration:
+                  //           const Duration(milliseconds: 2200),
+                  //       pauseAutoPlayOnTouch: true,
+                  //       scrollDirection: Axis.horizontal,
+                  //       pageSnapping: true,
+                  //       onPageChanged: (index, val) {
+                  //         // _current = index;
+                  //         // setState(() {
+                  //         // print('current index$_current $index');
+                  //         // });
+                  //       }),
+                  //   items: [
+                  //     for (int i = 0;
+                  //         i < homeProvider.bannersModel.banners!.length;
+                  //         i++)
+                  CustomCard(
+                    height: 169.h,
+                    width: 335.w,
+                    cardRadius: 10,
+                    cardColor: kLightGray,
+                    cardChild: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.network(
+                        '${homeProvider.bannersModel.banners![0].image ?? ''}',
+                        fit: BoxFit.fill,
+                      ),
+                    ),
                   ),
+                  //   ],
+                  // ),
+
+                  ///
                   SizedBox(height: 30.h),
                   Flexible(
                     child: Padding(
@@ -224,22 +242,31 @@ class _HomeScreenState extends State<HomeScreen> {
                                 fontWeight: FontWeight.w600,
                               ),
                               InkWell(
-                                onTap: () => Navigator.push(
+                                onTap: () async {
+                                  // var image =
+                                  //     "https://saffronhub.citizensadgrace.com/public/storage/food-items/vendor-slider-image-20221107-05404552569777.jpg";
+                                  await Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => VendorsScreen(
-                                            image: homeProvider
-                                                .restaurantsListModel![0]
-                                                .vendorProfilePic,
-                                            name: homeProvider
-                                                .restaurantsListModel![0].name,
-                                            phoneNo: homeProvider
-                                                .restaurantsListModel![0].phone,
-                                            location: homeProvider
-                                                .restaurantsListModel![0]
-                                                .location))),
+                                      builder: (context) => VendorsScreen(
+                                          // image: image,
+                                          // // homeProvider.restaurantsListModel![0].vendorProfilePic,
+                                          // name: 'Rices',
+                                          // //  homeProvider.restaurantsListModel![0].name,
+                                          // phoneNo: '9234534567',
+                                          // // homeProvider.restaurantsListModel![0].phone,
+                                          // location: 'Faisalabad',
+                                          // homeProvider.restaurantsListModel![0].location
+                                          ),
+                                    ),
+                                  );
+                                  _isInit = true;
+                                  setState(() {});
+                                  await getData();
+                                  setState(() {});
+                                },
                                 child: CustomText(
-                                  text: "View all",
+                                  text: "View All",
                                   fontSize: 15.sp,
                                   fontWeight: FontWeight.w500,
                                   fontColor: kYellow,
@@ -257,8 +284,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 // primary: false,
                                 shrinkWrap: true,
                                 physics: NeverScrollableScrollPhysics(),
-                                itemCount: homeProvider.restaurantsListModel![0]
-                                    .foodVendorItems!.length,
+                                itemCount:
+                                    homeProvider.restaurantsListModel!.length,
+                                // itemCount: homeProvider.restaurantsListModel![0]
+                                //     .foodVendorItems!.length,
                                 // itemCount: homeProvider
                                 //     .restaurantsListModel.menuList!.length,
                                 gridDelegate:
@@ -268,94 +297,118 @@ class _HomeScreenState extends State<HomeScreen> {
                                   childAspectRatio: itemWidth / itemHeight,
                                   crossAxisSpacing: 10,
                                 ),
-                                itemBuilder: (context, index) => InkWell(
-                                  onTap: () => Navigator.pushNamed(
-                                      context, FoodVendorScreen.id),
-                                  child: CustomCard(
-                                    cardRadius: 16.r,
-                                    border: Border.all(
-                                      color: Colors.black12,
-                                    ),
-                                    cardColor: Colors.white,
-                                    cardChild: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(16.r),
-                                            topRight: Radius.circular(16.r),
+                                itemBuilder: (context, index) {
+                                  return InkWell(
+                                    onTap: () async {
+                                      homeProvider.currentVendor = index;
+                                      print(
+                                          'currentVendor>>${homeProvider.currentVendor}<<');
+                                      await Navigator.pushNamed(
+                                          context, FoodVendorDetailScreen.id);
+                                      _isInit = true;
+                                      setState(() {});
+                                      await getData();
+                                      setState(() {});
+                                    },
+                                    child: CustomCard(
+                                      cardRadius: 16.r,
+                                      border: Border.all(
+                                        color: Colors.black12,
+                                      ),
+                                      cardColor: Colors.white,
+                                      cardChild: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(16.r),
+                                              topRight: Radius.circular(16.r),
+                                            ),
+                                            child: Image.network(
+                                              height: 143.h,
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              '${homeProvider.restaurantsListModel![index].vendorProfilePic}',
+                                              fit: BoxFit.fill,
+                                            ),
                                           ),
-                                          child: Image.network(
-                                            height: 143.h,
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            '${homeProvider.restaurantsListModel![index].vendorProfilePic}',
-                                            fit: BoxFit.fill,
-                                          ),
-                                        ),
-                                        /* Image.asset(
+                                          /* Image.asset(
                                           homeItemList[index].itemImage,
                                           fit: BoxFit.fitWidth,
                                         ),*/
-                                        SizedBox(height: 5.h),
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 10.w),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              CustomText(
+                                          SizedBox(height: 5.h),
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 10.w),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                CustomText(
                                                   text: homeProvider
-                                                      .restaurantsListModel![
-                                                          index]
-                                                      .name),
-                                              SizedBox(height: 3.h),
-                                              Row(
-                                                children: [
-                                                  Icon(
-                                                    Icons
-                                                        .phone_in_talk_outlined,
-                                                    size: 12.sp,
-                                                  ),
-                                                  SizedBox(width: 10.w),
-                                                  CustomText(
-                                                    text: homeProvider
-                                                        .restaurantsListModel![
-                                                            index]
-                                                        .phone,
-                                                    fontSize: 10.sp,
-                                                    fontWeight: FontWeight.w400,
-                                                  )
-                                                ],
-                                              ),
-                                              SizedBox(height: 3.h),
-                                              Row(
-                                                children: [
-                                                  Icon(
+                                                          .restaurantsListModel![
+                                                              index]
+                                                          .name ??
+                                                      '',
+                                                ),
+                                                SizedBox(height: 3.h),
+                                                Row(
+                                                  children: [
+                                                    Icon(
                                                       Icons
-                                                          .location_on_outlined,
-                                                      size: 12.sp),
-                                                  SizedBox(width: 10.w),
-                                                  CustomText(
-                                                    text: homeProvider
-                                                        .restaurantsListModel![
-                                                            index]
-                                                        .location,
-                                                    fontSize: 10.sp,
-                                                    fontWeight: FontWeight.w400,
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
+                                                          .phone_in_talk_outlined,
+                                                      size: 12.sp,
+                                                    ),
+                                                    SizedBox(width: 10.w),
+                                                    CustomText(
+                                                      text: homeProvider
+                                                              .restaurantsListModel![
+                                                                  index]
+                                                              .phone ??
+                                                          '',
+                                                      fontSize: 10.sp,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                    )
+                                                  ],
+                                                ),
+                                                SizedBox(height: 3.h),
+                                                Row(
+                                                  children: [
+                                                    Icon(
+                                                        Icons
+                                                            .location_on_outlined,
+                                                        size: 12.sp),
+                                                    SizedBox(width: 10.w),
+                                                    SizedBox(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width /
+                                                              3.3,
+                                                      child: CustomText(
+                                                        text: homeProvider
+                                                                .restaurantsListModel![
+                                                                    index]
+                                                                .location ??
+                                                            '',
+                                                        fontSize: 10.sp,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ),
+                                  );
+                                },
                               ),
                             ),
                           ),

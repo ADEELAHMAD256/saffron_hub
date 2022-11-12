@@ -9,6 +9,7 @@ class HomeProvider extends ChangeNotifier {
 
   bool isLoading = true;
   bool isLoadingR = true;
+  late int currentVendor;
 
   Future<void> getBanners() async {
     try {
