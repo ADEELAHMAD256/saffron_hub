@@ -30,7 +30,11 @@ class _FoodVendorScreenState extends State<FoodVendorScreen> {
       foodVendorsProvider = Provider.of<FoodVendorsProvider>(context);
       // await foodVendorsProvider!.getFoodVendorData();
       vendorIndex = foodVendorsProvider.currentVendor;
-      vendor = foodVendorsProvider.foodVendors.data![vendorIndex!];
+      if (foodVendorsProvider.searchedMode) {
+        vendor = foodVendorsProvider.searchedVendor;
+      } else {
+        vendor = foodVendorsProvider.foodVendors.data![vendorIndex!];
+      }
     }
     _isInit = false;
     super.didChangeDependencies();

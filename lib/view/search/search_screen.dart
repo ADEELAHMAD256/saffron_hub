@@ -128,6 +128,9 @@ class _SearchScreenState extends State<SearchScreen> {
                         return InkWell(
                           onTap: () async {
                             foodVendorsProvider.currentVendor = index;
+                            foodVendorsProvider.searchedMode = true;
+                            foodVendorsProvider.searchedVendor =
+                                vendors!.data![index];
                             await Navigator.pushNamed(
                                 context, FoodVendorScreen.id);
                             _isInit = true;

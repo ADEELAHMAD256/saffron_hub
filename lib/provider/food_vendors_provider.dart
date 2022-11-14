@@ -34,4 +34,8 @@ class FoodVendorsProvider extends ChangeNotifier {
       rethrow;
     }
   }
+
+  //Search
+  late Data searchedVendor;
+  late bool searchedMode = false;
 }
