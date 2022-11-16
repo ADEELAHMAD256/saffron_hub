@@ -2,7 +2,7 @@
     package="com.example.saffron_hub">
     <uses-permission android:name="android.permission.INTERNET" /> 
     <application
-        android:label="saffron_hub"
+        android:label="Saffron Hub"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">
