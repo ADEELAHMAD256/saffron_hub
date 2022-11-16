@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:saffron_hub/models/vendors_model.dart';
 import '../../../components/custom_card/custom_card.dart';
 import '../../../components/custom_text/text.dart';
 import '../../../consts/const_colors.dart';
@@ -16,12 +15,12 @@ class CustomBottomSheet extends StatelessWidget {
   // FoodVendorItems item;
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 440.h,
+      height: 500.h,
       // color: Colors.transparent,
       child: Column(
         children: [
           SizedBox(
-            height: 280.h,
+            height: 350.h,
             child: Stack(
               children: [
                 ClipRRect(
@@ -30,19 +29,20 @@ class CustomBottomSheet extends StatelessWidget {
                     topRight: Radius.circular(10),
                   ),
                   child: ClipPath(
-                    clipper: CustomShape(),
+                    // clipper: CustomShape(),
                     // child: Image.asset("assets/images/sb.png",
                     child: Image.network(
                       '${item.image}',
                       fit: BoxFit.cover,
-                      height: 240.h,
+                      height: 340.h,
                       width: MediaQuery.of(context).size.width,
                     ),
                   ),
                 ),
                 Positioned(
-                  top: 20.h,
-                  left: 325.w,
+                  top: 10.h,
+                  right: 10.h,
+                  // left: 325.w,
                   child: CustomCard(
                     height: 30.h,
                     width: 30.w,
@@ -61,37 +61,48 @@ class CustomBottomSheet extends StatelessWidget {
               ],
             ),
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30.w),
-            child: Row(
-              children: [
-                Column(
+          SizedBox(
+            height: 150.h,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: SingleChildScrollView(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomText(
-                      text: '${item.name}', // "Chicken Samosa",
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.w500,
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width - 40.w,
+                      child: CustomText(
+                        text: '${item.name}', // "Chicken Samosa",
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                     SizedBox(height: 3.h),
-                    CustomText(
-                      text: "${vendorName}", //  "Kitchen Logic",
-                      fontSize: 14.sp,
-                      fontColor: kYellow,
-                      fontWeight: FontWeight.w500,
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width - 40.w,
+                      child: CustomText(
+                        text: "${vendorName}", //  "Kitchen Logic",
+                        fontSize: 14.sp,
+                        fontColor: kYellow,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                     SizedBox(height: 10.h),
-                    CustomText(
-                      text: '${item.description}', //
-                      // "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500",
-                      fontSize: 14.sp,
-                      fontColor: Colors.black.withOpacity(0.6),
-                      fontWeight: FontWeight.w400,
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width - 40.w,
+                      // height: 120.w,
+                      child: CustomText(
+                        text: '${item.description}', //
+                        // "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500",
+                        fontSize: 14.sp,
+                        fontColor: Colors.black.withOpacity(0.6),
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                     SizedBox(height: 30.h),
                   ],
                 ),
-              ],
+              ),
             ),
           ),
         ],

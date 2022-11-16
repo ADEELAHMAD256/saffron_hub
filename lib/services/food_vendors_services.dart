@@ -6,7 +6,7 @@ import '../models/food_vendor_model.dart';
 class FoodVendorsServices {
   final _dio = Dio();
 
-  Future<FoodVendorModel> getFoodVendor() async {
+  Future<FoodVendorModel> getFoodVendor99() async {
     try {
       const url = '${AppConstants.baseUrl}food-vendors/all';
       final response = await _dio.post(url);
@@ -20,9 +20,9 @@ class FoodVendorsServices {
     }
   }
 
-  Future<Vendors> getAllFoodVendors() async {
+  Future<Vendors> getAllFoodVendors(int? page) async {
     try {
-      const url = '${AppConstants.baseUrl}food-vendors/all';
+      var url = '${AppConstants.baseUrl}food-vendors/all?page=$page';
       final response = await _dio.post(url);
       if (response.statusCode != 200) {
         throw response.data;

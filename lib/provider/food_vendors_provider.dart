@@ -7,9 +7,9 @@ class FoodVendorsProvider extends ChangeNotifier {
   late FoodVendorModel foodVendorModel;
   bool isLoadingF = true;
 
-  Future<void> getFoodVendorData() async {
+  Future<void> getFoodVendorDat00a() async {
     try {
-      foodVendorModel = await FoodVendorsServices().getFoodVendor();
+      // foodVendorModel = await FoodVendorsServices().getFoodVendor();
       isLoadingF = true;
       notifyListeners();
       // log('Food vendors - ${foodVendorModel}');
@@ -20,11 +20,13 @@ class FoodVendorsProvider extends ChangeNotifier {
     }
   }
 
-  late Vendors foodVendors;
+  late Vendors vendors;
   late int currentVendor;
+  int? currentPage = 1;
+  List<Data>? foodVendors;
   Future getAllFoodVendors() async {
     try {
-      foodVendors = await FoodVendorsServices().getAllFoodVendors();
+      vendors = await FoodVendorsServices().getAllFoodVendors(currentPage);
       isLoadingF = true;
       notifyListeners();
       // log('Food vendors - ${foodVendorModel}');

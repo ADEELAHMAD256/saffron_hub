@@ -36,20 +36,48 @@ class _VendorsScreenState extends State<VendorsScreen> {
 
   bool? isSearchMode = false;
   String? forSearch = '';
-  @override
-  Future<void> didChangeDependencies() async {
-    await getData();
-    super.didChangeDependencies();
-  }
 
+  final scrollController = ScrollController();
+  // List<Data>? foodVendors;
+  bool? noMore = false;
+  // @override
+  // Future<void> didChangeDependencies() async {
+  //   await getData();
+  //   super.didChangeDependencies();
+  // }
+  List<Data>? foodVendors;
   Future<void> getData() async {
     if (_isInit) {
       foodVendorsProvider =
           Provider.of<FoodVendorsProvider>(context, listen: false);
       await foodVendorsProvider.getAllFoodVendors();
+      foodVendorsProvider.foodVendors = [];
+      for (var element in foodVendorsProvider.vendors.data!) {
+        //
+        foodVendorsProvider.foodVendors!.add(element);
+      }
     }
     _isInit = false;
     setState(() {});
+  }
+
+  @override
+  initState() {
+    getData();
+    scrollController.addListener(() {
+      //
+      if (scrollController.position.maxScrollExtent ==
+          scrollController.offset) {
+        //
+        fetchMoreData();
+      }
+      // if (scrollController.position.minScrollExtent ==
+      //     scrollController.offset) {
+      //   //
+      //   fetchPreviousData();
+      // }
+    });
+    super.initState();
   }
 
   @override
@@ -120,11 +148,27 @@ class _VendorsScreenState extends State<VendorsScreen> {
                   SizedBox(height: 5.h),
                   Expanded(
                     child: ListView.builder(
-                      itemCount: foodVendorsProvider.foodVendors.data!.length,
+                      controller: scrollController,
+                      itemCount: foodVendorsProvider.foodVendors!.length + 1,
                       // FoodVendorsProvider().foodVendorModel.length,
                       itemBuilder: (context, index) {
-                        Data vendor =
-                            foodVendorsProvider.foodVendors.data![index];
+                        if (index >= foodVendorsProvider.foodVendors!.length) {
+                          return Center(
+                              child: noMore!
+                                  ? CustomText(
+                                      text: 'No More Item',
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w500,
+                                    )
+                                  : Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: SizedBox(
+                                          width: 20.w,
+                                          height: 20.h,
+                                          child: CircularProgressIndicator()),
+                                    ));
+                        }
+                        Data vendor = foodVendorsProvider.foodVendors![index];
                         return !vendor.name!
                                 .toLowerCase()
                                 .contains('${forSearch!.toLowerCase()}')
@@ -137,10 +181,10 @@ class _VendorsScreenState extends State<VendorsScreen> {
                                   await Navigator.pushNamed(
                                       context, FoodVendorScreen.id);
                                   // Popo.id); CustomScrollViewScreen.id);
-                                  _isInit = true;
-                                  setState(() {});
-                                  await getData();
-                                  setState(() {});
+                                  // _isInit = true;
+                                  // setState(() {});
+                                  // await getData();
+                                  // setState(() {});
                                 },
                                 child: Column(
                                   children: [
@@ -265,5 +309,43 @@ class _VendorsScreenState extends State<VendorsScreen> {
               ),
             ),
           );
+  }
+
+  fetchMoreData() async {
+    noMore = false;
+    setState(() {});
+    if (foodVendorsProvider.currentPage! <
+        foodVendorsProvider.vendors.lastPage!) {
+      foodVendorsProvider.currentPage = foodVendorsProvider.currentPage! + 1;
+    } else {
+      noMore = true;
+      setState(() {});
+      return;
+    }
+    await foodVendorsProvider.getAllFoodVendors();
+    for (var element in foodVendorsProvider.vendors.data!) {
+      foodVendorsProvider.foodVendors!.add(element);
+    }
+    setState(() {});
+
+    // scrollController.jumpTo(1);
+    // setState(() {});
+  }
+
+  fetchPreviousData() async {
+    noMore = false;
+    setState(() {});
+    if (foodVendorsProvider.currentPage! > 1) {
+      foodVendorsProvider.currentPage = foodVendorsProvider.currentPage! - 1;
+    } else {
+      //
+      return;
+    }
+    await foodVendorsProvider.getAllFoodVendors();
+    // foodVendors = foodVendorsProvider.vendors.data!;
+    setState(() {});
+
+    // scrollController.jumpTo(1);
+    // setState(() {});
   }
 }

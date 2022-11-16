@@ -133,10 +133,10 @@ class _SearchScreenState extends State<SearchScreen> {
                                 vendors!.data![index];
                             await Navigator.pushNamed(
                                 context, FoodVendorScreen.id);
-                            _isInit = true;
-                            setState(() {});
-                            await getData();
-                            setState(() {});
+                            // _isInit = true;
+                            // setState(() {});
+                            // await getData();
+                            // setState(() {});
                           },
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

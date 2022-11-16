@@ -33,7 +33,8 @@ class _FoodVendorScreenState extends State<FoodVendorScreen> {
       if (foodVendorsProvider.searchedMode) {
         vendor = foodVendorsProvider.searchedVendor;
       } else {
-        vendor = foodVendorsProvider.foodVendors.data![vendorIndex!];
+        vendor = foodVendorsProvider.foodVendors![vendorIndex!];
+        // vendor = foodVendorsProvider.vendors.data![vendorIndex!];
       }
     }
     _isInit = false;
