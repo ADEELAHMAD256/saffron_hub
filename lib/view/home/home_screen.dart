@@ -217,7 +217,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     cardChild: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: Image.network(
-                        '${homeProvider.bannersModel.banners![0].image ?? ''}',
+                        homeProvider.bannersModel.banners![0].image ?? '',
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -326,12 +326,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                               topRight: Radius.circular(16.r),
                                             ),
                                             child: Image.network(
-                                              height: 143.h,
+                                              height: 140.h,
                                               width: MediaQuery.of(context)
                                                   .size
                                                   .width,
                                               '${homeProvider.restaurantsListModel![index].vendorProfilePic}',
-                                              fit: BoxFit.fill,
+                                              fit: BoxFit.cover,
                                             ),
                                           ),
                                           /* Image.asset(
@@ -352,6 +352,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               index]
                                                           .name ??
                                                       '',
+                                                  fontSize: 14.sp,
                                                 ),
                                                 SizedBox(height: 3.h),
                                                 Row(
@@ -381,7 +382,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         Icons
                                                             .location_on_outlined,
                                                         size: 12.sp),
-                                                    SizedBox(width: 10.w),
+                                                    SizedBox(width: 8.w),
                                                     SizedBox(
                                                       width:
                                                           MediaQuery.of(context)

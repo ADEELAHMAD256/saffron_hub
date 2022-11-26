@@ -10,6 +10,7 @@ import 'package:saffron_hub/view/food_vendor/food_vendor_page_scroll.dart';
 import 'package:saffron_hub/view/food_vendor/food_vendor_screen.dart';
 import 'package:saffron_hub/view/home/home_screen.dart';
 import 'package:saffron_hub/view/search/search_screen.dart';
+import 'package:saffron_hub/view/send_email_screen/email_screen.dart';
 import 'package:saffron_hub/view/setting/setting_screen.dart';
 import 'package:saffron_hub/view/splash/splash_screen.dart';
 import 'package:saffron_hub/view/vendors/vendors_screen.dart';
@@ -55,6 +56,7 @@ class MyApp extends StatelessWidget {
               AccountSettingScreen.id: (context) => AccountSettingScreen(),
               FoodVendorScreen.id: (context) => FoodVendorScreen(),
               FoodVendorDetailScreen.id: (context) => FoodVendorDetailScreen(),
+              SendEmailScreen.id: (context) => SendEmailScreen(),
               // CustomScrollViewScreen.id: (context) => CustomScrollViewScreen(),
               // Popo.id: (context) => Popo(),
             },

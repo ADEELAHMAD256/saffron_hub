@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -8,6 +9,8 @@ import 'package:saffron_hub/consts/const_colors.dart';
 import 'package:saffron_hub/models/vendors_model.dart';
 import 'package:saffron_hub/provider/food_vendors_provider.dart';
 import 'package:saffron_hub/view/food_vendor/bottom_sheet/custom_bottom_sheet.dart';
+
+import '../send_email_screen/email_screen.dart';
 
 class FoodVendorScreen extends StatefulWidget {
   static const String id = "FoodVendorScreen";
@@ -76,7 +79,7 @@ class _FoodVendorScreenState extends State<FoodVendorScreen> {
                                 cardChild: ClipRRect(
                                   // borderRadius: BorderRadius.circular(10),
                                   child: Image.network(
-                                    '${vendor.sliderImages!.first}',
+                                    vendor.sliderImages!.first,
                                     fit: BoxFit.fill,
                                   ),
                                 ),
@@ -150,75 +153,100 @@ class _FoodVendorScreenState extends State<FoodVendorScreen> {
                                 ],
                                 cardChild: Padding(
                                   padding: EdgeInsets.symmetric(
-                                      horizontal: 20.w, vertical: 10),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
+                                      horizontal: 15.w, vertical: 10.h),
+                                  child: Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      CustomText(
-                                        text: '${vendor.name ?? ''}',
-                                        //  foodVendorsProvider!
-                                        //     .foodVendorModel.data![0].name,
-                                        fontSize: 16.sp,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                      SizedBox(height: 3.h),
-                                      Row(
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          Icon(
-                                            Icons.location_on,
-                                            size: 10.sp,
-                                            color: kLightGray,
-                                          ),
-                                          SizedBox(width: 12.w),
                                           CustomText(
-                                            text: '${vendor.location ?? ''}',
-                                            // foodVendorsProvider!.foodVendorModel.data![0].location,
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 10.sp,
-                                            fontColor: kLightGray,
-                                          )
-                                        ],
-                                      ),
-                                      SizedBox(height: 3.h),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.phone_in_talk_outlined,
-                                            size: 10.sp,
-                                            color: kLightGray,
+                                            text: vendor.name ?? '',
+                                            //  foodVendorsProvider!
+                                            //     .foodVendorModel.data![0].name,
+                                            fontSize: 16.sp,
+                                            fontWeight: FontWeight.w600,
                                           ),
-                                          SizedBox(width: 12.w),
-                                          CustomText(
-                                            text: '${vendor.phone ?? ''}',
+                                          SizedBox(height: 3.h),
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                Icons.location_on,
+                                                size: 10.sp,
+                                                color: kLightGray,
+                                              ),
+                                              SizedBox(width: 12.w),
+                                              CustomText(
+                                                text: vendor.location ?? '',
+                                                // foodVendorsProvider!.foodVendorModel.data![0].location,
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 10.sp,
+                                                fontColor: kLightGray,
+                                              )
+                                            ],
+                                          ),
+                                          SizedBox(height: 3.h),
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                Icons.phone_in_talk_outlined,
+                                                size: 10.sp,
+                                                color: kLightGray,
+                                              ),
+                                              SizedBox(width: 12.w),
+                                              CustomText(
+                                                text: vendor.phone ?? '',
 
-                                            // foodVendorsProvider!.foodVendorModel.data![0].phone,
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 10.sp,
-                                            fontColor: kLightGray,
-                                          )
+                                                // foodVendorsProvider!.foodVendorModel.data![0].phone,
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 10.sp,
+                                                fontColor: kLightGray,
+                                              )
+                                            ],
+                                          ),
+                                          SizedBox(height: 3.h),
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                Icons.email,
+                                                size: 10.sp,
+                                                color: kLightGray,
+                                              ),
+                                              SizedBox(width: 12.w),
+                                              CustomText(
+                                                text: vendor.email ?? '',
+                                                // text: foodVendorsProvider!
+                                                //     .foodVendorModel.data![0].email,
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 10.sp,
+                                                fontColor: kLightGray,
+                                              ),
+                                            ],
+                                          ),
                                         ],
                                       ),
-                                      SizedBox(height: 3.h),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.email,
-                                            size: 10.sp,
-                                            color: kLightGray,
+                                      InkWell(
+                                        onTap: () => Navigator.pushNamed(
+                                            context, SendEmailScreen.id),
+                                        child: CustomCard(
+                                          height: 37.h,
+                                          width: 75.w,
+                                          cardRadius: 5.r,
+                                          cardColor: kYellow,
+                                          cardChild: Center(
+                                            child: CustomText(
+                                              text: "Contact",
+                                              fontColor: Colors.white,
+                                              fontSize: 14.sp,
+                                            ),
                                           ),
-                                          SizedBox(width: 12.w),
-                                          CustomText(
-                                            text: '${vendor.email ?? ''}',
-                                            // text: foodVendorsProvider!
-                                            //     .foodVendorModel.data![0].email,
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 10.sp,
-                                            fontColor: kLightGray,
-                                          ),
-                                        ],
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -244,7 +272,7 @@ class _FoodVendorScreenState extends State<FoodVendorScreen> {
                           ),
                           SizedBox(height: 10.h),
                           CustomText(
-                            text: '${vendor.description ?? ''}',
+                            text: vendor.description ?? '',
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w300,
                             fontColor: Colors.black.withOpacity(0.6),
@@ -264,12 +292,12 @@ class _FoodVendorScreenState extends State<FoodVendorScreen> {
                   SliverAppBar(
                     leadingWidth: 2.w,
                     expandedHeight: 50.h,
-                    collapsedHeight: 50.h,
-                    toolbarHeight: 50,
+                    // collapsedHeight: 50.h,
+                    // toolbarHeight: 50,
                     leading: Container(),
                     pinned: true,
                     flexibleSpace: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.all(10.r),
                       height: 50,
                       width: double.infinity,
                     ),
@@ -289,7 +317,9 @@ class _FoodVendorScreenState extends State<FoodVendorScreen> {
                         itemBuilder: (context, index) {
                           MenuList menu = vendor.menuList![index];
                           // _selectedMenu = vendor.menuList!.first.menuName!;
-                          print('_selectedMenu ff ${_selectedMenu}');
+                          if (kDebugMode) {
+                            print('_selectedMenu ff $_selectedMenu');
+                          }
 
                           return Row(
                             children: [
@@ -299,12 +329,14 @@ class _FoodVendorScreenState extends State<FoodVendorScreen> {
                                   _selectedIndex = index;
                                   _selectedMenu = menu.menuName!;
                                   setState(() {});
-                                  print('_selectedMenu  ${_selectedMenu}');
+                                  if (kDebugMode) {
+                                    print('_selectedMenu  $_selectedMenu');
+                                  }
                                 },
                                 child: CustomCard(
                                   height: 37.h,
                                   width: 75.w,
-                                  cardRadius: 5,
+                                  cardRadius: 5.r,
                                   cardColor: _selectedIndex == index
                                       ? kYellow
                                       : Colors.white,
@@ -318,7 +350,7 @@ class _FoodVendorScreenState extends State<FoodVendorScreen> {
                                   ],
                                   cardChild: Center(
                                     child: CustomText(
-                                      text: '${menu.menuName ?? ''}',
+                                      text: menu.menuName ?? '',
                                       fontSize: 12.sp,
                                       fontColor: _selectedIndex == index
                                           ? Colors.white
@@ -349,93 +381,93 @@ class _FoodVendorScreenState extends State<FoodVendorScreen> {
           );
   }
 
-  buildList(BuildContext context, String? vendorName,
-      List<FoodVendorItems>? foodVendorItems) {
-    return MediaQuery.removePadding(
-      context: context,
-      removeTop: true,
-      child: ListView.builder(
-        // itemCount: foodVendorsProvider!
-        //     .foodVendorModel.data![0].foodVendorItems!.length,
-        itemCount: foodVendorItems!.length,
-        itemBuilder: (context, index) {
-          // var image =
-          //     "https://saffronhub.citizensadgrace.com/public/storage/food-items/vendor-slider-item-20221110-13182145233479.jpg";
-          _selectedMenu = _selectedMenu.isNotEmpty
-              ? _selectedMenu
-              : foodVendorItems.first.foodMenu!;
-          return foodVendorItems[index].foodMenu != _selectedMenu
-              ? Container()
-              : InkWell(
-                  onTap: () {
-                    //
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (builder) => CustomBottomSheet(
-                        vendorName: vendorName,
-                        item: foodVendorItems[index],
-                      ),
-                      isScrollControlled: true,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                      ),
-                    );
-                  },
-                  child: Column(
-                    children: [
-                      SizedBox(height: 7.h),
-                      CustomCard(
-                        height: 118.h,
-                        width: 335.w,
-                        cardRadius: 10,
-                        cardColor: Colors.white,
-                        border: Border.all(color: Colors.black12),
-                        cardChild: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height,
-                              width: 118.w,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10.r),
-                                  bottomLeft: Radius.circular(10.r),
-                                ),
-                                child: Image.network(
-                                  '${foodVendorItems[index].image}', // image!,
-                                  height: MediaQuery.of(context).size.height,
-                                  width: 118.w,
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(top: 16.h, left: 20.w),
-                              child: SizedBox(
-                                width:
-                                    MediaQuery.of(context).size.width - 180.w,
-                                child: CustomText(
-                                  text: '${foodVendorItems[index].name}',
-                                  //  imageTitle,
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 3.h),
-                    ],
-                  ),
-                );
-        },
-      ),
-    );
-  }
+  // buildList(BuildContext context, String? vendorName,
+  //     List<FoodVendorItems>? foodVendorItems) {
+  //   return MediaQuery.removePadding(
+  //     context: context,
+  //     removeTop: true,
+  //     child: ListView.builder(
+  //       // itemCount: foodVendorsProvider!
+  //       //     .foodVendorModel.data![0].foodVendorItems!.length,
+  //       itemCount: foodVendorItems!.length,
+  //       itemBuilder: (context, index) {
+  //         // var image =
+  //         //     "https://saffronhub.citizensadgrace.com/public/storage/food-items/vendor-slider-item-20221110-13182145233479.jpg";
+  //         _selectedMenu = _selectedMenu.isNotEmpty
+  //             ? _selectedMenu
+  //             : foodVendorItems.first.foodMenu!;
+  //         return foodVendorItems[index].foodMenu != _selectedMenu
+  //             ? Container()
+  //             : InkWell(
+  //                 onTap: () {
+  //                   //
+  //                   showModalBottomSheet(
+  //                     context: context,
+  //                     builder: (builder) => CustomBottomSheet(
+  //                       vendorName: vendorName,
+  //                       item: foodVendorItems[index],
+  //                     ),
+  //                     isScrollControlled: true,
+  //                     shape: RoundedRectangleBorder(
+  //                       borderRadius: BorderRadius.only(
+  //                         topLeft: Radius.circular(10),
+  //                         topRight: Radius.circular(10),
+  //                       ),
+  //                     ),
+  //                   );
+  //                 },
+  //                 child: Column(
+  //                   children: [
+  //                     SizedBox(height: 7.h),
+  //                     CustomCard(
+  //                       height: 118.h,
+  //                       width: 335.w,
+  //                       cardRadius: 10,
+  //                       cardColor: Colors.white,
+  //                       border: Border.all(color: Colors.black12),
+  //                       cardChild: Row(
+  //                         crossAxisAlignment: CrossAxisAlignment.start,
+  //                         children: [
+  //                           SizedBox(
+  //                             height: MediaQuery.of(context).size.height,
+  //                             width: 118.w,
+  //                             child: ClipRRect(
+  //                               borderRadius: BorderRadius.only(
+  //                                 topLeft: Radius.circular(10.r),
+  //                                 bottomLeft: Radius.circular(10.r),
+  //                               ),
+  //                               child: Image.network(
+  //                                 '${foodVendorItems[index].image}', // image!,
+  //                                 height: MediaQuery.of(context).size.height,
+  //                                 width: 118.w,
+  //                                 fit: BoxFit.fill,
+  //                               ),
+  //                             ),
+  //                           ),
+  //                           Padding(
+  //                             padding: EdgeInsets.only(top: 16.h, left: 20.w),
+  //                             child: SizedBox(
+  //                               width:
+  //                                   MediaQuery.of(context).size.width - 180.w,
+  //                               child: CustomText(
+  //                                 text: '${foodVendorItems[index].name}',
+  //                                 //  imageTitle,
+  //                                 fontSize: 14.sp,
+  //                                 fontWeight: FontWeight.w400,
+  //                               ),
+  //                             ),
+  //                           )
+  //                         ],
+  //                       ),
+  //                     ),
+  //                     SizedBox(height: 3.h),
+  //                   ],
+  //                 ),
+  //               );
+  //       },
+  //     ),
+  //   );
+  // }
 
   buildList2(BuildContext context, String? vendorName,
       List<FoodVendorItems>? foodVendorItems) {
@@ -492,7 +524,7 @@ class _FoodVendorScreenState extends State<FoodVendorScreen> {
                                         bottomLeft: Radius.circular(10.r),
                                       ),
                                       child: Image.network(
-                                        '${item.image ?? ''}', // image!,
+                                        item.image ?? '', // image!,
                                         height:
                                             MediaQuery.of(context).size.height,
                                         width: 118.w,
@@ -507,7 +539,7 @@ class _FoodVendorScreenState extends State<FoodVendorScreen> {
                                       width: MediaQuery.of(context).size.width -
                                           180.w,
                                       child: CustomText(
-                                        text: '${item.name ?? ''}',
+                                        text: item.name ?? '',
                                         //  imageTitle,
                                         fontSize: 15.sp,
                                         fontWeight: FontWeight.w500,
@@ -536,7 +568,6 @@ class _FoodVendorScreenState extends State<FoodVendorScreen> {
   //   _isInit = false;
   // }
 }
-
 
 /*
 import 'package:flutter/material.dart';

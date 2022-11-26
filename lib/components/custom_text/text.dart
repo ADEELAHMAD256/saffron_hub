@@ -16,6 +16,8 @@ class CustomText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text!,
+      overflow: TextOverflow.ellipsis,
+      // textAlign: TextAlign.center,
       style: TextStyle(
         fontSize: fontSize,
         fontWeight: fontWeight,

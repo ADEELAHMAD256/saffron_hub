@@ -1,4 +1,4 @@
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -9,6 +9,7 @@ import 'package:saffron_hub/consts/const_colors.dart';
 import 'package:saffron_hub/models/restaurants_list_model.dart';
 import 'package:saffron_hub/provider/home_provider.dart';
 import 'package:saffron_hub/view/food_vendor/bottom_sheet/custom_bottom_sheet.dart';
+import 'package:saffron_hub/view/send_email_screen/email_screen.dart';
 
 class FoodVendorDetailScreen extends StatefulWidget {
   static const String id = "FoodVendorDetailScreen";
@@ -79,7 +80,7 @@ class _FoodVendorDetailScreenState extends State<FoodVendorDetailScreen> {
                                 cardChild: ClipRRect(
                                   // borderRadius: BorderRadius.circular(10),
                                   child: Image.network(
-                                    '${vendor.sliderImages!.first}',
+                                    vendor.sliderImages!.first,
                                     fit: BoxFit.fill,
                                   ),
                                 ),
@@ -153,75 +154,100 @@ class _FoodVendorDetailScreenState extends State<FoodVendorDetailScreen> {
                                 ],
                                 cardChild: Padding(
                                   padding: EdgeInsets.symmetric(
-                                      horizontal: 20.w, vertical: 10),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
+                                      horizontal: 20.w, vertical: 10.h),
+                                  child: Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      CustomText(
-                                        text: '${vendor.name ?? ''}',
-                                        //  foodVendorsProvider!
-                                        //     .foodVendorModel.data![0].name,
-                                        fontSize: 16.sp,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                      SizedBox(height: 3.h),
-                                      Row(
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          Icon(
-                                            Icons.location_on,
-                                            size: 10.sp,
-                                            color: kLightGray,
-                                          ),
-                                          SizedBox(width: 12.w),
                                           CustomText(
-                                            text: '${vendor.location ?? ''}',
-                                            // foodVendorsProvider!.foodVendorModel.data![0].location,
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 10.sp,
-                                            fontColor: kLightGray,
-                                          )
-                                        ],
-                                      ),
-                                      SizedBox(height: 3.h),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.phone_in_talk_outlined,
-                                            size: 10.sp,
-                                            color: kLightGray,
+                                            text: vendor.name ?? '',
+                                            //  foodVendorsProvider!
+                                            //     .foodVendorModel.data![0].name,
+                                            fontSize: 16.sp,
+                                            fontWeight: FontWeight.w600,
                                           ),
-                                          SizedBox(width: 12.w),
-                                          CustomText(
-                                            text: '${vendor.phone ?? ''}',
+                                          SizedBox(height: 3.h),
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                Icons.location_on,
+                                                size: 10.sp,
+                                                color: kLightGray,
+                                              ),
+                                              SizedBox(width: 12.w),
+                                              CustomText(
+                                                text: vendor.location ?? '',
+                                                // foodVendorsProvider!.foodVendorModel.data![0].location,
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 10.sp,
+                                                fontColor: kLightGray,
+                                              )
+                                            ],
+                                          ),
+                                          SizedBox(height: 3.h),
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                Icons.phone_in_talk_outlined,
+                                                size: 10.sp,
+                                                color: kLightGray,
+                                              ),
+                                              SizedBox(width: 12.w),
+                                              CustomText(
+                                                text: vendor.phone ?? '',
 
-                                            // foodVendorsProvider!.foodVendorModel.data![0].phone,
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 10.sp,
-                                            fontColor: kLightGray,
-                                          )
+                                                // foodVendorsProvider!.foodVendorModel.data![0].phone,
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 10.sp,
+                                                fontColor: kLightGray,
+                                              )
+                                            ],
+                                          ),
+                                          SizedBox(height: 3.h),
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                Icons.email,
+                                                size: 10.sp,
+                                                color: kLightGray,
+                                              ),
+                                              SizedBox(width: 12.w),
+                                              CustomText(
+                                                text: vendor.email ?? '',
+                                                // text: foodVendorsProvider!
+                                                //     .foodVendorModel.data![0].email,
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 10.sp,
+                                                fontColor: kLightGray,
+                                              ),
+                                            ],
+                                          ),
                                         ],
                                       ),
-                                      SizedBox(height: 3.h),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.email,
-                                            size: 10.sp,
-                                            color: kLightGray,
+                                      InkWell(
+                                        onTap: () => Navigator.pushNamed(
+                                            context, SendEmailScreen.id),
+                                        child: CustomCard(
+                                          height: 37.h,
+                                          width: 75.w,
+                                          cardRadius: 5.r,
+                                          cardColor: kYellow,
+                                          cardChild: Center(
+                                            child: CustomText(
+                                              text: "Contact",
+                                              fontColor: Colors.white,
+                                              fontSize: 14.sp,
+                                            ),
                                           ),
-                                          SizedBox(width: 12.w),
-                                          CustomText(
-                                            text: '${vendor.email ?? ''}',
-                                            // text: foodVendorsProvider!
-                                            //     .foodVendorModel.data![0].email,
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 10.sp,
-                                            fontColor: kLightGray,
-                                          ),
-                                        ],
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -247,7 +273,7 @@ class _FoodVendorDetailScreenState extends State<FoodVendorDetailScreen> {
                           ),
                           SizedBox(height: 10.h),
                           CustomText(
-                            text: '${vendor.description ?? ''}',
+                            text: vendor.description ?? '',
 
                             // text: foodVendorsProvider!
                             //     .foodVendorModel.data![0].description,
@@ -329,7 +355,7 @@ class _FoodVendorDetailScreenState extends State<FoodVendorDetailScreen> {
                               },
                             ),
                           ),
-                        
+
                           Container(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -427,7 +453,9 @@ class _FoodVendorDetailScreenState extends State<FoodVendorDetailScreen> {
                         itemBuilder: (context, index) {
                           MenuList menu = vendor.menuList![index];
                           // _selectedMenu = vendor.menuList!.first.menuName!;
-                          print('_selectedMenu ff ${_selectedMenu}');
+                          if (kDebugMode) {
+                            print('_selectedMenu ff $_selectedMenu');
+                          }
 
                           return Row(
                             children: [
@@ -437,7 +465,9 @@ class _FoodVendorDetailScreenState extends State<FoodVendorDetailScreen> {
                                   _selectedIndex = index;
                                   _selectedMenu = menu.menuName!;
                                   setState(() {});
-                                  print('_selectedMenu  ${_selectedMenu}');
+                                  if (kDebugMode) {
+                                    print('_selectedMenu  $_selectedMenu');
+                                  }
                                 },
                                 child: CustomCard(
                                   height: 37.h,
@@ -456,7 +486,7 @@ class _FoodVendorDetailScreenState extends State<FoodVendorDetailScreen> {
                                   ],
                                   cardChild: Center(
                                     child: CustomText(
-                                      text: '${menu.menuName ?? ''}',
+                                      text: menu.menuName ?? '',
                                       // text: foodVendorsProvider!
                                       //     .foodVendorModel
                                       //     .data![index]
