@@ -232,23 +232,23 @@ class _FoodVendorDetailScreenState extends State<FoodVendorDetailScreen> {
                                           ),
                                         ],
                                       ),
-                                      InkWell(
-                                        onTap: () => Navigator.pushNamed(
-                                            context, SendEmailScreen.id),
-                                        child: CustomCard(
-                                          height: 37.h,
-                                          width: 75.w,
-                                          cardRadius: 5.r,
-                                          cardColor: kYellow,
-                                          cardChild: Center(
-                                            child: CustomText(
-                                              text: "Contact",
-                                              fontColor: Colors.white,
-                                              fontSize: 14.sp,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
+                                      // InkWell(
+                                      //   onTap: () => Navigator.pushNamed(
+                                      //       context, SendEmailScreen.id),
+                                      //   child: CustomCard(
+                                      //     height: 37.h,
+                                      //     width: 75.w,
+                                      //     cardRadius: 5.r,
+                                      //     cardColor: kYellow,
+                                      //     cardChild: Center(
+                                      //       child: CustomText(
+                                      //         text: "Contact",
+                                      //         fontColor: Colors.white,
+                                      //         fontSize: 14.sp,
+                                      //       ),
+                                      //     ),
+                                      //   ),
+                                      // ),
                                     ],
                                   ),
                                 ),

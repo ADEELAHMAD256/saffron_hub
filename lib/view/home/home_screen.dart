@@ -147,15 +147,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                                 SizedBox(width: 5.w),
-                                IconButton(
-                                  padding: EdgeInsets.zero,
-                                  constraints: BoxConstraints(),
-                                  onPressed: () {},
-                                  icon: Icon(
-                                    Icons.notifications_none_outlined,
-                                    color: kYellow,
-                                  ),
-                                ),
+                                // IconButton(
+                                //   padding: EdgeInsets.zero,
+                                //   constraints: BoxConstraints(),
+                                //   onPressed: () {},
+                                //   icon: Icon(
+                                //     Icons.notifications_none_outlined,
+                                //     color: kYellow,
+                                //   ),
+                                // ),
                               ],
                             ),
                           ],

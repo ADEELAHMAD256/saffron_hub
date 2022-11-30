@@ -1,4 +1,4 @@
-package com.example.saffron_hub
+package com.highapp.co.uk.saffron_hub
 
 import io.flutter.embedding.android.FlutterActivity
 
