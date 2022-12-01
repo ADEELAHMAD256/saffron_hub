@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../components/custom_text/text.dart';
 
@@ -44,16 +45,25 @@ class AccountSettingScreen extends StatelessWidget {
                   size: 16.sp,
                   color: Colors.black,
                 ),
-                title: CustomText(
-                  text: "Contact us",
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w500,
+                title: GestureDetector(
+                  onTap: () {
+                  launch(
+                      'https://www.saffronhub.org/contact-us/');
+                },
+                  child: CustomText(
+                    text: "Contact us",
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 trailing: Icon(
                   Icons.arrow_forward_ios,
                   size: 16.sp,
                 ),
-                onTap: () {},
+                onTap: () {
+                  launch(
+                      'https://www.saffronhub.org/contact-us/');
+                },
               ),
               Divider(),
               ListTile(
@@ -84,32 +94,48 @@ class AccountSettingScreen extends StatelessWidget {
                 minLeadingWidth: 10,
                 visualDensity: VisualDensity(horizontal: 0, vertical: -4),
                 leading: Image.asset("assets/images/policy.png"),
-                title: CustomText(
-                  text: "Privacy Policy",
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w500,
+                title: GestureDetector(
+                  onTap: () {
+                    launch(
+                        'https://www.freeprivacypolicy.com/live/a4a924e1-5942-4460-b938-f72660248465');
+                  },
+                  child: CustomText(
+                    text: "Privacy Policy",
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 trailing: Icon(
                   Icons.arrow_forward_ios,
                   size: 16.sp,
                 ),
-                onTap: () {},
+                onTap: () {
+                  launch(
+                      'https://www.freeprivacypolicy.com/live/a4a924e1-5942-4460-b938-f72660248465');
+                },
               ),
               Divider(),
               ListTile(
                 minLeadingWidth: 10,
                 visualDensity: VisualDensity(horizontal: 0, vertical: -4),
                 leading: Image.asset("assets/images/about.png"),
-                title: CustomText(
-                  text: "About",
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w500,
+                title: GestureDetector(
+                  onTap: () {
+                    launch('https://www.saffronhub.org/about-us/');
+                  },
+                  child: CustomText(
+                    text: "About",
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 trailing: Icon(
                   Icons.arrow_forward_ios,
                   size: 16.sp,
                 ),
-                onTap: () {},
+                onTap: () {
+                  launch('https://www.saffronhub.org/about-us/');
+                },
               ),
               Divider()
             ],

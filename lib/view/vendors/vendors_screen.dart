@@ -336,7 +336,7 @@ class _VendorsScreenState extends State<VendorsScreen> {
     noMore = false;
     setState(() {});
     if (foodVendorsProvider.currentPage! > 1) {
-      foodVendorsProvider.currentPage = foodVendorsProvider.currentPage! - 1;
+      foodVendorsProvider.currentPage = foodVendorsProvider.currentPage! + 1;
     } else {
       //
       return;

@@ -9,6 +9,7 @@ import 'package:saffron_hub/consts/const_colors.dart';
 import 'package:saffron_hub/models/vendors_model.dart';
 import 'package:saffron_hub/provider/food_vendors_provider.dart';
 import 'package:saffron_hub/view/food_vendor/bottom_sheet/custom_bottom_sheet.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../send_email_screen/email_screen.dart';
 
@@ -136,11 +137,11 @@ class _FoodVendorScreenState extends State<FoodVendorScreen> {
                             ),
                           ),
                           Positioned(
-                            top: 216.h,
+                            top: 205.h,
                             child: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 20.w),
                               child: CustomCard(
-                                height: 95.h,
+                                height: 115.h,
                                 width: 335.w,
                                 cardRadius: 10,
                                 cardColor: Colors.white,
@@ -153,7 +154,7 @@ class _FoodVendorScreenState extends State<FoodVendorScreen> {
                                 ],
                                 cardChild: Padding(
                                   padding: EdgeInsets.symmetric(
-                                      horizontal: 15.w, vertical: 10.h),
+                                      horizontal: 10.w, vertical: 10.h),
                                   child: Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -173,7 +174,7 @@ class _FoodVendorScreenState extends State<FoodVendorScreen> {
                                             fontSize: 16.sp,
                                             fontWeight: FontWeight.w600,
                                           ),
-                                          SizedBox(height: 3.h),
+                                          SizedBox(height: 8.h),
                                           Row(
                                             children: [
                                               Icon(
@@ -191,7 +192,7 @@ class _FoodVendorScreenState extends State<FoodVendorScreen> {
                                               )
                                             ],
                                           ),
-                                          SizedBox(height: 3.h),
+                                          SizedBox(height: 8.h),
                                           Row(
                                             children: [
                                               Icon(
@@ -207,10 +208,9 @@ class _FoodVendorScreenState extends State<FoodVendorScreen> {
                                                 fontWeight: FontWeight.w400,
                                                 fontSize: 10.sp,
                                                 fontColor: kLightGray,
-                                              )
+                                              ),
                                             ],
                                           ),
-                                          SizedBox(height: 3.h),
                                           Row(
                                             children: [
                                               Icon(
@@ -227,27 +227,47 @@ class _FoodVendorScreenState extends State<FoodVendorScreen> {
                                                 fontSize: 10.sp,
                                                 fontColor: kLightGray,
                                               ),
+                                              SizedBox(width: 120.w),
+                                              InkWell(
+                                                onTap: () {
+                                                  launch(
+                                                      'https://saffronhub.citizensadgrace.com/contact-us/info@highapp.co.uk');
+                                                },
+                                                child: CustomCard(
+                                                  height: 30.h,
+                                                  width: 50.w,
+                                                  cardRadius: 5.r,
+                                                  cardColor: kYellow,
+                                                  cardChild: Center(
+                                                    child: CustomText(
+                                                      text: "Contact",
+                                                      fontColor: Colors.white,
+                                                      fontSize: 10.sp,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
                                             ],
                                           ),
                                         ],
                                       ),
-                                      InkWell(
-                                        onTap: () => Navigator.pushNamed(
-                                            context, SendEmailScreen.id),
-                                        child: CustomCard(
-                                          height: 37.h,
-                                          width: 75.w,
-                                          cardRadius: 5.r,
-                                          cardColor: kYellow,
-                                          cardChild: Center(
-                                            child: CustomText(
-                                              text: "Contact",
-                                              fontColor: Colors.white,
-                                              fontSize: 14.sp,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
+                                      // InkWell(
+                                      //   onTap: () => Navigator.pushNamed(
+                                      //       context, SendEmailScreen.id),
+                                      //   child: CustomCard(
+                                      //     height: 30.h,
+                                      //     width: 70.w,
+                                      //     cardRadius: 5.r,
+                                      //     cardColor: kYellow,
+                                      //     cardChild: Center(
+                                      //       child: CustomText(
+                                      //         text: "Contact",
+                                      //         fontColor: Colors.white,
+                                      //         fontSize: 10.sp,
+                                      //       ),
+                                      //     ),
+                                      //   ),
+                                      // ),
                                     ],
                                   ),
                                 ),
@@ -335,7 +355,7 @@ class _FoodVendorScreenState extends State<FoodVendorScreen> {
                                 },
                                 child: CustomCard(
                                   height: 37.h,
-                                  width: 75.w,
+                                  // width: 75.w,
                                   cardRadius: 5.r,
                                   cardColor: _selectedIndex == index
                                       ? kYellow
@@ -349,13 +369,16 @@ class _FoodVendorScreenState extends State<FoodVendorScreen> {
                                     )
                                   ],
                                   cardChild: Center(
-                                    child: CustomText(
-                                      text: menu.menuName ?? '',
-                                      fontSize: 12.sp,
-                                      fontColor: _selectedIndex == index
-                                          ? Colors.white
-                                          : Colors.black,
-                                      fontWeight: FontWeight.w400,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: CustomText(
+                                        text: menu.menuName ?? '',
+                                        fontSize: 12.sp,
+                                        fontColor: _selectedIndex == index
+                                            ? Colors.white
+                                            : Colors.black,
+                                        fontWeight: FontWeight.w400,
+                                      ),
                                     ),
                                   ),
                                 ),

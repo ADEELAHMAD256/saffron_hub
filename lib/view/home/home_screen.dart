@@ -326,7 +326,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               topRight: Radius.circular(16.r),
                                             ),
                                             child: Image.network(
-                                              height: 140.h,
+                                              height: 130.h,
                                               width: MediaQuery.of(context)
                                                   .size
                                                   .width,
