@@ -155,62 +155,60 @@ class _FoodVendorScreenState extends State<FoodVendorScreen> {
                                 cardChild: Padding(
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 10.w, vertical: 10.h),
-                                  child: Row(
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                      CustomText(
+                                        text: vendor.name ?? '',
+                                        //  foodVendorsProvider!
+                                        //     .foodVendorModel.data![0].name,
+                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                      SizedBox(height: 8.h),
+                                      Row(
                                         children: [
+                                          Icon(
+                                            Icons.location_on,
+                                            size: 10.sp,
+                                            color: kLightGray,
+                                          ),
+                                          SizedBox(width: 12.w),
                                           CustomText(
-                                            text: vendor.name ?? '',
-                                            //  foodVendorsProvider!
-                                            //     .foodVendorModel.data![0].name,
-                                            fontSize: 16.sp,
-                                            fontWeight: FontWeight.w600,
+                                            text: vendor.location ?? '',
+                                            // foodVendorsProvider!.foodVendorModel.data![0].location,
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 10.sp,
+                                            fontColor: kLightGray,
+                                          )
+                                        ],
+                                      ),
+                                      SizedBox(height: 8.h),
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.phone_in_talk_outlined,
+                                            size: 10.sp,
+                                            color: kLightGray,
                                           ),
-                                          SizedBox(height: 8.h),
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Icons.location_on,
-                                                size: 10.sp,
-                                                color: kLightGray,
-                                              ),
-                                              SizedBox(width: 12.w),
-                                              CustomText(
-                                                text: vendor.location ?? '',
-                                                // foodVendorsProvider!.foodVendorModel.data![0].location,
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 10.sp,
-                                                fontColor: kLightGray,
-                                              )
-                                            ],
-                                          ),
-                                          SizedBox(height: 8.h),
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Icons.phone_in_talk_outlined,
-                                                size: 10.sp,
-                                                color: kLightGray,
-                                              ),
-                                              SizedBox(width: 12.w),
-                                              CustomText(
-                                                text: vendor.phone ?? '',
+                                          SizedBox(width: 12.w),
+                                          CustomText(
+                                            text: vendor.phone ?? '',
 
-                                                // foodVendorsProvider!.foodVendorModel.data![0].phone,
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 10.sp,
-                                                fontColor: kLightGray,
-                                              ),
-                                            ],
+                                            // foodVendorsProvider!.foodVendorModel.data![0].phone,
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 10.sp,
+                                            fontColor: kLightGray,
                                           ),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
                                           Row(
                                             children: [
                                               Icon(
@@ -227,47 +225,30 @@ class _FoodVendorScreenState extends State<FoodVendorScreen> {
                                                 fontSize: 10.sp,
                                                 fontColor: kLightGray,
                                               ),
-                                              SizedBox(width: 120.w),
-                                              InkWell(
-                                                onTap: () {
-                                                  launch(
-                                                      'https://saffronhub.citizensadgrace.com/contact-us/info@highapp.co.uk');
-                                                },
-                                                child: CustomCard(
-                                                  height: 30.h,
-                                                  width: 50.w,
-                                                  cardRadius: 5.r,
-                                                  cardColor: kYellow,
-                                                  cardChild: Center(
-                                                    child: CustomText(
-                                                      text: "Contact",
-                                                      fontColor: Colors.white,
-                                                      fontSize: 10.sp,
-                                                    ),
-                                                  ),
+                                            ],
+                                          ),
+                                          // SizedBox(width: 120.w),
+                                          InkWell(
+                                            onTap: () {
+                                              launch(
+                                                  'https://saffronhub.citizensadgrace.com/contact-us/${vendor.email}');
+                                            },
+                                            child: CustomCard(
+                                              height: 30.h,
+                                              width: 50.w,
+                                              cardRadius: 5.r,
+                                              cardColor: kYellow,
+                                              cardChild: Center(
+                                                child: CustomText(
+                                                  text: "Contact",
+                                                  fontColor: Colors.white,
+                                                  fontSize: 10.sp,
                                                 ),
                                               ),
-                                            ],
+                                            ),
                                           ),
                                         ],
                                       ),
-                                      // InkWell(
-                                      //   onTap: () => Navigator.pushNamed(
-                                      //       context, SendEmailScreen.id),
-                                      //   child: CustomCard(
-                                      //     height: 30.h,
-                                      //     width: 70.w,
-                                      //     cardRadius: 5.r,
-                                      //     cardColor: kYellow,
-                                      //     cardChild: Center(
-                                      //       child: CustomText(
-                                      //         text: "Contact",
-                                      //         fontColor: Colors.white,
-                                      //         fontSize: 10.sp,
-                                      //       ),
-                                      //     ),
-                                      //   ),
-                                      // ),
                                     ],
                                   ),
                                 ),
@@ -309,84 +290,91 @@ class _FoodVendorScreenState extends State<FoodVendorScreen> {
                       ),
                     ),
                   ),
-                  SliverAppBar(
-                    leadingWidth: 2.w,
-                    expandedHeight: 50.h,
-                    // collapsedHeight: 50.h,
-                    // toolbarHeight: 50,
-                    leading: Container(),
-                    pinned: true,
-                    flexibleSpace: Container(
-                      padding: EdgeInsets.all(10.r),
-                      height: 50,
-                      width: double.infinity,
-                    ),
-                    backgroundColor: Colors.white,
-                    stretchTriggerOffset: 60,
-                    floating: true,
-                    title: SizedBox(
-                      height: 45.h,
-                      width: 350.w,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: vendor.menuList!.length,
-                        // foodVendorsProvider!.foodVendorModel.data![0].menuList!.length,
-                        // itemCount: tabBarItems.length,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          MenuList menu = vendor.menuList![index];
-                          // _selectedMenu = vendor.menuList!.first.menuName!;
-                          if (kDebugMode) {
-                            print('_selectedMenu ff $_selectedMenu');
-                          }
+                  MediaQuery.removePadding(
+                    context: context,
+                    removeTop: true,
+                    child: SliverAppBar(
+                      leadingWidth: 0.5.w,
+                      // expandedHeight: 10.h,
+                      // collapsedHeight: 50.h,
+                      // toolbarHeight: 50,
+                      leading: Container(),
+                      pinned: true,
+                      flexibleSpace: Container(
+                        padding: EdgeInsets.all(10.r),
+                        height: 10,
+                        width: double.infinity,
+                      ),
+                      backgroundColor: Colors.white,
+                      stretchTriggerOffset: 60,
+                      floating: true,
+                      title: SizedBox(
+                        height: 45.h,
+                        width: 350.w,
+                        child: MediaQuery.removePadding(
+                          context: context,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            itemCount: vendor.menuList!.length,
+                            // foodVendorsProvider!.foodVendorModel.data![0].menuList!.length,
+                            // itemCount: tabBarItems.length,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              MenuList menu = vendor.menuList![index];
+                              // _selectedMenu = vendor.menuList!.first.menuName!;
+                              if (kDebugMode) {
+                                print('_selectedMenu ff $_selectedMenu');
+                              }
 
-                          return Row(
-                            children: [
-                              SizedBox(width: 6.w),
-                              InkWell(
-                                onTap: () {
-                                  _selectedIndex = index;
-                                  _selectedMenu = menu.menuName!;
-                                  setState(() {});
-                                  if (kDebugMode) {
-                                    print('_selectedMenu  $_selectedMenu');
-                                  }
-                                },
-                                child: CustomCard(
-                                  height: 37.h,
-                                  // width: 75.w,
-                                  cardRadius: 5.r,
-                                  cardColor: _selectedIndex == index
-                                      ? kYellow
-                                      : Colors.white,
-                                  shadow: const [
-                                    BoxShadow(
-                                      color: Colors.black12,
-                                      blurRadius: 2,
-                                      spreadRadius: 0.2,
-                                      offset: Offset(0, 0),
-                                    )
-                                  ],
-                                  cardChild: Center(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: CustomText(
-                                        text: menu.menuName ?? '',
-                                        fontSize: 12.sp,
-                                        fontColor: _selectedIndex == index
-                                            ? Colors.white
-                                            : Colors.black,
-                                        fontWeight: FontWeight.w400,
+                              return Row(
+                                children: [
+                                  // SizedBox(width: 6.w),
+                                  InkWell(
+                                    onTap: () {
+                                      _selectedIndex = index;
+                                      _selectedMenu = menu.menuName!;
+                                      setState(() {});
+                                      if (kDebugMode) {
+                                        print('_selectedMenu  $_selectedMenu');
+                                      }
+                                    },
+                                    child: CustomCard(
+                                      height: 37.h,
+                                      // width: 75.w,
+                                      cardRadius: 5.r,
+                                      cardColor: _selectedIndex == index
+                                          ? kYellow
+                                          : Colors.white,
+                                      shadow: const [
+                                        BoxShadow(
+                                          color: Colors.black12,
+                                          blurRadius: 2,
+                                          spreadRadius: 0.2,
+                                          offset: Offset(0, 0),
+                                        )
+                                      ],
+                                      cardChild: Center(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: CustomText(
+                                            text: menu.menuName ?? '',
+                                            fontSize: 12.sp,
+                                            fontColor: _selectedIndex == index
+                                                ? Colors.white
+                                                : Colors.black,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ),
-                              // SizedBox(width: 8.w),
-                            ],
-                          );
-                        },
+                                  // SizedBox(width: 8.w),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
                       ),
                     ),
                   ),
