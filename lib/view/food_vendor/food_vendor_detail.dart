@@ -6,11 +6,16 @@ import 'package:provider/provider.dart';
 import 'package:saffron_hub/components/custom_card/custom_card.dart';
 import 'package:saffron_hub/components/custom_text/text.dart';
 import 'package:saffron_hub/consts/const_colors.dart';
+import 'package:saffron_hub/db_helper/db_helper.dart';
+import 'package:saffron_hub/models/cart_model.dart';
 import 'package:saffron_hub/models/restaurants_list_model.dart';
 import 'package:saffron_hub/provider/home_provider.dart';
+import 'package:saffron_hub/view/cart/cart_screen.dart';
 import 'package:saffron_hub/view/food_vendor/bottom_sheet/custom_bottom_sheet.dart';
 import 'package:saffron_hub/view/send_email_screen/email_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../provider/cart_provider.dart';
 
 class FoodVendorDetailScreen extends StatefulWidget {
   static const String id = "FoodVendorDetailScreen";
@@ -21,9 +26,11 @@ class FoodVendorDetailScreen extends StatefulWidget {
 }
 
 class _FoodVendorDetailScreenState extends State<FoodVendorDetailScreen> {
+  DBHelper dbHelper = DBHelper();
   late int _selectedIndex = 0;
-  late String _selectedMenu = '';
+  late String? _selectedMenu = '';
   late HomeProvider homeProvider;
+  late CartProvider cartProvider;
   bool _isInit = true;
   int? vendorIndex;
   late RestaurantsListModel vendor;
@@ -31,7 +38,7 @@ class _FoodVendorDetailScreenState extends State<FoodVendorDetailScreen> {
   void didChangeDependencies() async {
     if (_isInit) {
       homeProvider = Provider.of<HomeProvider>(context);
-      // await homeProvider!.getFoodVendorData();
+      cartProvider = Provider.of<CartProvider>(context);
       vendorIndex = homeProvider.currentVendor;
       vendor = homeProvider.restaurantsListModel![vendorIndex!];
     }
@@ -43,6 +50,7 @@ class _FoodVendorDetailScreenState extends State<FoodVendorDetailScreen> {
   @override
   void initState() {
     super.initState();
+
     // getCurrentVendor();
   }
 
@@ -86,38 +94,6 @@ class _FoodVendorDetailScreenState extends State<FoodVendorDetailScreen> {
                                   ),
                                 ),
                               ),
-
-                              // CarouselSlider.builder(
-                              //   options: CarouselOptions(
-                              //     viewportFraction: 1,
-                              //     disableCenter: false,
-                              //     initialPage: 0,
-                              //     autoPlay: true,
-                              //     reverse: false,
-                              //     height: 270.h,
-                              //     enableInfiniteScroll: true,
-                              //     // autoPlayInterval: const Duration(seconds: 3),
-                              //     autoPlayAnimationDuration:
-                              //         const Duration(milliseconds: 3000),
-                              //     pauseAutoPlayOnTouch: true,
-                              //     scrollDirection: Axis.horizontal,
-                              //     pageSnapping: true,
-                              //   ),
-                              //   itemCount: vendor.sliderImages!.length,
-                              //   // foodVendorsProvider!.foodVendorModel.data![_selectedIndex].sliderImages!.length,
-                              //   itemBuilder: (BuildContext context, int index,
-                              //           int realIndex) =>
-                              //       Container(
-                              //     margin: EdgeInsets.symmetric(horizontal: 1),
-                              //     child: Image.network(
-                              //       '${vendor.sliderImages![index]}',
-                              //       height: 265.h,
-                              //       width: MediaQuery.of(context).size.width,
-                              //       // foodVendorsProvider!.foodVendorModel.data![index].sliderImages![index],
-                              //       fit: BoxFit.fill,
-                              //     ),
-                              //   ),
-                              // ),
                             ),
                           ),
                           Positioned(
@@ -284,139 +260,15 @@ class _FoodVendorDetailScreenState extends State<FoodVendorDetailScreen> {
                           SizedBox(height: 10.h),
                           vendor.menuList!.isEmpty
                               ? Container()
-                              : CustomText(
-                                  text: "Foods Menu",
-                                  fontSize: 20.sp,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                          /*
-                          SizedBox(
-                            height: 45.h,
-                            width: 350.w,
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              itemCount: vendor.menuList!.length,
-                              // foodVendorsProvider!.foodVendorModel.data![0].menuList!.length,
-                              // itemCount: tabBarItems.length,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                MenuList menu = vendor.menuList![index];
-                                // _selectedMenu = vendor.menuList!.first.menuName!;
-                                print('_selectedMenu ff ${_selectedMenu}');
-
-                                return Row(
+                              : Row(
                                   children: [
-                                    SizedBox(width: 5.w),
-                                    InkWell(
-                                      onTap: () {
-                                        _selectedIndex = index;
-                                        _selectedMenu = menu.menuName!;
-                                        setState(() {});
-                                        print(
-                                            '_selectedMenu  ${_selectedMenu}');
-                                      },
-                                      child: CustomCard(
-                                        height: 37.h,
-                                        width: 75.w,
-                                        cardRadius: 5,
-                                        cardColor: _selectedIndex == index
-                                            ? kYellow
-                                            : Colors.white,
-                                        shadow: const [
-                                          BoxShadow(
-                                            color: Colors.black12,
-                                            blurRadius: 2,
-                                            spreadRadius: 0.2,
-                                            offset: Offset(0, 0),
-                                          )
-                                        ],
-                                        cardChild: Center(
-                                          child: CustomText(
-                                            text: '${menu.menuName ?? ''}',
-                                            // text: foodVendorsProvider!
-                                            //     .foodVendorModel
-                                            //     .data![index]
-                                            //     .menuList![index]
-                                            //     .menuName,
-                                            fontSize: 12.sp,
-                                            fontColor: _selectedIndex == index
-                                                ? Colors.white
-                                                : Colors.black,
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                        ),
-                                      ),
+                                    CustomText(
+                                      text: "Foods Menu",
+                                      fontSize: 20.sp,
+                                      fontWeight: FontWeight.w600,
                                     ),
-                                    // SizedBox(width: 8.w),
                                   ],
-                                );
-                              },
-                            ),
-                          ),
-
-                          Container(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // CustomText(
-                                //   text: _selectedMenu.isNotEmpty
-                                //       ? _selectedMenu
-                                //       : '${vendor.menuList!.first.menuName}',
-                                // text: foodVendorsProvider!
-                                //     .foodVendorModel
-                                //     .data![_selectedIndex]
-                                //     .menuList![_selectedIndex]
-                                //     .menuName,
-                                // ),
-                                // Expanded(
-                                // Container(
-                                //   // height: 222,
-                                //   child: buildList2(context, vendor.name!,
-                                //       vendor.foodVendorItems!),
-                                // ),
-                                // DefaultTabController(
-                                //   length: 2,
-                                //   child: Column(
-                                //     children: [
-                                //       TabBar(
-                                //         onTap: (index) {
-                                //           // Tab index when user select it, it start from zero
-                                //         },
-                                //         tabs: const [
-                                //           Tab(
-                                //             icon: Icon(Icons.card_travel),
-                                //           ),
-                                //           Tab(
-                                //             icon: Icon(Icons.add_shopping_cart),
-                                //           ),
-                                //         ],
-                                //       ),
-                                //       SizedBox(
-                                //         height: 120,
-                                //         child: TabBarView(
-                                //           children: const [
-                                //             Center(
-                                //               child: Text(
-                                //                 "0",
-                                //                 style: TextStyle(fontSize: 40),
-                                //               ),
-                                //             ),
-                                //             Center(
-                                //               child: Text(
-                                //                 "1",
-                                //                 style: TextStyle(fontSize: 40),
-                                //               ),
-                                //             ),
-                                //           ],
-                                //         ),
-                                //       ),
-                                //     ],
-                                //   ),
-                                // ),
-                              ],
-                            ),
-                          ),   */
+                                ),
                         ],
                       ),
                     ),
@@ -425,82 +277,110 @@ class _FoodVendorDetailScreenState extends State<FoodVendorDetailScreen> {
                     context: context,
                     removeTop: true,
                     child: SliverAppBar(
-                      leadingWidth: 2.w,
+                      toolbarHeight: 70,
+                      collapsedHeight: 70,
+                      leadingWidth: 5.w,
                       leading: Container(),
-                      // expandedHeight: 10,
+                      expandedHeight: 10,
                       pinned: true,
                       backgroundColor: Colors.white,
-                      title: SizedBox(
-                        height: 45.h,
-                        width: 350.w,
-                        child: MediaQuery.removePadding(
-                          context: context,
-                          removeTop: true,
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            scrollDirection: Axis.horizontal,
-                            itemCount: vendor.menuList!.length,
-                            // foodVendorsProvider!.foodVendorModel.data![0].menuList!.length,
-                            // itemCount: tabBarItems.length,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              MenuList menu = vendor.menuList![index];
-                              // _selectedMenu = vendor.menuList!.first.menuName!;
-                              if (kDebugMode) {
-                                print('_selectedMenu ff $_selectedMenu');
-                              }
+                      flexibleSpace: FlexibleSpaceBar(
+                        titlePadding:
+                            EdgeInsets.only(top: 10.h, left: 15.w, right: 15.w),
+                        title: SizedBox(
+                          height: 45.h,
+                          width: 350.w,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              MediaQuery.removePadding(
+                                context: context,
+                                removeTop: true,
+                                child: ListView.builder(
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: vendor.menuList!.length,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemBuilder: (context, index) {
+                                    MenuList menu = vendor.menuList![index];
+                                    // _selectedMenu = vendor.menuList!.first.menuName!;
+                                    if (kDebugMode) {
+                                      print('_selectedMenu ff $_selectedMenu');
+                                    }
 
-                              return Row(
-                                children: [
-                                  SizedBox(width: 6.w),
-                                  InkWell(
-                                    onTap: () {
-                                      _selectedIndex = index;
-                                      _selectedMenu = menu.menuName!;
-                                      setState(() {});
-                                      if (kDebugMode) {
-                                        print('_selectedMenu  $_selectedMenu');
-                                      }
-                                    },
-                                    child: CustomCard(
-                                      height: 37.h,
-                                      //width: 75.w,
-                                      cardRadius: 5,
-                                      cardColor: _selectedIndex == index
-                                          ? kYellow
-                                          : Colors.white,
-                                      shadow: const [
-                                        BoxShadow(
-                                          color: Colors.black12,
-                                          blurRadius: 2,
-                                          spreadRadius: 0.2,
-                                          offset: Offset(0, 0),
-                                        )
-                                      ],
-                                      cardChild: Center(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: CustomText(
-                                            text: menu.menuName ?? '',
-                                            // text: foodVendorsProvider!
-                                            //     .foodVendorModel
-                                            //     .data![index]
-                                            //     .menuList![index]
-                                            //     .menuName,
-                                            fontSize: 12.sp,
-                                            fontColor: _selectedIndex == index
-                                                ? Colors.white
-                                                : Colors.black,
-                                            fontWeight: FontWeight.w400,
+                                    return Row(
+                                      children: [
+                                        SizedBox(width: 6.w),
+                                        InkWell(
+                                          onTap: () {
+                                            _selectedIndex = index;
+                                            _selectedMenu = menu.menuName!;
+                                            setState(() {});
+                                          },
+                                          child: CustomCard(
+                                            height: 37.h,
+                                            //width: 75.w,
+                                            cardRadius: 5,
+                                            cardColor: _selectedIndex == index
+                                                ? kYellow
+                                                : Colors.white,
+                                            shadow: const [
+                                              BoxShadow(
+                                                color: Colors.black12,
+                                                blurRadius: 2,
+                                                spreadRadius: 0.2,
+                                                offset: Offset(0, 0),
+                                              )
+                                            ],
+                                            cardChild: Center(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: CustomText(
+                                                  text: menu.menuName ?? '',
+                                                  fontSize: 12.sp,
+                                                  fontColor:
+                                                      _selectedIndex == index
+                                                          ? Colors.white
+                                                          : Colors.black,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              ),
+                                            ),
                                           ),
+                                        ),
+                                        // SizedBox(width: 8.w),
+                                      ],
+                                    );
+                                  },
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () => Navigator.pushNamed(
+                                    context, AddToCartScreen.id),
+                                child: Stack(
+                                  children: [
+                                    CircleAvatar(
+                                      child: Icon(
+                                        Icons.shopping_cart,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    Positioned(
+                                      left: 20.w,
+                                      child: CircleAvatar(
+                                        radius: 10,
+                                        backgroundColor: Colors.blueGrey,
+                                        child: CustomText(
+                                          text: cartProvider.counter.toString(),
+                                          fontColor: Colors.white,
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  // SizedBox(width: 8.w),
-                                ],
-                              );
-                            },
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -514,107 +394,99 @@ class _FoodVendorDetailScreenState extends State<FoodVendorDetailScreen> {
                           context, vendor.name!, vendor.foodVendorItems!),
                     ),
                   ),
-                  // SliverAnimatedList(
-                  //   itemBuilder: (_, index, ___) {
-                  //     return ListTile(
-                  //       title: Text(index.toString()),
-                  //     );
-                  //   },
-                  //   initialItemCount: 100,
-                  // )
                 ],
               ),
             ),
           );
   }
 
-  buildList(BuildContext context, String? vendorName,
-      List<FoodVendorItems>? foodVendorItems) {
-    return MediaQuery.removePadding(
-      context: context,
-      removeTop: true,
-      child: ListView.builder(
-        // itemCount: foodVendorsProvider!
-        //     .foodVendorModel.data![0].foodVendorItems!.length,
-        itemCount: foodVendorItems!.length,
-        itemBuilder: (context, index) {
-          // var image =
-          //     "https://saffronhub.citizensadgrace.com/public/storage/food-items/vendor-slider-item-20221110-13182145233479.jpg";
-          _selectedMenu = _selectedMenu.isNotEmpty
-              ? _selectedMenu
-              : foodVendorItems.first.foodMenu!;
-          return foodVendorItems[index].foodMenu != _selectedMenu
-              ? Container()
-              : InkWell(
-                  onTap: () {
-                    //
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (builder) => CustomBottomSheet(
-                        vendorName: vendorName,
-                        item: foodVendorItems[index],
-                      ),
-                      isScrollControlled: true,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                      ),
-                    );
-                  },
-                  child: Column(
-                    children: [
-                      SizedBox(height: 7.h),
-                      CustomCard(
-                        height: 30.h,
-                        width: 335.w,
-                        cardRadius: 10,
-                        cardColor: Colors.white,
-                        border: Border.all(color: Colors.black12),
-                        cardChild: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height,
-                              width: 118.w,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10.r),
-                                  bottomLeft: Radius.circular(10.r),
-                                ),
-                                child: Image.network(
-                                  '${foodVendorItems[index].image}', // image!,
-                                  height: MediaQuery.of(context).size.height,
-                                  width: 118.w,
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(top: 16.h, left: 20.w),
-                              child: SizedBox(
-                                width:
-                                    MediaQuery.of(context).size.width - 180.w,
-                                child: CustomText(
-                                  text: '${foodVendorItems[index].name}',
-                                  //  imageTitle,
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 3.h),
-                    ],
-                  ),
-                );
-        },
-      ),
-    );
-  }
+  // buildList(BuildContext context, String? vendorName,
+  //     List<FoodVendorItems>? foodVendorItems) {
+  //   return MediaQuery.removePadding(
+  //     context: context,
+  //     removeTop: true,
+  //     child: ListView.builder(
+  //       // itemCount: foodVendorsProvider!
+  //       //     .foodVendorModel.data![0].foodVendorItems!.length,
+  //       itemCount: foodVendorItems!.length,
+  //       itemBuilder: (context, index) {
+  //         // var image =
+  //         //     "https://saffronhub.citizensadgrace.com/public/storage/food-items/vendor-slider-item-20221110-13182145233479.jpg";
+  //         _selectedMenu = _selectedMenu.isNotEmpty
+  //             ? _selectedMenu
+  //             : foodVendorItems.first.foodMenu!;
+  //         return foodVendorItems[index].foodMenu != _selectedMenu
+  //             ? Container()
+  //             : InkWell(
+  //                 onTap: () {
+  //                   //
+  //                   showModalBottomSheet(
+  //                     context: context,
+  //                     builder: (builder) => CustomBottomSheet(
+  //                       vendorName: vendorName,
+  //                       item: foodVendorItems[index],
+  //                     ),
+  //                     isScrollControlled: true,
+  //                     shape: RoundedRectangleBorder(
+  //                       borderRadius: BorderRadius.only(
+  //                         topLeft: Radius.circular(10),
+  //                         topRight: Radius.circular(10),
+  //                       ),
+  //                     ),
+  //                   );
+  //                 },
+  //                 child: Column(
+  //                   children: [
+  //                     SizedBox(height: 7.h),
+  //                     CustomCard(
+  //                       height: 30.h,
+  //                       width: 335.w,
+  //                       cardRadius: 10,
+  //                       cardColor: Colors.white,
+  //                       border: Border.all(color: Colors.black12),
+  //                       cardChild: Row(
+  //                         crossAxisAlignment: CrossAxisAlignment.start,
+  //                         children: [
+  //                           SizedBox(
+  //                             height: MediaQuery.of(context).size.height,
+  //                             width: 118.w,
+  //                             child: ClipRRect(
+  //                               borderRadius: BorderRadius.only(
+  //                                 topLeft: Radius.circular(10.r),
+  //                                 bottomLeft: Radius.circular(10.r),
+  //                               ),
+  //                               child: Image.network(
+  //                                 '${foodVendorItems[index].image}', // image!,
+  //                                 height: MediaQuery.of(context).size.height,
+  //                                 width: 118.w,
+  //                                 fit: BoxFit.fill,
+  //                               ),
+  //                             ),
+  //                           ),
+  //                           Padding(
+  //                             padding: EdgeInsets.only(top: 16.h, left: 20.w),
+  //                             child: SizedBox(
+  //                               width:
+  //                                   MediaQuery.of(context).size.width - 180.w,
+  //                               child: CustomText(
+  //                                 text: '${foodVendorItems[index].name}',
+  //                                 //  imageTitle,
+  //                                 fontSize: 14.sp,
+  //                                 fontWeight: FontWeight.w400,
+  //                               ),
+  //                             ),
+  //                           )
+  //                         ],
+  //                       ),
+  //                     ),
+  //                     SizedBox(height: 3.h),
+  //                   ],
+  //                 ),
+  //               );
+  //       },
+  //     ),
+  //   );
+  // }
   // Wrap(
   //     children: foodVendorItems!.map((e) {
   //   return Text('data');
@@ -638,7 +510,7 @@ class _FoodVendorDetailScreenState extends State<FoodVendorDetailScreen> {
             direction: Axis.vertical,
             children: foodVendorItems!.map(
               (item) {
-                _selectedMenu = _selectedMenu.isNotEmpty
+                _selectedMenu = _selectedMenu!.isNotEmpty
                     ? _selectedMenu
                     : foodVendorItems.first.foodMenu!;
                 return item.foodMenu != _selectedMenu
@@ -695,11 +567,64 @@ class _FoodVendorDetailScreenState extends State<FoodVendorDetailScreen> {
                                     child: SizedBox(
                                       width: MediaQuery.of(context).size.width -
                                           180.w,
-                                      child: CustomText(
-                                        text: '${item.name}',
-                                        //  imageTitle,
-                                        fontSize: 15.sp,
-                                        fontWeight: FontWeight.w500,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          SizedBox(
+                                            height: 60.h,
+                                            child: CustomText(
+                                              text: '${item.name}',
+                                              //  imageTitle,
+                                              fontSize: 15.sp,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              InkWell(
+                                                onTap: () {
+                                                  dbHelper
+                                                      .insert(
+                                                    Cart(
+                                                      productId: item.itemId!,
+                                                      productName: item.name!,
+                                                      productImage: item.image!,
+                                                      quantity: 1,
+                                                    ),
+                                                  )
+                                                      .then((v) {
+                                                    print(
+                                                        "add to cart success");
+                                                    cartProvider.addItems();
+                                                  });
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(SnackBar(
+                                                    content: Text(
+                                                        "${item.name ?? ''}has been added to your cart"),
+                                                    duration:
+                                                        Duration(seconds: 2),
+                                                  ));
+                                                },
+                                                child: CustomCard(
+                                                  height: 30.h,
+                                                  width: 90.w,
+                                                  cardRadius: 5.r,
+                                                  cardColor: kYellow,
+                                                  cardChild: Center(
+                                                    child: CustomText(
+                                                      text: "Add to cart",
+                                                      fontColor: Colors.white,
+                                                      fontSize: 10.sp,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ),

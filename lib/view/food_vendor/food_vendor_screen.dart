@@ -11,6 +11,10 @@ import 'package:saffron_hub/provider/food_vendors_provider.dart';
 import 'package:saffron_hub/view/food_vendor/bottom_sheet/custom_bottom_sheet.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../db_helper/db_helper.dart';
+import '../../models/cart_model.dart';
+import '../../provider/cart_provider.dart';
+import '../cart/cart_screen.dart';
 import '../send_email_screen/email_screen.dart';
 
 class FoodVendorScreen extends StatefulWidget {
@@ -22,16 +26,21 @@ class FoodVendorScreen extends StatefulWidget {
 }
 
 class _FoodVendorScreenState extends State<FoodVendorScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  DBHelper dbHelper = DBHelper();
+  late CartProvider cartProvider;
   late int _selectedIndex = 0;
   late String _selectedMenu = '';
   late FoodVendorsProvider foodVendorsProvider;
   bool _isInit = true;
   int? vendorIndex;
   late Data vendor;
+
   @override
   void didChangeDependencies() async {
     if (_isInit) {
       foodVendorsProvider = Provider.of<FoodVendorsProvider>(context);
+
       // await foodVendorsProvider!.getFoodVendorData();
       vendorIndex = foodVendorsProvider.currentVendor;
       if (foodVendorsProvider.searchedMode) {
@@ -46,10 +55,18 @@ class _FoodVendorScreenState extends State<FoodVendorScreen> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    // cartProvider = Provider.of<CartProvider>(context);
     return _isInit
         ? const Center(child: SpinKitSpinningLines(color: kYellow))
         : Scaffold(
+            key: _scaffoldKey,
             body: Center(
               // child: Column(
               //   children: [
@@ -311,69 +328,107 @@ class _FoodVendorScreenState extends State<FoodVendorScreen> {
                       title: SizedBox(
                         height: 45.h,
                         width: 350.w,
-                        child: MediaQuery.removePadding(
-                          context: context,
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            scrollDirection: Axis.horizontal,
-                            itemCount: vendor.menuList!.length,
-                            // foodVendorsProvider!.foodVendorModel.data![0].menuList!.length,
-                            // itemCount: tabBarItems.length,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              MenuList menu = vendor.menuList![index];
-                              // _selectedMenu = vendor.menuList!.first.menuName!;
-                              if (kDebugMode) {
-                                print('_selectedMenu ff $_selectedMenu');
-                              }
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            MediaQuery.removePadding(
+                              context: context,
+                              removeTop: true,
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                itemCount: vendor.menuList!.length,
+                                // foodVendorsProvider!.foodVendorModel.data![0].menuList!.length,
+                                // itemCount: tabBarItems.length,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  MenuList menu = vendor.menuList![index];
+                                  // _selectedMenu = vendor.menuList!.first.menuName!;
+                                  if (kDebugMode) {
+                                    print('_selectedMenu ff $_selectedMenu');
+                                  }
 
-                              return Row(
-                                children: [
-                                  // SizedBox(width: 6.w),
-                                  InkWell(
-                                    onTap: () {
-                                      _selectedIndex = index;
-                                      _selectedMenu = menu.menuName!;
-                                      setState(() {});
-                                      if (kDebugMode) {
-                                        print('_selectedMenu  $_selectedMenu');
-                                      }
-                                    },
-                                    child: CustomCard(
-                                      height: 37.h,
-                                      // width: 75.w,
-                                      cardRadius: 5.r,
-                                      cardColor: _selectedIndex == index
-                                          ? kYellow
-                                          : Colors.white,
-                                      shadow: const [
-                                        BoxShadow(
-                                          color: Colors.black12,
-                                          blurRadius: 2,
-                                          spreadRadius: 0.2,
-                                          offset: Offset(0, 0),
-                                        )
-                                      ],
-                                      cardChild: Center(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: CustomText(
-                                            text: menu.menuName ?? '',
-                                            fontSize: 12.sp,
-                                            fontColor: _selectedIndex == index
-                                                ? Colors.white
-                                                : Colors.black,
-                                            fontWeight: FontWeight.w400,
+                                  return Row(
+                                    children: [
+                                      SizedBox(width: 6.w),
+                                      InkWell(
+                                        onTap: () {
+                                          _selectedIndex = index;
+                                          _selectedMenu = menu.menuName!;
+                                          // setState(() {});
+                                          if (kDebugMode) {
+                                            print(
+                                                '_selectedMenu  $_selectedMenu');
+                                          }
+                                        },
+                                        child: CustomCard(
+                                          height: 37.h,
+                                          //width: 75.w,
+                                          cardRadius: 5,
+                                          cardColor: _selectedIndex == index
+                                              ? kYellow
+                                              : Colors.white,
+                                          shadow: const [
+                                            BoxShadow(
+                                              color: Colors.black12,
+                                              blurRadius: 2,
+                                              spreadRadius: 0.2,
+                                              offset: Offset(0, 0),
+                                            )
+                                          ],
+                                          cardChild: Center(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: CustomText(
+                                                text: menu.menuName ?? '',
+                                                fontSize: 12.sp,
+                                                fontColor:
+                                                    _selectedIndex == index
+                                                        ? Colors.white
+                                                        : Colors.black,
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
                                           ),
+                                        ),
+                                      ),
+                                      // SizedBox(width: 8.w),
+                                    ],
+                                  );
+                                },
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () => Navigator.pushNamed(
+                                  context, AddToCartScreen.id),
+                              child: Stack(
+                                children: [
+                                  CircleAvatar(
+                                    child: Icon(
+                                      Icons.shopping_cart,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 20.w,
+                                    child: CircleAvatar(
+                                      radius: 10,
+                                      backgroundColor: Colors.blueGrey,
+                                      child: Consumer<CartProvider>(
+                                        builder: (BuildContext context, value,
+                                                Widget? child) =>
+                                            CustomText(
+                                          text: value.counter.toString(),
+                                          fontColor: Colors.white,
                                         ),
                                       ),
                                     ),
                                   ),
-                                  // SizedBox(width: 8.w),
                                 ],
-                              );
-                            },
-                          ),
+                              ),
+                            )
+                          ],
                         ),
                       ),
                     ),
@@ -549,11 +604,60 @@ class _FoodVendorScreenState extends State<FoodVendorScreen> {
                                     child: SizedBox(
                                       width: MediaQuery.of(context).size.width -
                                           180.w,
-                                      child: CustomText(
-                                        text: item.name ?? '',
-                                        //  imageTitle,
-                                        fontSize: 15.sp,
-                                        fontWeight: FontWeight.w500,
+                                      child: Column(
+                                        children: [
+                                          CustomText(
+                                            text: item.name ?? '',
+                                            //  imageTitle,
+                                            fontSize: 15.sp,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                          SizedBox(height: 40.h),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              InkWell(
+                                                onTap: () {
+                                                  dbHelper
+                                                      .insert(
+                                                    Cart(
+                                                      productId: item.itemId!,
+                                                      productName: item.name!,
+                                                      productImage: item.image!,
+                                                      quantity: 1,
+                                                    ),
+                                                  )
+                                                      .then((v) {
+                                                    print(
+                                                        "add to cart success");
+                                                    cartProvider.addItems();
+                                                  });
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(SnackBar(
+                                                    content: Text(
+                                                        "${item.name ?? ''}has been added to your cart"),
+                                                    duration:
+                                                        Duration(seconds: 2),
+                                                  ));
+                                                },
+                                                child: CustomCard(
+                                                  height: 30.h,
+                                                  width: 90.w,
+                                                  cardRadius: 5.r,
+                                                  cardColor: kYellow,
+                                                  cardChild: Center(
+                                                    child: CustomText(
+                                                      text: "Add to cart",
+                                                      fontColor: Colors.white,
+                                                      fontSize: 10.sp,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   )

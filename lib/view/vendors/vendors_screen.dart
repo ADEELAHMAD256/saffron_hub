@@ -9,6 +9,7 @@ import 'package:saffron_hub/view/food_vendor/food_vendor_page.dart';
 import 'package:saffron_hub/view/food_vendor/food_vendor_page_scroll.dart';
 import '../../components/custom_card/custom_card.dart';
 import '../../components/custom_text/text.dart';
+import '../food_vendor/food_vendor_detail.dart';
 import '../food_vendor/food_vendor_screen.dart';
 
 class VendorsScreen extends StatefulWidget {

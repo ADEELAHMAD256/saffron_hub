@@ -78,7 +78,7 @@ class Data {
   String? vendorFirstName;
   String? vendorLastName;
   String? vendorProfilePic;
-  List<MenuList>? menuList;
+  List<MenuList>? menuList = [];
   List<FoodVendorItems>? foodVendorItems;
 
   Data({

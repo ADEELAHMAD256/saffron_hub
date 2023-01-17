@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:saffron_hub/view/home/home_screen.dart';
 

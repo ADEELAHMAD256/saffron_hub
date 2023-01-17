@@ -9,7 +9,7 @@ class RestaurantsListModel {
   String? logo;
   List<String>? sliderImages;
   String? description;
-  List<MenuList>? menuList;
+  List<MenuList>? menuList = [];
   List<FoodVendorItems>? foodVendorItems;
 
   RestaurantsListModel(
