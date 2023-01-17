@@ -71,7 +71,7 @@ class AddToCartScreen extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                SizedBox(width: 10.w),
+                                SizedBox(width: 11.w),
                                 SizedBox(
                                   width: 180.w,
                                   height: 50.h,
