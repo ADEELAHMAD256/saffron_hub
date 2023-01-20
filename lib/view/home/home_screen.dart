@@ -8,6 +8,7 @@ import 'package:saffron_hub/models/food_vendor_model.dart';
 import 'package:saffron_hub/provider/home_provider.dart';
 import 'package:saffron_hub/view/food_vendor/food_vendor_detail.dart';
 import 'package:saffron_hub/view/food_vendor/food_vendor_screen.dart';
+import 'package:saffron_hub/view/get_product/get_product_screen.dart';
 import 'package:saffron_hub/view/search/search_screen.dart';
 import 'package:saffron_hub/view/setting/setting_screen.dart';
 import 'package:saffron_hub/view/vendors/vendors_screen.dart';
@@ -233,6 +234,30 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              CustomText(
+                                text: "Get Product",
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              InkWell(
+                                onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            GetProductScreen())),
+                                child: CustomText(
+                                  text: "View",
+                                  fontSize: 15.sp,
+                                  fontColor: kYellow,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 10.h),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
