@@ -11,6 +11,15 @@ class CartVerify extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        title: CustomText(
+          text: "Customter Details",
+          fontSize: 25.sp,
+        ),
+      ),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 20.w),
         child: Column(
@@ -34,6 +43,14 @@ class CartVerify extends StatelessWidget {
             ),
             SizedBox(height: 20.h),
             CustomText(
+              text: "E-mail",
+            ),
+            SizedBox(height: 5.h),
+            SearchTextField(
+              hintText: "E-mail",
+            ),
+            SizedBox(height: 20.h),
+            CustomText(
               text: "Description",
             ),
             SizedBox(height: 5.h),
@@ -51,7 +68,7 @@ class CartVerify extends StatelessWidget {
                   return AlertDialog(
                     content: SingleChildScrollView(
                       child: CustomText(
-                        text: 'Your request send to the vendor, Vendor requite shortly',
+                        text: 'Your request send to the vendor, Vendor reply via E-mail shortly',
                         fontSize: 18.sp,
                       ),
                     ),
