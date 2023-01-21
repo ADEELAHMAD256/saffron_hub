@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "852057024420",
+    "project_id": "saffronhub-412a9",
+    "storage_bucket": "saffronhub-412a9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:852057024420:android:389ef3e89eaaee25b44331",
+        "android_client_info": {
+          "package_name": "com.highapp.co.uk.saffron_hub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "852057024420-qi8avubvp8c2tqr7cp2d0unv5ve091uh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.highapp.co.uk.saffron_hub",
+            "certificate_hash": "7ac8671c20f87563185372c2c0c837faf7a20791"
+          }
+        },
+        {
+          "client_id": "852057024420-jgnrcm3ff3rs3j18g9aviqqq7ouruu34.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC91FV3sJvCcqHlfcpUdD5IAWXZkqoPnB4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "852057024420-jgnrcm3ff3rs3j18g9aviqqq7ouruu34.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

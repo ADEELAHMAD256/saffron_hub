@@ -50,7 +50,9 @@ dependencies:
   path_provider: ^2.0.11
   intl_phone_number_input: ^0.7.0+2
   pin_code_text_field: ^1.8.0
-
+  get: ^4.6.5
+  intl:
+  cached_network_image: ^3.2.3
 dev_dependencies:
   flutter_test:
     sdk: flutter

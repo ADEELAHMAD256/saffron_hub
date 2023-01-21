@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:provider/provider.dart';
 import 'package:saffron_hub/components/custom_card/custom_card.dart';
 import 'package:saffron_hub/components/custom_text/text.dart';
+import 'package:saffron_hub/controller/home_controller.dart';
+import 'package:saffron_hub/models/getproductbystore.dart';
 import 'package:saffron_hub/provider/get_product.dart';
 
+import '../../CustomContainer.dart';
 import '../../models/get_product_model.dart';
 
 class GetProductScreen extends StatefulWidget {
@@ -15,87 +21,232 @@ class GetProductScreen extends StatefulWidget {
 }
 
 class _GetProductScreenState extends State<GetProductScreen> {
-  late GetProductController getProductController;
   // late ProductsList productsList;
-  bool _isInit = true;
 
   @override
   Future<void> didChangeDependencies() async {
     // _isInit = true;
-    await getData();
     super.didChangeDependencies();
   }
 
-  Future<void> getData() async {
-    print('111');
-    if (_isInit) {
-      print('444');
-      getProductController = Provider.of<GetProductController>(context);
 
-      await getProductController.getProductList();
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-                itemCount:
-                    getProductController.getProductModel.productsList!.length,
-                itemBuilder: (context, index) => Column(
-                      children: [
-                        CustomCard(
-                          height: 150.h,
-                          width: 335.w,
-                          cardRadius: 15.r,
-                          cardColor: Colors.blue,
-                          cardChild: Row(
-                            children: [
-                              CustomCard(
-                                height: 200.h,
-                                width: 150.w,
-                                cardRadius: 15.r,
-                                cardColor: Colors.redAccent,
-                                cardChild: ClipRRect(
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(16.r),
-                                    topRight: Radius.circular(16.r),
-                                  ),
-                                  child: Image.network(
-                                    height: 130.h,
-                                    width: MediaQuery.of(context).size.width,
-                                    '${getProductController.getProductModel.productsList![index].productImage}',
-                                    fit: BoxFit.cover,
+    return CustomContainer(
+      widget: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          titleSpacing: 0,
+          automaticallyImplyLeading: false,
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          title: Container(
+            padding: EdgeInsets.only(
+              left: 20.w,
+              right: 20.w,
+            ),
+            child: Row(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Get.back();
+                  },
+                  child: Container(
+                    height: 30.h,
+                    width: 30.w,
+                    decoration: BoxDecoration(
+                      color: Color(0xffFFFFFF),
+                      borderRadius: BorderRadius.circular(10.0.r),
+                    ),
+                    child: Center(
+                        child: GestureDetector(
+                          onTap: () {
+                            Get.back();
+                          },
+                          child: Icon(
+                            Icons.arrow_back_ios_new,
+                            color: Color(0xff677294),
+                            size: 13,
+                          ),
+                        )),
+                  ),
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+                CustomText(
+                  text: "My Doctor",
+                  fontColor: Color(0xff333333),
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.w500,
+                  //letterSpacing: -0.3,
+                ),
+              ],
+            ),
+          ),
+        ),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Container(
+              padding: EdgeInsets.only(
+                  left: 20.w, right: 20.w, top: 20.h, bottom: 20.h),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  GetBuilder<HomeController>(
+                      init: HomeController(),
+                      builder: (cont) {
+                        return Container(
+                          height: 600.h,
+                          child: cont.searchDoctorbySpecialitylist.isEmpty
+                              ? const Center(child: Text("No Data Found"))
+                              : ListView.builder(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            itemCount:
+                            cont.searchDoctorbySpecialitylist.length,
+                            itemBuilder:
+                                (BuildContext context, int index) {
+                                  // ProductsList
+                                  // searchbyspecialitytDoctorModel =
+                                  // cont.searchDoctorbySpecialitylist[
+                                  // index];
+                                  GetProductbystore doctor =
+                              cont.searchDoctorbySpecialitylist[index] as GetProductbystore;
+                              return GestureDetector(
+                                child: Card(
+                                  elevation: 0.0,
+                                  color: Colors.transparent,
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        // height: 200.h,
+                                          width: double.infinity.w,
+                                          padding:
+                                          const EdgeInsets.all(18.0)
+                                              .r,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                            BorderRadius.circular(
+                                                8.r),
+                                            border: Border.all(
+                                                width: 1,
+                                                color: const Color(
+                                                    0xffFFFFFF)),
+                                            boxShadow: [
+                                              const BoxShadow(
+                                                offset: Offset(0, 0),
+                                                blurRadius: 4.0,
+                                                color: Color.fromRGBO(
+                                                    0, 0, 0, 0.2),
+                                              ),
+                                            ],
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                MainAxisAlignment
+                                                    .spaceBetween,
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment
+                                                    .start,
+                                                children: [
+                                                  ClipRRect(
+                                                    borderRadius: BorderRadius.only(
+                                                        topLeft: Radius
+                                                            .circular(10),
+                                                        topRight: Radius
+                                                            .circular(10),
+                                                        bottomLeft: Radius
+                                                            .circular(10),
+                                                        bottomRight:
+                                                        Radius
+                                                            .circular(
+                                                            10)),
+                                                    child: Image.network(
+                                                      doctor
+                                                          .productsList?.first.productPrice ??
+                                                          "",
+                                                      fit: BoxFit.cover,
+                                                      width: 100.w,
+                                                      height: 120.h,
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                    EdgeInsets.only(
+                                                        left: 14.w),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                      CrossAxisAlignment
+                                                          .start,
+                                                      children: [
+                                                        CustomText(
+                                                          text:
+                                                          doctor
+                                                              .productsList?.first.productName,
+                                                          fontWeight:
+                                                          FontWeight
+                                                              .w500,
+                                                          fontSize: 18.sp,
+                                                          fontColor: Color(
+                                                              0xff000000),
+                                                        ),
+                                                        SizedBox(
+                                                          height: 5.h,
+                                                        ),
+                                                        SizedBox(
+                                                          width: 150.w,
+                                                          child:
+                                                          CustomText(
+                                                            text: doctor
+                                                                .productsList?.first.productDescription,
+                                                            fontWeight:
+                                                            FontWeight
+                                                                .w500,
+                                                            fontSize:
+                                                            18.sp,
+                                                            fontColor: Color(
+                                                                0xff000000),
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          height: 5.h,
+                                                        ),
+                                                        SizedBox(
+                                                          height: 5.h,
+                                                        ),
+                                                        Row(
+                                                          children: [
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+
+                                            ],
+                                          )),
+                                    ],
                                   ),
                                 ),
-                              ),
-                              Column(
-                                children: [
-                                  CustomText(
-                                    text:
-                                        '${getProductController.getProductModel.productsList![index].productName}',
-                                  ),
-                                  CustomText(
-                                    text:
-                                        '${getProductController.getProductModel!.productsList![index].productPrice}',
-                                  ),
-                                  CustomText(
-                                    text:
-                                        '${getProductController.getProductModel!.productsList![index].productDescription}',
-                                  ),
-                                ],
-                              ),
-                            ],
+                                onTap: () {
+                                  setState(() {});
+                                },
+                              );
+                            },
                           ),
-                        ),
-                        SizedBox(height: 10.h),
-                      ],
-                    )),
-          )
-        ],
+                        );
+                      }),
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
