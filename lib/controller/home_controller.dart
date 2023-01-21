@@ -39,9 +39,9 @@ class HomeController extends GetxController {
     } else if (response.statusCode == 200) {
       var json = response.body;
       //specialityListdata = SpecialityListModel.fromJson(json).;
-      if (json['data'] != null) {
+      if (json['products_list'] != null) {
         searchDoctorbySpecialitydata = <ProductsList>[].obs;
-        json['data'].forEach((v) {
+        json['products_list'].forEach((v) {
           searchDoctorbySpecialitydata
               .add(ProductsList.fromJson(v));
         });

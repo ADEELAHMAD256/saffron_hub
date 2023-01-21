@@ -1,17 +1,14 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart';
-import 'package:provider/provider.dart';
-import 'package:saffron_hub/components/custom_card/custom_card.dart';
-import 'package:saffron_hub/components/custom_text/text.dart';
+import 'package:saffron_hub/CustomContainer.dart';
 import 'package:saffron_hub/controller/home_controller.dart';
 import 'package:saffron_hub/models/getproductbystore.dart';
-import 'package:saffron_hub/provider/get_product.dart';
 
-import '../../CustomContainer.dart';
-import '../../models/get_product_model.dart';
+import '../../components/custom_text/text.dart';
 
 class GetProductScreen extends StatefulWidget {
   const GetProductScreen({Key? key}) : super(key: key);
@@ -22,6 +19,7 @@ class GetProductScreen extends StatefulWidget {
 
 class _GetProductScreenState extends State<GetProductScreen> {
   // late ProductsList productsList;
+  List<int> selectedItem = [];
 
   @override
   Future<void> didChangeDependencies() async {
@@ -108,12 +106,11 @@ class _GetProductScreenState extends State<GetProductScreen> {
                             cont.searchDoctorbySpecialitylist.length,
                             itemBuilder:
                                 (BuildContext context, int index) {
-                                  // ProductsList
-                                  // searchbyspecialitytDoctorModel =
-                                  // cont.searchDoctorbySpecialitylist[
-                                  // index];
-                                  GetProductbystore doctor =
-                              cont.searchDoctorbySpecialitylist[index] as GetProductbystore;
+                                  ProductsList
+                                  searchbyspecialitytDoctorModel =
+                                  cont.searchDoctorbySpecialitylist[
+                                  index];
+
                               return GestureDetector(
                                 child: Card(
                                   elevation: 0.0,
@@ -167,8 +164,8 @@ class _GetProductScreenState extends State<GetProductScreen> {
                                                             .circular(
                                                             10)),
                                                     child: Image.network(
-                                                      doctor
-                                                          .productsList?.first.productPrice ??
+                                                      searchbyspecialitytDoctorModel
+                                                          .productImage ??
                                                           "",
                                                       fit: BoxFit.cover,
                                                       width: 100.w,
@@ -186,8 +183,8 @@ class _GetProductScreenState extends State<GetProductScreen> {
                                                       children: [
                                                         CustomText(
                                                           text:
-                                                          doctor
-                                                              .productsList?.first.productName,
+                                                          searchbyspecialitytDoctorModel
+                                                              .productName,
                                                           fontWeight:
                                                           FontWeight
                                                               .w500,
@@ -202,8 +199,8 @@ class _GetProductScreenState extends State<GetProductScreen> {
                                                           width: 150.w,
                                                           child:
                                                           CustomText(
-                                                            text: doctor
-                                                                .productsList?.first.productDescription,
+                                                            text: searchbyspecialitytDoctorModel
+                                                                .productDescription,
                                                             fontWeight:
                                                             FontWeight
                                                                 .w500,
