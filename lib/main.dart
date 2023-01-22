@@ -23,6 +23,7 @@ import 'package:saffron_hub/view/sign_in/sign_in_screen.dart';
 import 'package:saffron_hub/view/sign_up/sign_up_screen.dart';
 import 'package:saffron_hub/view/splash/splash_screen.dart';
 import 'package:saffron_hub/view/vendors/vendors_screen.dart';
+import 'package:get/get.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,7 +45,6 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider.value(value: FoodVendorsProvider()),
             ChangeNotifierProvider.value(value: CartProvider()),
             ChangeNotifierProvider.value(value: SignUpController()),
-            ChangeNotifierProvider.value(value: GetProductController()),
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,

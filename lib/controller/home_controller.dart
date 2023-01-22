@@ -10,16 +10,13 @@ import 'package:saffron_hub/models/getproductbystore.dart';
 import 'package:saffron_hub/utils/functions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class HomeController extends GetxController {
   RxBool loading = false.obs;
   ApiClient api = ApiClient(appBaseUrl: baseUrl);
   ApiChecker apichecker = ApiChecker();
-  RxList<ProductsList> searchDoctorbySpecialitydata =
-      RxList<ProductsList>([]);
+  RxList<ProductsList> searchDoctorbySpecialitydata = RxList<ProductsList>([]);
   List<ProductsList> get searchDoctorbySpecialitylist =>
       searchDoctorbySpecialitydata.value;
-
 
   @override
   Future<void> onInit() async {
@@ -42,8 +39,7 @@ class HomeController extends GetxController {
       if (json['products_list'] != null) {
         searchDoctorbySpecialitydata = <ProductsList>[].obs;
         json['products_list'].forEach((v) {
-          searchDoctorbySpecialitydata
-              .add(ProductsList.fromJson(v));
+          searchDoctorbySpecialitydata.add(ProductsList.fromJson(v));
         });
       }
     } else {
@@ -51,5 +47,4 @@ class HomeController extends GetxController {
     }
     update();
   }
-
 }

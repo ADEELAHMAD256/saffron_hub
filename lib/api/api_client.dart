@@ -31,9 +31,7 @@ class ApiClient extends GetxService {
       );
     }
   }
-  void updateHeader(
-    String token,
-  ) {
+  void updateHeader(String token) {
     _mainHeaders = {
       'Content-Type': 'application/json; charset=UTF-8',
       'Accept': 'application/json',

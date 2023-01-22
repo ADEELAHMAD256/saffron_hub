@@ -1,10 +1,70 @@
-class GetProductbystore {
+// import 'dart:convert';
+//
+// GetProductModel getProductModelFromMap(String str) =>
+//     GetProductModel.fromMap(json.decode(str));
+//
+// String getProductModelToMap(GetProductModel data) => json.encode(data.toMap());
+//
+// class GetProductModel {
+//   GetProductModel({
+//     required this.status,
+//     required this.productsList,
+//   });
+//
+//   bool status;
+//   List<ProductsList> productsList;
+//
+//   factory GetProductModel.fromMap(Map<String, dynamic> json) => GetProductModel(
+//         status: json["status"],
+//         productsList: List<ProductsList>.from(
+//             json["products_list"].map((x) => ProductsList.fromMap(x))),
+//       );
+//
+//   Map<String, dynamic> toMap() => {
+//         "status": status,
+//         "products_list": List<dynamic>.from(productsList.map((x) => x.toMap())),
+//       };
+// }
+//
+// class ProductsList {
+//   ProductsList({
+//     required this.id,
+//     required this.productName,
+//     required this.productPrice,
+//     required this.productDescription,
+//     required this.productImage,
+//   });
+//
+//   String id;
+//   String productName;
+//   String productPrice;
+//   String productDescription;
+//   String productImage;
+//
+//   factory ProductsList.fromMap(Map<String, dynamic> json) => ProductsList(
+//         id: json["id"],
+//         productName: json["product_name"],
+//         productPrice: json["product_price"],
+//         productDescription: json["product_description"],
+//         productImage: json["ProductImage"],
+//       );
+//
+//   Map<String, dynamic> toMap() => {
+//         "id": id,
+//         "product_name": productName,
+//         "product_price": productPrice,
+//         "product_description": productDescription,
+//         "ProductImage": productImage,
+//       };
+// }
+
+class ProductsListModel {
   bool? status;
   List<ProductsList>? productsList;
 
-  GetProductbystore({this.status, this.productsList});
+  ProductsListModel({this.status, this.productsList});
 
-  GetProductbystore.fromJson(Map<String, dynamic> json) {
+  ProductsListModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     if (json['products_list'] != null) {
       productsList = <ProductsList>[];
@@ -34,10 +94,10 @@ class ProductsList {
 
   ProductsList(
       {this.id,
-        this.productName,
-        this.productPrice,
-        this.productDescription,
-        this.productImage});
+      this.productName,
+      this.productPrice,
+      this.productDescription,
+      this.productImage});
 
   ProductsList.fromJson(Map<String, dynamic> json) {
     id = json['id'];
