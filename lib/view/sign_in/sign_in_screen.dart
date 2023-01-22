@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-
+import 'package:get/get.dart';
 import '../../components/custom_card/custom_card.dart';
 import '../../components/custom_text/text.dart';
 import '../../components/custom_text_feild.dart';
@@ -132,8 +132,8 @@ class SignInScreen extends StatelessWidget {
                   children: <TextSpan>[
                     const TextSpan(text: 'Donn’t have an account? '),
                     TextSpan(
-                        recognizer: TapGestureRecognizer(),
-                        // ..onTap = () => Get.to(() => SignUpScreen()),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () => Get.to(() => SignUpScreen()),
                         text: 'Sign Up ',
                         style: const TextStyle(
                             fontWeight: FontWeight.bold,

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:provider/provider.dart';
+import 'package:saffron_hub/api/api_client.dart';
 import 'package:saffron_hub/components/custom_card/custom_card.dart';
 import 'package:saffron_hub/components/custom_text/text.dart';
 import 'package:saffron_hub/consts/base_url.dart';
@@ -12,16 +13,20 @@ import 'package:saffron_hub/consts/const_colors.dart';
 import 'package:saffron_hub/controller/home_controller.dart';
 import 'package:saffron_hub/models/getproductbystore.dart';
 import 'package:saffron_hub/provider/get_product.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../CustomContainer.dart';
 import '../../models/get_product_model.dart';
 import '../../models/get_prroduct_cart_model.dart';
 import '../../provider/get_product_cart_provider.dart';
-import '../get_product_cart/data_base.dart';
+import '../../db_helper/data_base.dart';
+import '../../provider/sign_up_controller.dart';
+import '../cart/get_product_cart_screen.dart';
+import '../sign_in/sign_in_screen.dart';
 
 class GetProductScreen extends StatefulWidget {
-  const GetProductScreen({Key? key}) : super(key: key);
-
+  GetProductScreen({Key? key}) : super(key: key);
+  final SignUpController signUpController = SignUpController();
   @override
   State<GetProductScreen> createState() => _GetProductScreenState();
 }
@@ -29,7 +34,30 @@ class GetProductScreen extends StatefulWidget {
 class _GetProductScreenState extends State<GetProductScreen> {
   // late ProductsList productsList;
   DataBaseHelper dataBaseHelper = DataBaseHelper();
+
   late GetProductCartProvider getProductCartProvider;
+  // bool isAuth = false;
+  late Future<bool> loginCheckFuture;
+
+  @override
+  void initState() {
+    loginCheckFuture = _checkIfLoggedIn();
+
+    super.initState();
+  }
+
+  Future<bool> _checkIfLoggedIn() async {
+    var token = widget.signUpController.token;
+    print("token========$token");
+    if (token != "") {
+      print("token value is true");
+      return true;
+    } else {
+      print("token value is false");
+      return false;
+    }
+  }
+
   @override
   Future<void> didChangeDependencies() async {
     getProductCartProvider = Provider.of<GetProductCartProvider>(context);
@@ -44,6 +72,16 @@ class _GetProductScreenState extends State<GetProductScreen> {
         automaticallyImplyLeading: false,
         elevation: 0,
         backgroundColor: Colors.transparent,
+        actions: [
+          InkWell(
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => GetProductCartScreen())),
+            child: Icon(Icons.shopping_cart_outlined),
+          ),
+          SizedBox(width: 20.w)
+        ],
         title: Container(
           padding: EdgeInsets.only(
             left: 20.w,
@@ -186,34 +224,72 @@ class _GetProductScreenState extends State<GetProductScreen> {
                                                       SizedBox(width: 90),
                                                       GestureDetector(
                                                           onTap: () {
-                                                            dataBaseHelper
-                                                                .insert(
-                                                              GetProductCartModel(
-                                                                productId: cont
-                                                                    .searchDoctorbySpecialitylist[
-                                                                        index]
-                                                                    .id!,
-                                                                productName: cont
-                                                                    .searchDoctorbySpecialitylist[
-                                                                        index]
-                                                                    .productName!,
-                                                                productImage: cont
-                                                                    .searchDoctorbySpecialitylist[
-                                                                        index]
-                                                                    .productImage!,
-                                                                quantity: 1,
-                                                                productPrice: cont
-                                                                    .searchDoctorbySpecialitylist[
-                                                                        index]
-                                                                    .productPrice!,
-                                                              ),
-                                                            )
-                                                                .then((v) {
-                                                              print(
-                                                                  "add to cart success");
-                                                              getProductCartProvider
-                                                                  .addItems();
-                                                            });
+                                                            if (loginCheckFuture ==
+                                                                true) {
+                                                              dataBaseHelper
+                                                                  .insert(
+                                                                GetProductCartModel(
+                                                                  productId: cont
+                                                                      .searchDoctorbySpecialitylist[
+                                                                          index]
+                                                                      .id!,
+                                                                  productName: cont
+                                                                      .searchDoctorbySpecialitylist[
+                                                                          index]
+                                                                      .productName!,
+                                                                  productImage: cont
+                                                                      .searchDoctorbySpecialitylist[
+                                                                          index]
+                                                                      .productImage!,
+                                                                  quantity: 1,
+                                                                  productPrice: cont
+                                                                      .searchDoctorbySpecialitylist[
+                                                                          index]
+                                                                      .productPrice!,
+                                                                ),
+                                                              )
+                                                                  .then((v) {
+                                                                print(
+                                                                    "add to cart success");
+                                                                getProductCartProvider
+                                                                    .addItems();
+                                                              });
+                                                            } else {
+                                                              showDialog<void>(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (BuildContext
+                                                                        context) {
+                                                                  return AlertDialog(
+                                                                    title: Text(
+                                                                        'Please login first'),
+                                                                    actions: <
+                                                                        Widget>[
+                                                                      TextButton(
+                                                                        child: Text(
+                                                                            'Ok'),
+                                                                        onPressed:
+                                                                            () {
+                                                                          Navigator.push(
+                                                                              context,
+                                                                              MaterialPageRoute(builder: (context) => SignInScreen()));
+                                                                        },
+                                                                      ),
+                                                                      TextButton(
+                                                                        child: Text(
+                                                                            'Cancel'),
+                                                                        onPressed:
+                                                                            () {
+                                                                          Navigator.of(context)
+                                                                              .pop();
+                                                                        },
+                                                                      ),
+                                                                    ],
+                                                                  );
+                                                                },
+                                                              );
+                                                            }
                                                           },
                                                           child: CustomCard(
                                                               height: 40.h,

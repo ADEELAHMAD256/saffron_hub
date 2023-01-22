@@ -1,5 +1,5 @@
 class GetProductCartModel {
-  late final int? id;
+  // late final int? id;
   final String productId;
   final String productName;
   final String productImage;
@@ -7,7 +7,7 @@ class GetProductCartModel {
   final int quantity;
 
   GetProductCartModel({
-    this.id,
+    // this.id,
     required this.productId,
     required this.quantity,
     required this.productName,
@@ -18,14 +18,14 @@ class GetProductCartModel {
   GetProductCartModel.fromMap(Map<dynamic, dynamic> res)
       : productId = res["id"],
         quantity = res["quantity"],
-        productPrice = res["product_price"],
+        productPrice = res["productPrice"],
         productName = res["productName"],
         productImage = res["productImage"];
   Map<String, Object?> toMap() {
     return {
       "id": productId,
       "quantity": quantity,
-      "product_price": productPrice,
+      "productPrice": productPrice,
       "productName": productName,
       "productImage": productImage
     };

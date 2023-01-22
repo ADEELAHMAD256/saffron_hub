@@ -6,6 +6,7 @@ import 'package:saffron_hub/consts/const_colors.dart';
 import 'package:saffron_hub/provider/cart_provider.dart';
 import 'package:saffron_hub/provider/food_vendors_provider.dart';
 import 'package:saffron_hub/provider/get_product.dart';
+import 'package:saffron_hub/provider/get_product_cart_provider.dart';
 import 'package:saffron_hub/provider/home_provider.dart';
 import 'package:saffron_hub/provider/sign_up_controller.dart';
 import 'package:saffron_hub/view/cart/cart_screen.dart';
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider.value(value: FoodVendorsProvider()),
             ChangeNotifierProvider.value(value: CartProvider()),
             ChangeNotifierProvider.value(value: SignUpController()),
+            ChangeNotifierProvider.value(value: GetProductCartProvider()),
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:saffron_hub/provider/sign_up_controller.dart';
 import 'package:saffron_hub/view/home/home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -11,8 +12,10 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  SignUpController signUpController = SignUpController();
   @override
   void initState() {
+    signUpController.getLogin();
     Timer(
       Duration(seconds: 3),
       () => Navigator.pushReplacementNamed(context, HomeScreen.id),

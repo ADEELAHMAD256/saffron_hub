@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -57,9 +58,17 @@ class SignUpController extends ChangeNotifier {
     }
   }
 
+  // getToken() async {
+  //   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  //   String token = sharedPreferences.getString("access_token")!;
+  //   return token;
+  // }
+
   Future<LoginModel?> getLogin() async {
-    final prefs = await SharedPreferences.getInstance();
-    final String token = prefs.getString('token') ?? "";
+    print("Token ==================================$token");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString("token");
+    print("Token 2==================================$token");
 
     const url = "${AppConstants.baseUrl}login";
     try {
@@ -79,13 +88,15 @@ class SignUpController extends ChangeNotifier {
         if (response.data['status']) {
           print('okkk');
           print(response);
+          prefs.setString("token", jsonEncode(response.data["access_token"]));
           LoginModel? loginModel = LoginModel.fromJson(response.data);
+
           return loginModel;
         } else if (response.data['status'] == false) {
           print("${response.data['status']}:${response.data['message']}");
           return null;
         }
-        prefs.setString("token", response.data["access_token"]);
+
         return null;
       }
     } on DioError catch (e) {
@@ -93,6 +104,7 @@ class SignUpController extends ChangeNotifier {
     }
   }
 
+  String? token = "";
   verifyPhone(String phoneNumber) async {
     await auth.verifyPhoneNumber(
       timeout: const Duration(seconds: 30),

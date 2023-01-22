@@ -3,16 +3,17 @@ import 'package:saffron_hub/db_helper/db_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 import '../models/cart_model.dart';
-import '../view/get_product_cart/data_base.dart';
+import '../db_helper/data_base.dart';
+import '../models/get_prroduct_cart_model.dart';
 
 class GetProductCartProvider extends ChangeNotifier {
   DataBaseHelper dataBase = DataBaseHelper();
   int counter = 0;
 
-  late Future<List<Cart>> _cart;
+  late Future<List<GetProductCartModel>> cart;
 
-  Future<List<Cart>> getData() async {
-    return _cart = dataBase.getCartList();
+  Future<List<GetProductCartModel>> getData() async {
+    return cart = dataBase.getCartList();
   }
 
   void _setRreItems() async {
