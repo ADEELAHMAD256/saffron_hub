@@ -36,7 +36,7 @@ class ApiClient extends GetxService {
       'Content-Type': 'application/json; charset=UTF-8',
       'Accept': 'application/json',
       'Access-Control-Allow-Origin': "*",
-      'Authorization': 'Bearer 149|CSQaRCOe44jRmF2pM9Xi61vv0Noegj09W2b4UXhp'
+      'Authorization': 'Bearer $token'
     };
   }
 

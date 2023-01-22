@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:saffron_hub/consts/const_colors.dart';
+import 'package:saffron_hub/controller/auth_controller.dart';
 import 'package:saffron_hub/provider/cart_provider.dart';
 import 'package:saffron_hub/provider/food_vendors_provider.dart';
 import 'package:saffron_hub/provider/get_product.dart';
@@ -29,11 +30,13 @@ import 'package:get/get.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+
+  runApp( MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final authController = Get.put(AuthController());
+   MyApp({super.key});
 
   // This widget is the root of your application.
   @override
@@ -48,7 +51,7 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider.value(value: SignUpController()),
             ChangeNotifierProvider.value(value: GetProductCartProvider()),
           ],
-          child: MaterialApp(
+          child: GetMaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Saffron Hub',
             theme: ThemeData(
@@ -57,10 +60,13 @@ class MyApp extends StatelessWidget {
               canvasColor: Colors.white,
               visualDensity: VisualDensity.adaptivePlatformDensity,
             ),
-            home:
-                // GetProductScreen(),
-                // SignUpScreen(),
-                SignInScreen(),
+            home:FutureBuilder(
+              future: authController.checkUserLoggedIn(),
+              builder: (context, dynamic snapshot) {
+                return snapshot.data;
+              },
+              initialData: const SplashScreen(),
+            ),
             // initialRoute: SplashScreen.id,
             routes: {
               SplashScreen.id: (context) => SplashScreen(),

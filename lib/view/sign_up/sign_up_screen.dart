@@ -282,7 +282,7 @@ class SignUpScreen extends StatelessWidget {
                           ..onTap = () => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SignInScreen())),
+                                  builder: (context) => LoginScreen())),
                         text: 'Sign In ',
                         style: const TextStyle(
                             fontWeight: FontWeight.bold,

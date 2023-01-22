@@ -11,14 +11,14 @@ class LoginModel {
 
   LoginModel(
       {this.status,
-      this.accessToken,
-      this.tokenType,
-      this.userId,
-      this.fullName,
-      this.email,
-      this.phone,
-      this.profilePicture,
-      this.createdAt});
+        this.accessToken,
+        this.tokenType,
+        this.userId,
+        this.fullName,
+        this.email,
+        this.phone,
+        this.profilePicture,
+        this.createdAt});
 
   LoginModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];

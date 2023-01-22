@@ -2,8 +2,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:saffron_hub/consts/const_colors.dart';
+import 'package:saffron_hub/controller/auth_controller.dart';
 import 'package:saffron_hub/models/food_vendor_model.dart';
 import 'package:saffron_hub/provider/home_provider.dart';
 import 'package:saffron_hub/view/food_vendor/food_vendor_detail.dart';
@@ -17,6 +19,7 @@ import '../../components/custom_text/text.dart';
 import 'drawer/drawer_widget.dart';
 
 class HomeScreen extends StatefulWidget {
+
   static const String id = "HomeScreen";
 
   const HomeScreen({Key? key}) : super(key: key);
@@ -106,6 +109,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     text: "Share App",
                     fontColor: Colors.black,
                     onTap: () {},
+                  ),
+                  createDrawerBodyItem(
+                    icon: Icons.logout,
+                    iconColor: Colors.black,
+                    text: "Logout",
+                    fontColor: Colors.black,
+                    onTap: () {
+                      Get.to(Logout(context));
+                    },
                   ),
                 ],
               ),
@@ -446,6 +458,104 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           );
+  }
+
+  Future<dynamic> Logout(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            insetPadding:
+            EdgeInsets.only(left: 20.w, right: 20.w, top: 0.h, bottom: 0.h).r,
+            backgroundColor: Color(0xff000000).withOpacity(0.50),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: Container(
+                    width: double.infinity.w,
+                    height: 167.h,
+                    child: Card(
+                      elevation: 2.0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      color: Color(0xffFFFFFF),
+                      child: Container(
+                        padding: EdgeInsets.only(left: 28.w, right: 38.w).r,
+                        child:
+                        Column(crossAxisAlignment: CrossAxisAlignment.start,
+                            // mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SizedBox(
+                                height: 24.h,
+                              ),
+                              CustomText(
+                                text: "Log Out",
+                                //textAlign: TextAlign.left,
+                                fontColor: Color(0xff000000),
+                                fontSize: 26.sp,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              SizedBox(
+                                height: 5.h,
+                              ),
+                              CustomText(
+                                text: "Are you sure you want to logout?",
+                                //textAlign: TextAlign.left,
+                                fontColor: Color(0xff677294),
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
+                              SizedBox(
+                                height: 34.h,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      Get.to(HomeScreen());
+                                    },
+                                    child: CustomText(
+                                      text: "Cancel",
+                                      fontColor: Color(0xff96CCD5),
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 30.h,
+                                  ),
+                                  InkWell(
+                                    onTap: () async {
+                                      await Get.find<AuthController>().logout();
+                                    },
+                                    child: CustomText(
+                                      text: "Ok",
+                                      fontColor: Color(0xff96CCD5),
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ]),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            // child: Container(
+            //   child: Image.asset(
+            //     'images/check_logo.png',
+            //     height: 70.h,
+            //     width: 70,
+            //   ),
+            // ),
+          );
+        });
   }
 }
 // CustomCard(

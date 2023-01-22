@@ -10,6 +10,7 @@ import 'package:saffron_hub/components/custom_card/custom_card.dart';
 import 'package:saffron_hub/components/custom_text/text.dart';
 import 'package:saffron_hub/consts/base_url.dart';
 import 'package:saffron_hub/consts/const_colors.dart';
+import 'package:saffron_hub/controller/auth_controller.dart';
 import 'package:saffron_hub/controller/home_controller.dart';
 import 'package:saffron_hub/models/getproductbystore.dart';
 import 'package:saffron_hub/provider/get_product.dart';
@@ -38,24 +39,13 @@ class _GetProductScreenState extends State<GetProductScreen> {
   late GetProductCartProvider getProductCartProvider;
   // bool isAuth = false;
   late Future<bool> loginCheckFuture;
+  var auth = Get.find<AuthController>();
+
 
   @override
   void initState() {
-    loginCheckFuture = _checkIfLoggedIn();
-
+    print(auth.user?.accessToken);
     super.initState();
-  }
-
-  Future<bool> _checkIfLoggedIn() async {
-    var token = widget.signUpController.token;
-    print("token========$token");
-    if (token != "") {
-      print("token value is true");
-      return true;
-    } else {
-      print("token value is false");
-      return false;
-    }
   }
 
   @override
@@ -273,7 +263,7 @@ class _GetProductScreenState extends State<GetProductScreen> {
                                                                             () {
                                                                           Navigator.push(
                                                                               context,
-                                                                              MaterialPageRoute(builder: (context) => SignInScreen()));
+                                                                              MaterialPageRoute(builder: (context) => LoginScreen()));
                                                                         },
                                                                       ),
                                                                       TextButton(
