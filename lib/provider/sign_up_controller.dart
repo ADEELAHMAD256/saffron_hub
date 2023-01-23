@@ -13,7 +13,7 @@ class SignUpController extends ChangeNotifier {
   var authStatus;
   String verificationId = "";
   int? _resendToken;
-
+  String? token = "";
   var auth = FirebaseAuth.instance;
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -88,7 +88,7 @@ class SignUpController extends ChangeNotifier {
         if (response.data['status']) {
           print('okkk');
           print(response);
-          prefs.setString("token", jsonEncode(response.data["access_token"]));
+          prefs.setString("token", response.data["access_token"]);
           LoginModel? loginModel = LoginModel.fromJson(response.data);
 
           return loginModel;
@@ -104,7 +104,6 @@ class SignUpController extends ChangeNotifier {
     }
   }
 
-  String? token = "";
   verifyPhone(String phoneNumber) async {
     await auth.verifyPhoneNumber(
       timeout: const Duration(seconds: 30),

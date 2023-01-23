@@ -16,14 +16,14 @@ class GetProductCartModel {
   });
 
   GetProductCartModel.fromMap(Map<dynamic, dynamic> res)
-      : productId = res["id"],
+      : productId = res["productId"],
         quantity = res["quantity"],
         productPrice = res["productPrice"],
         productName = res["productName"],
         productImage = res["productImage"];
   Map<String, Object?> toMap() {
     return {
-      "id": productId,
+      "productId": productId,
       "quantity": quantity,
       "productPrice": productPrice,
       "productName": productName,

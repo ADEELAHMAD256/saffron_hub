@@ -34,11 +34,12 @@ class DataBaseHelper {
         'CREATE TABLE productcart (id INTEGER PRIMARY KEY , productId VARCHAR UNIQUE,productName TEXT, productImage TEXT, quantity INTEGER, productPrice TEXT )');
   }
 
-  Future<GetProductCartModel> insert(GetProductCartModel cart) async {
+  Future<GetProductCartModel> insert(
+      GetProductCartModel getProductCartModel) async {
     var dbClient = await dataBase;
-    await dbClient!.insert("productcart", cart.toMap(),
+    await dbClient!.insert("productcart", getProductCartModel.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace);
-    return cart;
+    return getProductCartModel;
   }
 
   Future<List<GetProductCartModel>> getCartList() async {

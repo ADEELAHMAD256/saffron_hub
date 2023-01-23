@@ -3,19 +3,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:saffron_hub/components/custom_card/custom_card.dart';
 import 'package:saffron_hub/components/custom_text/text.dart';
+import 'package:saffron_hub/consts/const_colors.dart';
+import '../../controller/home_controller.dart';
 import '../../db_helper/data_base.dart';
-import '../../db_helper/db_helper.dart';
-import '../../models/cart_model.dart';
 import '../../models/get_prroduct_cart_model.dart';
-import '../../provider/cart_provider.dart';
+import 'package:get/get.dart';
 import '../../provider/get_product_cart_provider.dart';
-import 'cart_verify.dart';
 
 class GetProductCartScreen extends StatelessWidget {
   static const String id = "AddToCartScreen";
   late GetProductCartProvider getProductCartProvider;
   DataBaseHelper getProductDataBse = DataBaseHelper();
   GetProductCartScreen({Key? key}) : super(key: key);
+
+  var home = Get.find<HomeController>();
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class GetProductCartScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         centerTitle: true,
         title: CustomText(
-          text: "Cart",
+          text: "Get Product Cart",
           fontSize: 25.sp,
         ),
       ),
@@ -76,14 +77,29 @@ class GetProductCartScreen extends StatelessWidget {
                                   ),
                                 ),
                                 SizedBox(width: 10.w),
-                                SizedBox(
-                                  width: 180.w,
-                                  height: 50.h,
-                                  child: CustomText(
-                                    text: snapshot.data![index].productName,
-                                    fontSize: 18.sp,
-                                    // textOverflow: TextOverflow.ellipsis,
-                                  ),
+                                Column(
+                                  children: [
+                                    SizedBox(height: 10.h),
+                                    SizedBox(
+                                      width: 180.w,
+                                      height: 25.h,
+                                      child: CustomText(
+                                        text: snapshot.data![index].productName,
+                                        fontSize: 18.sp,
+                                        // textOverflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 180.w,
+                                      height: 20.h,
+                                      child: CustomText(
+                                        text:
+                                            snapshot.data![index].productPrice,
+                                        fontSize: 16.sp, fontColor: kYellow,
+                                        // textOverflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                                 Spacer(),
                                 Column(
@@ -104,6 +120,63 @@ class GetProductCartScreen extends StatelessWidget {
                                       },
                                       child: Icon(Icons.delete),
                                     ),
+                                    // SizedBox(height: 20.h),
+                                    // Row(
+                                    //   children: [
+                                    //     InkWell(
+                                    //         onTap: () {
+                                    //           int quantity = snapshot
+                                    //               .data![index].quantity;
+                                    //           quantity--;
+                                    //           dataBse
+                                    //               .updateQuantity(Cart(
+                                    //                   productId: snapshot
+                                    //                       .data![index]
+                                    //                       .productId,
+                                    //                   quantity: quantity,
+                                    //                   productName: snapshot
+                                    //                       .data![index]
+                                    //                       .productName,
+                                    //                   productImage: snapshot
+                                    //                       .data![index]
+                                    //                       .productImage))
+                                    //               .then((value) {
+                                    //             quantity = 0;
+                                    //           }).onError((error, stackTrace) {
+                                    //             print(error.toString());
+                                    //           });
+                                    //         },
+                                    //         child: Icon(Icons.remove)),
+                                    //     CustomText(
+                                    //       text: snapshot.data![index].quantity
+                                    //           .toString(),
+                                    //     ),
+                                    //     InkWell(
+                                    //         onTap: () {
+                                    //           int quantity = snapshot
+                                    //               .data![index].quantity;
+                                    //           quantity + 1;
+                                    //           dataBse
+                                    //               .updateQuantity(Cart(
+                                    //                   productId: snapshot
+                                    //                       .data![index]
+                                    //                       .productId,
+                                    //                   quantity: quantity,
+                                    //                   productName: snapshot
+                                    //                       .data![index]
+                                    //                       .productName,
+                                    //                   productImage: snapshot
+                                    //                       .data![index]
+                                    //                       .productImage))
+                                    //               .then((value) {
+                                    //             quantity = 0;
+                                    //           }).onError((error, stackTrace) {
+                                    //             print(error.toString());
+                                    //           });
+                                    //         },
+                                    //         child: Icon(Icons.add))
+                                    //   ],
+                                    // )
                                   ],
                                 ),
                                 SizedBox(width: 5.w),
@@ -117,10 +190,14 @@ class GetProductCartScreen extends StatelessWidget {
                   );
                 }
               } else {
-                return Container();
+                return Container(
+                  // height: 100,
+                  // width: 100,
+                  // color: Colors.green,
+                );
               }
             },
-          ),
+          )
         ],
       ),
       bottomNavigationBar: FutureBuilder(
@@ -135,12 +212,9 @@ class GetProductCartScreen extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   InkWell(
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CartVerify(),
-                      ),
-                    ),
+                    onTap: () {
+                      home.checkout();
+                    },
                     child: CustomCard(
                       height: 50,
                       width: 335,
@@ -148,7 +222,7 @@ class GetProductCartScreen extends StatelessWidget {
                       cardColor: Colors.black38,
                       cardChild: Center(
                         child: CustomText(
-                          text: "Submit for inquiry",
+                          text: "Check Out",
                           fontWeight: FontWeight.bold,
                           fontSize: 20.sp,
                           fontColor: Colors.white,

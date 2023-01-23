@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:saffron_hub/consts/const_colors.dart';
 import 'package:saffron_hub/controller/auth_controller.dart';
+import 'package:saffron_hub/controller/home_controller.dart';
 import 'package:saffron_hub/provider/cart_provider.dart';
 import 'package:saffron_hub/provider/food_vendors_provider.dart';
 import 'package:saffron_hub/provider/get_product.dart';
@@ -31,12 +32,13 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  runApp( MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   final authController = Get.put(AuthController());
-   MyApp({super.key});
+  final homeController = Get.put(HomeController());
+  MyApp({super.key});
 
   // This widget is the root of your application.
   @override
@@ -60,7 +62,7 @@ class MyApp extends StatelessWidget {
               canvasColor: Colors.white,
               visualDensity: VisualDensity.adaptivePlatformDensity,
             ),
-            home:FutureBuilder(
+            home: FutureBuilder(
               future: authController.checkUserLoggedIn(),
               builder: (context, dynamic snapshot) {
                 return snapshot.data;

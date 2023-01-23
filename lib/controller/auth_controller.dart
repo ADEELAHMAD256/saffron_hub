@@ -15,11 +15,12 @@ import '../api/api_checker.dart';
 import '../api/api_client.dart';
 import '../utils/app_constants.dart';
 import '../utils/functions.dart';
+
 class AuthController extends GetxController {
   late SharedPreferences prefs;
   TextEditingController nameCont = TextEditingController(text: "");
- TextEditingController phoneCont = TextEditingController(text: "");
- TextEditingController emailCont = TextEditingController(text: "");
+  TextEditingController phoneCont = TextEditingController(text: "");
+  TextEditingController emailCont = TextEditingController(text: "");
   TextEditingController passCont = TextEditingController(text: '');
   String? token;
   RxBool loading = false.obs;
@@ -37,7 +38,8 @@ class AuthController extends GetxController {
     tokenMain = prefs.getString(AppConstants().token);
     token = prefs.getString(AppConstants().token);
     api.updateHeader(token ?? "");
-    print(jsonDecode(prefs.getString(AppConstants().userdata)!));
+    print(
+        "This is AppConstant.userdata=================${jsonDecode(prefs.getString(AppConstants().userdata)!)}");
     try {
       user = LoginModel.fromJson(
           jsonDecode(prefs.getString(AppConstants().userdata)!));
@@ -59,24 +61,22 @@ class AuthController extends GetxController {
     }
   }
 
-
   Future login() async {
     //loading.value = true;
     Response response = await api.postData(
-      "api/login",
-      {
-        "email": emailCont.text,
-        "password": passCont.text,
-      },
-      showdialog: false
-    );
+        "api/login",
+        {
+          "email": emailCont.text,
+          "password": passCont.text,
+        },
+        showdialog: false);
     print(response.statusCode);
     if (response == null) {
       errorAlert('Check your internet connection.');
     } else if (response.statusCode == 200) {
       await prefs.setString(
           AppConstants().token, response.body["access_token"]);
-       onLoginSuccess(response.body);
+      onLoginSuccess(response.body);
       //Get.offAll(HomeScreen());
       //loading.value = false;
     } else {
@@ -116,7 +116,6 @@ class AuthController extends GetxController {
   //   }
   //   loading.value = false;
   // }
-
 
   void onLoginSuccess(Map<String, dynamic> value) async {
     await prefs.setString(AppConstants().userdata, jsonEncode(value));
