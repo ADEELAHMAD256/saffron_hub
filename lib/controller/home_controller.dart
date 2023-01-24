@@ -7,7 +7,9 @@ import 'package:intl/intl.dart';
 import 'package:saffron_hub/api/api_checker.dart';
 import 'package:saffron_hub/api/api_client.dart';
 import 'package:saffron_hub/controller/auth_controller.dart';
+import 'package:saffron_hub/models/get_prroduct_cart_model.dart';
 import 'package:saffron_hub/models/getproductbystore.dart';
+import 'package:saffron_hub/provider/get_product_cart_provider.dart';
 import 'package:saffron_hub/utils/functions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -20,14 +22,23 @@ class HomeController extends GetxController {
   ApiClient api = ApiClient(appBaseUrl: baseUrl);
   ApiChecker apichecker = ApiChecker();
   var auth = Get.find<AuthController>();
+
+
+  List<GetProductCartModel> getproductcart= [];
   RxList<ProductsList> searchDoctorbySpecialitydata = RxList<ProductsList>([]);
+  // RxList<GetProductCartModel> getProductCartModel = RxList<GetProductCartModel>([]);
+  // List<GetProductCartModel> get getProductCartModellist =>
+  //     getProductCartModel.value;
   List<ProductsList> get searchDoctorbySpecialitylist =>
       searchDoctorbySpecialitydata.value;
 
   @override
   Future<void> onInit() async {
+    
+
     await getMyDoctor();
     super.onInit();
+
   }
 
   // Future getCheckOUt() async {
@@ -49,23 +60,30 @@ class HomeController extends GetxController {
   //   }
   // }
   Future checkout() async {
-    print("start api");
-    Response response = await api.getData(
+  Response response = await api.postData(
+
       "api/checkout",
-    );
-    print("api not success");
-    if (response == null) {
-      errorAlert('Check your internet connection.');
-    } else if (response.statusCode == 200) {
-      var json = response.body;
-      print("api is success");
-      //specialityListdata = SpecialityListModel.fromJson(json).;
-      if (json['status'] == true) {
-        print("Check OUT di");
-      }
-    } else {
-      errorAlert('Something went wrong\nPlease try again!');
-    }
+      {
+        "customer_id": auth.user?.userId,
+        "products": jsonEncode(getproductcart),
+        "delivery_address": "Lahore",
+        "total_bill": "600",
+      },
+
+      showdialog: false);
+  print(response.statusCode);
+  if (response == null) {
+    errorAlert('Check your internet connection.');
+  } else if (response.statusCode == 200) {
+    print(response.statusCode);
+    // await prefs.setString(
+    //     AppConstants().token, response.body["access_token"]);
+    // onLoginSuccess(response.body);
+    //Get.offAll(HomeScreen());
+    //loading.value = false;
+  } else {
+    errorAlert('Something went wrong\nPlease try again!');
+  }
     update();
   }
 

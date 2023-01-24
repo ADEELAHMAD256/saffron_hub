@@ -30,4 +30,6 @@ class GetProductCartModel {
       "productImage": productImage
     };
   }
+
+
 }

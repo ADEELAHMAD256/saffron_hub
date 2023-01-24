@@ -39,6 +39,7 @@ class GetProductCartScreen extends StatelessWidget {
                 (context, AsyncSnapshot<List<GetProductCartModel>> snapshot) {
               if (snapshot.hasData) {
                 if (snapshot.data!.isEmpty) {
+                  home.getproductcart=getProductCartProvider as List<GetProductCartModel>;
                   return Center(
                     child: Column(
                       children: [
