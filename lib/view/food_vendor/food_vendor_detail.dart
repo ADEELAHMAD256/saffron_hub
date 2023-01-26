@@ -32,15 +32,16 @@ class _FoodVendorDetailScreenState extends State<FoodVendorDetailScreen> {
   late HomeProvider homeProvider;
   late CartProvider cartProvider;
   bool _isInit = true;
-  int? vendorIndex;
+  //int? vendorInd;
   late RestaurantsListModel vendor;
   @override
   void didChangeDependencies() async {
     if (_isInit) {
       homeProvider = Provider.of<HomeProvider>(context);
       cartProvider = Provider.of<CartProvider>(context);
-      vendorIndex = homeProvider.currentVendor;
-      vendor = homeProvider.restaurantsListModel![vendorIndex!];
+      //vendorIndex = homeProvider.currentVendor;
+      vendor = homeProvider.restaurantsListModel![homeProvider.currentVendor];
+      //vendor = homeProvider.restaurantsListModel![vendorIndex!];
     }
     _isInit = false;
 

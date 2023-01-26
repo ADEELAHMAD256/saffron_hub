@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -589,13 +590,30 @@ class _FoodVendorScreenState extends State<FoodVendorScreen> {
                                         topLeft: Radius.circular(10.r),
                                         bottomLeft: Radius.circular(10.r),
                                       ),
-                                      child: Image.network(
-                                        item.image ?? '', // image!,
+                                      child:CachedNetworkImage(
+                                        imageUrl:item.image ?? '',
+                                        errorWidget: (context, url, error) =>
+                                            Image.asset(
+                                              "assets/images/notImage.png",
+                                              height:
+                                              MediaQuery.of(context).size.height,
+                                              width: 118.w,
+                                              fit: BoxFit.fill,
+                                            ),
                                         height:
-                                            MediaQuery.of(context).size.height,
+                                        MediaQuery.of(context).size.height,
                                         width: 118.w,
                                         fit: BoxFit.fill,
-                                      ),
+                                      )
+
+
+                                      // Image.network(
+                                      //   item.image ?? '', // image!,
+                                      //   height:
+                                      //       MediaQuery.of(context).size.height,
+                                      //   width: 118.w,
+                                      //   fit: BoxFit.fill,
+                                      // ),
                                     ),
                                   ),
                                   Padding(

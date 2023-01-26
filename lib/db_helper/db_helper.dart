@@ -33,8 +33,9 @@ class DBHelper {
   }
 
   Future<Cart> insert(Cart cart) async {
+    print(cart.productName);
     var dbClient = await dataBase;
-    await dbClient!.insert("cart", cart.toMap(),
+    await dbClient?.insert("cart", cart.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace);
     return cart;
   }

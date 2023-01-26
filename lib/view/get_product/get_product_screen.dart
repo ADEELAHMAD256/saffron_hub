@@ -221,20 +221,20 @@ class _GetProductScreenState extends State<GetProductScreen> {
                                                                 productId: cont
                                                                     .searchDoctorbySpecialitylist[
                                                                         index]
-                                                                    .id!,
+                                                                    .id??"",
                                                                 productName: cont
                                                                     .searchDoctorbySpecialitylist[
                                                                         index]
-                                                                    .productName!,
+                                                                    .productName??"",
                                                                 productImage: cont
                                                                     .searchDoctorbySpecialitylist[
                                                                         index]
-                                                                    .productImage!,
+                                                                    .productImage??"",
                                                                 quantity: 1,
                                                                 productPrice: cont
                                                                     .searchDoctorbySpecialitylist[
                                                                         index]
-                                                                    .productPrice!,
+                                                                    .productPrice??"",
                                                               ),
                                                             )
                                                                 .then((v) {

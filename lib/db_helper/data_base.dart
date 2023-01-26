@@ -20,7 +20,7 @@ class DataBaseHelper {
 
   initDateBse() async {
     io.Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentsDirectory.path, "cart.dataBase");
+    String path = join(documentsDirectory.path, "cart.dataBase2");
     var dbase = await openDatabase(
       path,
       version: 5,
@@ -37,7 +37,7 @@ class DataBaseHelper {
   Future<GetProductCartModel> insert(
       GetProductCartModel getProductCartModel) async {
     var dbClient = await dataBase;
-    await dbClient!.insert("productcart", getProductCartModel.toMap(),
+    await dbClient?.insert("productcart", getProductCartModel.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace);
     return getProductCartModel;
   }

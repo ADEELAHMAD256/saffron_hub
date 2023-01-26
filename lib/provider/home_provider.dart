@@ -5,11 +5,11 @@ import 'package:saffron_hub/services/home_services.dart';
 
 class HomeProvider extends ChangeNotifier {
   late BannersModel bannersModel;
-  late List<RestaurantsListModel>? restaurantsListModel;
+  late List<RestaurantsListModel>? restaurantsListModel=[];
 
   bool isLoading = true;
   bool isLoadingR = true;
-  late int currentVendor;
+   int currentVendor=0;
 
   Future<void> getBanners() async {
     try {

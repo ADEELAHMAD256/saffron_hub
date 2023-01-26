@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -8,7 +10,10 @@ import '../../controller/home_controller.dart';
 import '../../db_helper/data_base.dart';
 import '../../models/get_prroduct_cart_model.dart';
 import 'package:get/get.dart';
+import '../../models/product_model.dart';
 import '../../provider/get_product_cart_provider.dart';
+import 'cart_screen.dart';
+import 'cart_verify.dart';
 
 class GetProductCartScreen extends StatelessWidget {
   static const String id = "AddToCartScreen";
@@ -16,8 +21,7 @@ class GetProductCartScreen extends StatelessWidget {
   DataBaseHelper getProductDataBse = DataBaseHelper();
   GetProductCartScreen({Key? key}) : super(key: key);
 
-  var home = Get.find<HomeController>();
-
+  final homeController = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
     getProductCartProvider = Provider.of<GetProductCartProvider>(context);
@@ -39,7 +43,7 @@ class GetProductCartScreen extends StatelessWidget {
                 (context, AsyncSnapshot<List<GetProductCartModel>> snapshot) {
               if (snapshot.hasData) {
                 if (snapshot.data!.isEmpty) {
-                  home.getproductcart=getProductCartProvider as List<GetProductCartModel>;
+                //  home.getproductcart=snapshot.data!;
                   return Center(
                     child: Column(
                       children: [
@@ -55,7 +59,14 @@ class GetProductCartScreen extends StatelessWidget {
                   return Expanded(
                     child: ListView.builder(
                       itemCount: snapshot.data!.length,
-                      itemBuilder: (context, index) => Column(
+                      itemBuilder: (context, index) {
+                        homeController.getproductcart.add(ProductModel(
+                            productId: snapshot.data![index].productId.toString(),
+                            productQuantity: snapshot.data![index].quantity.toString(),
+                            productPrice: snapshot.data![index].productPrice));
+                        print(jsonEncode(homeController.getproductcart));
+                        print(homeController.getproductcart[index].productPrice);
+                        return Column(
                         children: [
                           CustomCard(
                             height: 90.h,
@@ -186,7 +197,8 @@ class GetProductCartScreen extends StatelessWidget {
                           ),
                           SizedBox(height: 10.h),
                         ],
-                      ),
+                      );
+                        },
                     ),
                   );
                 }
@@ -214,8 +226,7 @@ class GetProductCartScreen extends StatelessWidget {
                 children: [
                   InkWell(
                     onTap: () {
-                      home.checkout();
-                    },
+Navigator.push(context, MaterialPageRoute(builder: (context)=>CartVerify()));                    },
                     child: CustomCard(
                       height: 50,
                       width: 335,

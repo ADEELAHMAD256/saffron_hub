@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:saffron_hub/consts/const_colors.dart';
 import 'package:saffron_hub/controller/auth_controller.dart';
+import 'package:saffron_hub/controller/home_controller.dart';
 import 'package:saffron_hub/models/food_vendor_model.dart';
 import 'package:saffron_hub/provider/home_provider.dart';
 import 'package:saffron_hub/view/food_vendor/food_vendor_detail.dart';
@@ -16,6 +18,7 @@ import 'package:saffron_hub/view/setting/setting_screen.dart';
 import 'package:saffron_hub/view/vendors/vendors_screen.dart';
 import '../../components/custom_card/custom_card.dart';
 import '../../components/custom_text/text.dart';
+import '../History/history.dart';
 import 'drawer/drawer_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -30,11 +33,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldState = GlobalKey<ScaffoldState>();
-
+final homeController=Get.put(HomeController());
   final double itemHeight = 226.h;
   final double itemWidth = 160.w;
   late HomeProvider homeProvider;
   bool _isInit = true;
+
   // int _current = 0;
 
   @override
@@ -57,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext contextt) {
     return _isInit
         ? const Center(
             child:
@@ -93,7 +97,17 @@ class _HomeScreenState extends State<HomeScreen> {
                     iconColor: kYellow,
                     text: "Home",
                     fontColor: kYellow,
-                    onTap: () {},
+                    onTap: () {homeController.getOrderProcessingList();},
+                  ),
+                  createDrawerBodyItem(
+                    icon: Icons.food_bank,
+                    iconColor: Colors.black,
+                    text: "Status",
+                    fontColor: Colors.black,
+                    onTap: () {
+                      Get.back();
+                      Get.to(HistoryScreen());
+                    },
                   ),
                   createDrawerBodyItem(
                     icon: Icons.settings,
@@ -229,10 +243,19 @@ class _HomeScreenState extends State<HomeScreen> {
                     cardColor: kLightGray,
                     cardChild: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: Image.network(
-                        homeProvider.bannersModel.banners![0].image ?? '',
+                      child: CachedNetworkImage(
+                        imageUrl:homeProvider.bannersModel.banners![0].image ?? '',
+                        errorWidget: (context, url, error) =>
+                            Image.asset(
+                              "assets/images/notImage.png",
+                              height: 100.h,
+                              width: 100.w,
+                              fit: BoxFit.fill,
+                            ),
+                        height: 100.h,
+                        width: 100.w,
                         fit: BoxFit.fill,
-                      ),
+                      )
                     ),
                   ),
                   //   ],
@@ -339,13 +362,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                     onTap: () async {
                                       homeProvider.currentVendor = index;
                                       print(
+                                          'currentVendor>>$index<<');
+                                      print(
                                           'currentVendor>>${homeProvider.currentVendor}<<');
-                                      await Navigator.pushNamed(
-                                          context, FoodVendorDetailScreen.id);
                                       _isInit = true;
-                                      setState(() {});
+                                      setState(() {
+
+                                      });
                                       await getData();
-                                      setState(() {});
+                                      await Navigator.pushNamed(
+                                          contextt, FoodVendorDetailScreen.id);
                                     },
                                     child: CustomCard(
                                       cardRadius: 16.r,
@@ -362,14 +388,27 @@ class _HomeScreenState extends State<HomeScreen> {
                                               topLeft: Radius.circular(16.r),
                                               topRight: Radius.circular(16.r),
                                             ),
-                                            child: Image.network(
+                                            child:CachedNetworkImage(
+                                              imageUrl:'${homeProvider.restaurantsListModel![index].vendorProfilePic}',
+                                              errorWidget: (context, url, error) =>
+                                                  Image.asset(
+                                                    "assets/images/notImage.png",
+                                                    height: 130.h,
+                                                    fit: BoxFit.fill,
+                                                  ),
                                               height: 130.h,
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              '${homeProvider.restaurantsListModel![index].vendorProfilePic}',
-                                              fit: BoxFit.cover,
-                                            ),
+                                              fit: BoxFit.fill,
+                                            )
+
+
+                                            // Image.network(
+                                            //   height: 130.h,
+                                            //   width: MediaQuery.of(context)
+                                            //       .size
+                                            //       .width,
+                                            //   '${homeProvider.restaurantsListModel![index].vendorProfilePic}',
+                                            //   fit: BoxFit.cover,
+                                            // ),
                                           ),
                                           /* Image.asset(
                                           homeItemList[index].itemImage,

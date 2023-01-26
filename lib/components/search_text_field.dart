@@ -5,8 +5,11 @@ class SearchTextField extends StatelessWidget {
   final String hintText;
   final double? height;
   final int? maxLines;
+  final TextEditingController? controller;
   const SearchTextField(
-      {Key? key, required this.hintText, this.height = 50, this.maxLines})
+      {Key? key, required this.hintText, this.height = 50, this.maxLines,
+      this.controller
+      })
       : super(key: key);
 
   @override
@@ -18,6 +21,7 @@ class SearchTextField extends StatelessWidget {
           border: Border.all(color: Colors.black38),
           borderRadius: BorderRadius.circular(10.r)),
       child: TextField(
+        controller:controller,
         maxLines: maxLines,
         textAlignVertical: TextAlignVertical.top,
         decoration: InputDecoration(
