@@ -10,9 +10,7 @@ import 'package:saffron_hub/view/home/home_screen.dart';
 import '../../components/custom_card/custom_card.dart';
 import '../../components/custom_text/text.dart';
 import '../../components/custom_text_feild.dart';
-
 import '../../provider/sign_up_controller.dart';
-import '../../share_pref/shared_prefrences.dart';
 import '../sign_in/sign_in_screen.dart';
 
 class SignUpScreen extends StatelessWidget {
