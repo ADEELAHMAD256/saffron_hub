@@ -106,7 +106,7 @@ class GetProductCartScreen extends StatelessWidget {
                                       height: 20.h,
                                       child: CustomText(
                                         text:
-                                            snapshot.data![index].productPrice,
+                                            "\$${snapshot.data![index].productPrice}",
                                         fontSize: 16.sp, fontColor: kYellow,
                                         // textOverflow: TextOverflow.ellipsis,
                                       ),

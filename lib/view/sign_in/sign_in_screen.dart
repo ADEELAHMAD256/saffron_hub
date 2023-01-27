@@ -9,6 +9,7 @@ import 'package:saffron_hub/button.dart';
 import 'package:saffron_hub/consts/const_colors.dart';
 import 'package:saffron_hub/controller/auth_controller.dart';
 import 'package:saffron_hub/view/home/home_screen.dart';
+import 'package:saffron_hub/view/sign_up/sign_up_screen.dart';
 import 'package:validators/validators.dart';
 
 import '../../components/custom_text/text.dart';
@@ -143,30 +144,49 @@ class _LoginScreenState extends State<LoginScreen> {
             //     fontWeight: FontWeight.w400,
             //   ),
             // ),
-            // SizedBox(
-            //   height: 80.h,
-            // ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     CustomText(
-            //       text: "Don’t have an account? ",
-            //       fontColor: Color(0xff96CCD5),
-            //       fontSize: 14.sp,
-            //       fontWeight: FontWeight.w400,
-            //     ),
-            //     GestureDetector(
-            //         child: CustomText(
-            //           text: "Join us",
-            //           fontColor: Color(0xff96CCD5),
-            //           fontSize: 14.sp,
-            //           fontWeight: FontWeight.w400,
-            //         ),
-            //         onTap: () {
-            //           Get.off(SignUpScreen());
-            //         }),
-            //   ],
-            // ),
+            SizedBox(
+              height: 30.h,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CustomText(
+                  text: "Don’t have an account? ",
+                  fontColor: Color(0xff96CCD5),
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w400,
+                ),
+                GestureDetector(
+                    child: CustomText(
+                      text: "Join us",
+                      fontColor: Color(0xff96CCD5),
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w400,
+                    ),
+                    onTap: () {
+                      Get.off(SignUpScreen());
+                    }),
+              ],
+            ),
+            SizedBox(
+              height: 30.h,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+
+                GestureDetector(
+                    child: CustomText(
+                      text: "Skip",
+                      fontColor: Color(0xff96CCD5),
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w400,
+                    ),
+                    onTap: () {
+                      Get.off(HomeScreen());
+                    }),
+              ],
+            ),
           ],
         ),
       )),
