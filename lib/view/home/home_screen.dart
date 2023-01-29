@@ -10,6 +10,7 @@ import 'package:saffron_hub/controller/auth_controller.dart';
 import 'package:saffron_hub/controller/home_controller.dart';
 import 'package:saffron_hub/models/food_vendor_model.dart';
 import 'package:saffron_hub/provider/home_provider.dart';
+import 'package:saffron_hub/view/delete_account_screen.dart';
 import 'package:saffron_hub/view/food_vendor/food_vendor_detail.dart';
 import 'package:saffron_hub/view/food_vendor/food_vendor_screen.dart';
 import 'package:saffron_hub/view/get_product/get_product_screen.dart';
@@ -94,10 +95,20 @@ final homeController=Get.put(HomeController());
                   ),
                   createDrawerBodyItem(
                     icon: Icons.home,
-                    iconColor: kYellow,
+                    iconColor: Colors.black,
                     text: "Home",
-                    fontColor: kYellow,
+                    fontColor: Colors.black,
                     onTap: () {homeController.getOrderProcessingList();},
+                  ),
+                  createDrawerBodyItem(
+                    icon: Icons.home,
+                    iconColor: Colors.black,
+                    text: "Saffron Hub Products",
+                    fontColor: Colors.black,
+                      onTap: () {
+                        Get.back();
+                        Get.to(GetProductScreen());
+                      },
                   ),
                   createDrawerBodyItem(
                     icon: Icons.food_bank,
@@ -123,6 +134,16 @@ final homeController=Get.put(HomeController());
                     text: "Share App",
                     fontColor: Colors.black,
                     onTap: () {},
+                  ),
+                  createDrawerBodyItem(
+                    icon: Icons.delete,
+                    iconColor: Colors.black,
+                    text: "Delete my Account",
+                    fontColor: Colors.black,
+                    onTap: () {
+                      Get.to(DeleteAccountScreen());
+
+                    },
                   ),
                   createDrawerBodyItem(
                     icon: Icons.logout,
@@ -273,7 +294,7 @@ final homeController=Get.put(HomeController());
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               CustomText(
-                                text: "Get Product",
+                                text: "Saffron Hub Products",
                                 fontSize: 20.sp,
                                 fontWeight: FontWeight.w600,
                               ),

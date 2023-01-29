@@ -72,7 +72,7 @@ class CartVerify extends StatelessWidget {
             SearchTextField(
               controller: homeController.description,
               height: 150,
-              hintText: "Write something",
+              hintText: "Write a Instruction",
               maxLines: 10,
             ),
             SizedBox(height: 100.h),

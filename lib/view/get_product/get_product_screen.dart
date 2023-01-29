@@ -206,7 +206,7 @@ class _GetProductScreenState extends State<GetProductScreen> {
                                                     children: [
                                                       CustomText(
                                                         text:
-                                                            doctor.productPrice,
+                                                            "\$${doctor.productPrice}",
                                                         fontWeight:
                                                             FontWeight.w500,
                                                         fontSize: 14.sp,
