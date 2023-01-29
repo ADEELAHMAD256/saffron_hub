@@ -101,7 +101,9 @@ class _VendorsScreenState extends State<VendorsScreen> {
               backgroundColor: Colors.transparent,
               elevation: 0.0,
               leading: IconButton(
-                onPressed: () => Navigator.pop(context),
+                onPressed: () {
+                  foodVendorsProvider.currentPage=1;
+                  Navigator.pop(context);},
                 icon: Icon(
                   Icons.arrow_back_ios,
                   size: 15.sp,

@@ -181,7 +181,7 @@ class _GetProductScreenState extends State<GetProductScreen> {
                                                   CustomText(
                                                     text: doctor.productName,
                                                     fontWeight: FontWeight.w500,
-                                                    fontSize: 18.sp,
+                                                    fontSize: 22.sp,
                                                     fontColor:
                                                         Color(0xff000000),
                                                   ),
@@ -193,7 +193,7 @@ class _GetProductScreenState extends State<GetProductScreen> {
                                                           .productDescription,
                                                       fontWeight:
                                                           FontWeight.w500,
-                                                      fontSize: 18.sp,
+                                                      fontSize: 16.sp,
                                                       fontColor:
                                                           Color(0xff000000),
                                                     ),
@@ -212,7 +212,16 @@ class _GetProductScreenState extends State<GetProductScreen> {
                                                         fontSize: 14.sp,
                                                         fontColor: kYellow,
                                                       ),
-                                                      SizedBox(width: 90),
+                                                      SizedBox(width:10),
+                                                      CustomText(
+                                                        text:
+                                                        "Free delivery",
+                                                        fontWeight:
+                                                        FontWeight.w500,
+                                                        fontSize: 14.sp,
+                                                        fontColor: kYellow,
+                                                      ),
+                                                      SizedBox(width:20),
                                                       GestureDetector(
                                                           onTap: () {
                                                             dataBaseHelper

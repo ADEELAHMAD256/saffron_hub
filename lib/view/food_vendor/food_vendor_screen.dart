@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:saffron_hub/components/custom_card/custom_card.dart';
 import 'package:saffron_hub/components/custom_text/text.dart';
@@ -11,11 +12,11 @@ import 'package:saffron_hub/models/vendors_model.dart';
 import 'package:saffron_hub/provider/food_vendors_provider.dart';
 import 'package:saffron_hub/view/food_vendor/bottom_sheet/custom_bottom_sheet.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../../db_helper/db_helper.dart';
 import '../../models/cart_model.dart';
 import '../../provider/cart_provider.dart';
 import '../cart/cart_screen.dart';
+import '../detailsForm.dart';
 import '../send_email_screen/email_screen.dart';
 
 class FoodVendorScreen extends StatefulWidget {
@@ -76,7 +77,7 @@ class _FoodVendorScreenState extends State<FoodVendorScreen> {
                   SliverToBoxAdapter(
                     key: UniqueKey(),
                     child: SizedBox(
-                      height: 330.h,
+                      height: 370.h,
                       child: Stack(
                         clipBehavior: Clip.none,
                         alignment: Alignment.center,
@@ -159,7 +160,7 @@ class _FoodVendorScreenState extends State<FoodVendorScreen> {
                             child: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 20.w),
                               child: CustomCard(
-                                height: 115.h,
+                                //height: 115.h,
                                 width: 335.w,
                                 cardRadius: 10,
                                 cardColor: Colors.white,
@@ -223,6 +224,7 @@ class _FoodVendorScreenState extends State<FoodVendorScreen> {
                                           ),
                                         ],
                                       ),
+                                      SizedBox(height: 8.h),
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -246,26 +248,86 @@ class _FoodVendorScreenState extends State<FoodVendorScreen> {
                                             ],
                                           ),
                                           // SizedBox(width: 120.w),
-                                          InkWell(
-                                            onTap: () {
-                                              launch(
-                                                  'https://saffronhub.citizensadgrace.com/contact-us/${vendor.email}');
-                                            },
-                                            child: CustomCard(
-                                              height: 30.h,
-                                              width: 50.w,
-                                              cardRadius: 5.r,
-                                              cardColor: kYellow,
-                                              cardChild: Center(
-                                                child: CustomText(
-                                                  text: "Contact",
-                                                  fontColor: Colors.white,
+                                        ],
+                                      ),
+                                      SizedBox(height: 8.h),
+                                      InkWell(
+                                        onTap: (){
+                                          Get.to(DetailsForm());
+                                        },
+                                        child: Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.home_repair_service,
+                                                  size: 10.sp,
+                                                  color: kLightGray,
+                                                ),
+                                                SizedBox(width: 12.w),
+                                                CustomText(
+                                                  text:'Reserve',
+                                                  // text: foodVendorsProvider!
+                                                  //     .foodVendorModel.data![0].email,
+                                                  fontWeight: FontWeight.w400,
                                                   fontSize: 10.sp,
+                                                  fontColor: kLightGray,
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: (){
+                                          Get.to(DetailsForm());
+                                        },
+                                        child: Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.delivery_dining,
+                                                  size: 10.sp,
+                                                  color: kLightGray,
+                                                ),
+                                                SizedBox(width: 12.w),
+                                                CustomText(
+                                                  text:'Free delivery',
+                                                  // text: foodVendorsProvider!
+                                                  //     .foodVendorModel.data![0].email,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 10.sp,
+                                                  fontColor: kLightGray,
+                                                ),
+                                              ],
+                                            ),
+                                            // SizedBox(width: 120.w),
+                                            InkWell(
+                                              onTap: () {
+                                                launch(
+                                                    'https://saffronhub.citizensadgrace.com/contact-us/${vendor.email}');
+                                              },
+                                              child: CustomCard(
+                                                height: 30.h,
+                                                width: 50.w,
+                                                cardRadius: 5.r,
+                                                cardColor: kYellow,
+                                                cardChild: Center(
+                                                  child: CustomText(
+                                                    text: "Contact",
+                                                    fontColor: Colors.white,
+                                                    fontSize: 10.sp,
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ],
                                   ),
