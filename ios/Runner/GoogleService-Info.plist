@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>852057024420-m3muv9el740oh537s13rofp5hpg0hlkt.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.852057024420-m3muv9el740oh537s13rofp5hpg0hlkt</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>852057024420-3agr0brtmbnietln8sklv3soamn8lops.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDCGTjh95DTAyfqhJJ8b5UU8xkxiVARMys</string>
+	<key>GCM_SENDER_ID</key>
+	<string>852057024420</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.highapp.co.uk.saffron-hub</string>
+	<key>PROJECT_ID</key>
+	<string>saffronhub-412a9</string>
+	<key>STORAGE_BUCKET</key>
+	<string>saffronhub-412a9.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:852057024420:ios:b37c072cb70008f7b44331</string>
+</dict>
+</plist>
